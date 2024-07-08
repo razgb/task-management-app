@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 
-type ValidUrlPaths = "/" | "tasks" | "dashboard";
+export type ValidUrlPaths = "/" | "/tasks" | "/dashboard";
 
 interface RouterContextType {
   path: string; // on page load, path could be anything.
@@ -18,8 +18,22 @@ const RouterContext = createContext<RouterContextType | undefined>(undefined);
 function RouterProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(window.location.pathname);
 
-  function updatePath(path: ValidUrlPaths) {
-    setPath(path);
+  /**
+   * Updates url and path state in 2 ways:
+   * 1. Absolute path. '/' + path name must be given.
+   * 2. Relative path that adds on to current path. Only give the path name.
+   *
+   * @param newPath string of valid urls from type ValidUrlPaths.
+   */
+  function updatePath(newPath: ValidUrlPaths) {
+    if (newPath[0] === "/") {
+      setPath(newPath);
+      window.history.pushState(null, "", newPath);
+    } else {
+      const updatedPath = `/${path}/${newPath}`;
+      setPath(updatedPath);
+      window.history.pushState(null, "", updatedPath);
+    }
   }
 
   const value: RouterContextType = {

@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import MenuButton from "../components/menu/MenuButton";
-import Button from "../components/Button";
+import Button from "../components/shared/Button";
 
 import { useState } from "react";
 
@@ -36,7 +36,7 @@ export default function Menu() {
           </Button>
         </div>
 
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <MenuButton icon={<LayoutDashboardIcon />} onClick={() => {}}>
             Dashboard
           </MenuButton>
@@ -44,7 +44,7 @@ export default function Menu() {
           <MenuButton icon={<ListIcon />} onClick={() => {}}>
             Tasks
           </MenuButton>
-        </div>
+        </div> */}
       </div>
     </div>
   );

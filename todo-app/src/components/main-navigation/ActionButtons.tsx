@@ -1,5 +1,5 @@
 import { Bell, User, Settings, Sun } from "lucide-react";
-import Button from "../Button";
+import Button from "../shared/Button";
 
 const ICON_SIZE = 24;
 const iconClasses = "stroke-secondary-dark";
