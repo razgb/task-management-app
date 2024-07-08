@@ -1,12 +1,6 @@
 import { ICON_SIZE } from "../todoAppConfig";
-import {
-  LayoutDashboardIcon,
-  ListIcon,
-  PanelLeftOpen,
-  PanelRightOpen,
-} from "lucide-react";
+import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
 
-import MenuButton from "../components/menu/MenuButton";
 import Button from "../components/shared/Button";
 
 import { useState } from "react";
@@ -15,7 +9,7 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="w-72 m-4 mr-0 p-4 rounded-3xl text-primary bg-secondary-ultralight">
+    <div className="w-72 m-4 mr-0 p-2 rounded-3xl text-primary bg-secondary-ultralight">
       <div className="h-full rounded-2xl bg-primary p-4">
         <div className="mb-16">
           <Button

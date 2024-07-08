@@ -1,11 +1,10 @@
 import TasksPage from "../components/pages/TasksPage.tsx";
 import DashboardPage from "../components/pages/DashboardPage.tsx";
 import useRouter from "../stores/useRouter.tsx";
-import Link from "../components/shared/Link.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
-  console.log(path);
+  // console.log(path);
 
   let content: React.ReactNode | null = null;
 
@@ -32,8 +31,7 @@ export default function Outlet() {
   }
 
   return (
-    <div className="flex-grow m-4 p-4 rounded-3xl bg-secondary-ultralight">
-      <Link to="/dashboard">Change to dasboard</Link>
+    <div className="flex-grow m-4 p-2 rounded-3xl bg-secondary-ultralight">
       <div className="bg-primary rounded-2xl w-full h-full">{content}</div>
     </div>
   );

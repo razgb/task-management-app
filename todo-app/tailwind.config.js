@@ -33,3 +33,15 @@ export default {
   },
   plugins: [],
 };
+
+/*
+#F9F7F7
+#112D4E
+#CAD5E3
+#0A1B2E
+#DBE2EF
+#E4EAF1
+#FAF0CA
+#ff9b9b
+#DCE2C8
+ */
