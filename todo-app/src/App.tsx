@@ -4,11 +4,13 @@ import MainNavigation from "./layouts/MainNavigation";
 import Outlet from "./layouts/Outlet";
 
 function App() {
+  // theme will be placed here.
+
   return (
-    <div className="flex h-screen bg-primary">
+    <div className="light flex h-screen bg-primary">
       <Menu />
 
-      <div className="flex-grow flex flex-col">
+      <div className="flex flex-grow flex-col">
         <MainNavigation />
         <Outlet />
       </div>

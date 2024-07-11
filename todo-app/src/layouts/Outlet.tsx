@@ -4,8 +4,6 @@ import useRouter from "../stores/useRouter.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
-  // console.log(path);
-
   let content: React.ReactNode | null = null;
 
   switch (path) {
@@ -31,8 +29,8 @@ export default function Outlet() {
   }
 
   return (
-    <div className="flex-grow m-4 p-2 rounded-3xl bg-secondary-ultralight">
-      <div className="bg-primary rounded-2xl w-full h-full">{content}</div>
+    <div className="m-4 flex-grow rounded-2xl bg-secondaryBg p-1">
+      <div className="h-full w-full rounded-xl bg-primaryBg">{content}</div>
     </div>
   );
 }

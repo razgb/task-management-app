@@ -16,22 +16,23 @@ export default function Button({
 
   switch (variant) {
     case "default": {
-      classes += `px-4 py-2 rounded-full bg-secondary-dark hover:bg-secondary`;
+      classes += `rounded-full bg-black px-4 py-2`;
       break;
     }
 
     case "ghost": {
-      classes += `text-secondary-dark font-semibold hover:bg-secondary-ultralight`;
+      classes += `text-text font-semibold hover:bg-secondary-ultralight`;
       break;
     }
 
     case "icon": {
-      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-secondary-light`;
+      // have no idea what to call this, might just delete.
+      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-iconBgStrong`;
       break;
     }
 
     case "ghost-icon": {
-      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-secondary-ultralight`;
+      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-iconBg`;
       break;
     }
   }

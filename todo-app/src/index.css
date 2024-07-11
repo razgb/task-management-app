@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.light {
+  --heading: #262626;
+  --heading-sub: #112d4e; /* Old secondary default might change */
+  --text: #525252;
+
+  /* --primary-bg: #f9f7f7; */
+  --primary-bg: #fff;
+  /* --secondary-bg: #dbe2ef; */
+  --secondary-bg: #e4eaf1;
+
+  --icon-bg: #e4eaf1;
+  --icon-bg-strong: #dbe2ef;
+  --icon-stroke: #112d4e;
+
+  --btn-bg: #0a0a0a;
+  --btn-hover: ;
+  --btn-active: ;
+
+  --progress: ;
+  --progress-text: ;
+  --progress-btn: ;
+  --progress-icon: ;
+
+  --success: ;
+  --success-text: ;
+  --success-btn: ;
+  --success-icon: ;
+
+  --error: ;
+  --error-text: ;
+  --error-btn: ;
+  --error-icon: ;
+
+  --link: ;
+  --link-hover: ;
+  --link-active: ;
+
+  --input-bg: ;
+  --input-border: ;
+  --input-focus: ;
+
+  --card-bg: ;
+  --card-border: ;
+}

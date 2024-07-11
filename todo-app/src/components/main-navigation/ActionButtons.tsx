@@ -1,13 +1,12 @@
 import { Bell, User, Settings, Sun } from "lucide-react";
-import Button from "../shared/Button";
 import { ICON_SIZE } from "../../todoAppConfig";
-
-const iconClasses = "stroke-secondary-dark";
+const iconClasses = "stroke-iconStroke";
+import Button from "../shared/Button";
 
 export default function ActionButtons() {
   return (
-    <div className="bg-secondary-ultralight rounded-full p-2">
-      <div className="flex items-center gap-4 rounded-full bg-primary p-2">
+    <div className="rounded-full bg-secondaryBg p-1">
+      <div className="flex items-center gap-4 rounded-full bg-primaryBg p-2">
         <Button variant="ghost-icon">
           <Sun size={ICON_SIZE} className={iconClasses} />
         </Button>

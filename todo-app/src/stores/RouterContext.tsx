@@ -25,7 +25,7 @@ function RouterProvider({ children }: { children: ReactNode }) {
    *
    * @param newPath string of valid urls from type ValidUrlPaths.
    */
-  function updatePath(newPath: ValidUrlPaths) {
+  const updatePath = (newPath: ValidUrlPaths) => {
     if (newPath[0] === "/") {
       setPath(newPath);
       window.history.pushState(null, "", newPath);
@@ -34,7 +34,7 @@ function RouterProvider({ children }: { children: ReactNode }) {
       setPath(updatedPath);
       window.history.pushState(null, "", updatedPath);
     }
-  }
+  };
 
   const value: RouterContextType = {
     path,
