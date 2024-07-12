@@ -13,7 +13,7 @@ const MenuAccordionContext = createContext<
 //
 
 function MenuAccordion({ children }: { children: ReactNode }) {
-  const [activeItem, setActiveItem] = useState<string | null>("Recent");
+  const [activeItem, setActiveItem] = useState<string | null>(null);
 
   return (
     <MenuAccordionContext.Provider value={{ activeItem, setActiveItem }}>
@@ -60,7 +60,7 @@ function AccordionGroup({
 
       {/* Content of the accordion group */}
       {isActive && (
-        <div className="bg-secondaryBgWeak flex flex-col items-start gap-2 rounded-b-lg px-4 py-2">
+        <div className="flex flex-col items-start gap-2 rounded-b-lg bg-secondaryBgWeak px-4 py-2">
           {children}
         </div>
       )}

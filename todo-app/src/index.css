@@ -49,3 +49,48 @@
   --card-bg: ;
   --card-border: ;
 }
+
+.dark {
+  --heading: #f9f7f7;
+  --heading-sub: #dbe2ef;
+  --text: #d4d4d4;
+
+  --primary-bg: #1a1a1a;
+  --secondary-bg: #2c2c2c;
+  --secondary-bg-weak: #333333;
+
+  --icon-bg: #2c2c2c;
+  --icon-bg-strong: #3a3a3a;
+  --icon-bg-strongest: #474747;
+  --icon-stroke: #dbe2ef;
+
+  --btn-bg: #f5f5f5;
+  --btn-hover: ;
+  --btn-active: ;
+
+  --progress: ;
+  --progress-text: ;
+  --progress-btn: ;
+  --progress-icon: ;
+
+  --success: ;
+  --success-text: ;
+  --success-btn: ;
+  --success-icon: ;
+
+  --error: ;
+  --error-text: ;
+  --error-btn: ;
+  --error-icon: ;
+
+  --link: ;
+  --link-hover: ;
+  --link-active: ;
+
+  --input-bg: ;
+  --input-border: ;
+  --input-focus: ;
+
+  --card-bg: ;
+  --card-border: ;
+}

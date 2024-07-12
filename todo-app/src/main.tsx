@@ -4,11 +4,14 @@ import App from "./App.tsx";
 import "./index.css";
 
 import { RouterProvider } from "./stores/RouterContext.tsx";
+import ThemeContextProvider from "./stores/ThemeContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider>
-      <App />
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
     </RouterProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

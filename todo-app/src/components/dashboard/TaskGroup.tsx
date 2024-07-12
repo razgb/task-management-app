@@ -17,9 +17,9 @@ export default function TaskGroup({ title }: TaskGroupProps) {
         </Button>
       </div>
 
-      <div className="bg-secondaryBgWeak h-4 w-full rounded-full">
+      <div className="h-4 w-full rounded-full bg-secondaryBgWeak">
         <div
-          className="h-full rounded-full bg-black"
+          className="h-full rounded-full bg-text"
           style={{ width: completion + "%" }}
         ></div>
       </div>
