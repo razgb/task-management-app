@@ -27,12 +27,12 @@ export default function Button({
 
     case "icon": {
       // have no idea what to call this, might just delete.
-      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-iconBgStrong`;
+      classes += `w-16 h-16 rounded-full flex items-center justify-center bg-iconBg hover:bg-iconBgStrong`;
       break;
     }
 
     case "ghost-icon": {
-      classes += `w-12 h-12 rounded-full flex items-center justify-center hover:bg-iconBg`;
+      classes += `w-8 h-8 rounded-full flex items-center justify-center bg-primaryBg`;
       break;
     }
   }

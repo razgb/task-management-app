@@ -1,5 +1,4 @@
-import TasksPage from "../components/pages/TasksPage.tsx";
-import DashboardPage from "../components/pages/DashboardPage.tsx";
+import DashboardPage from "../pages/DashboardPage.tsx";
 import useRouter from "../stores/useRouter.tsx";
 
 export default function Outlet() {
@@ -8,17 +7,17 @@ export default function Outlet() {
 
   switch (path) {
     case "/": {
-      content = <TasksPage />; // in the future this should be the dashboard
-      break;
-    }
-
-    case "/tasks": {
-      content = <TasksPage />;
+      content = <DashboardPage />; // in the future this should be the dashboard
       break;
     }
 
     case "/dashboard": {
       content = <DashboardPage />;
+      break;
+    }
+
+    case "/tasks": {
+      content = <></>;
       break;
     }
 
@@ -29,8 +28,15 @@ export default function Outlet() {
   }
 
   return (
-    <div className="m-4 flex-grow rounded-2xl bg-secondaryBg p-1">
-      <div className="h-full w-full rounded-xl bg-primaryBg">{content}</div>
+    <div className="m-4 flex-grow rounded-3xl bg-secondaryBg p-3">
+      {content}
     </div>
   );
 }
+
+/*
+
+    <div className="m-4 flex-grow rounded-3xl bg-secondaryBg p-3">
+      <div className="h-full w-full rounded-2xl bg-primaryBg">{content}</div>
+    </div>
+*/

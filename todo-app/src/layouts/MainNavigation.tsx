@@ -5,9 +5,9 @@ import SearchBar from "../components/main-navigation/SearchBar";
 
 export default function MainNavigation() {
   return (
-    <div className="min-h-16 flex gap-4 items-center justify-between p-4">
-      <picture className="flex gap-2 items-center justify-center flex-shrink-0">
-        <img className="w-16 h-16 rounded-md" src={logo} alt="logo" />
+    <div className="flex min-h-16 items-center justify-between gap-4 p-4 pb-0">
+      <picture className="flex flex-shrink-0 items-center justify-center gap-2">
+        <img className="h-16 w-16 rounded-md" src={logo} alt="logo" />
         <h1 className="text-2xl font-bold">Tasks Manager</h1>
       </picture>
 

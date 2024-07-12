@@ -10,9 +10,13 @@ export default {
 
         primaryBg: "var(--primary-bg)",
         secondaryBg: "var(--secondary-bg)",
+        secondaryBgWeak: "var(--secondary-bg-weak)",
+        // accentBg: "var(--accent-bg)",
+        // accentBgWeak: "var(--accent-bg-weak)",
 
         iconBg: "var(--icon-bg)",
         iconBgStrong: "var(--icon-bg-strong)",
+        iconBgStrongest: "var(--icon-bg-strongest)",
         iconStroke: "var(--icon-stroke)",
 
         btnBg: "var(--btn-bg)",

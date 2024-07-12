@@ -7,10 +7,10 @@ function App() {
   // theme will be placed here.
 
   return (
-    <div className="light flex h-screen bg-primary">
+    <div className="light flex h-screen gap-4 bg-primaryBg">
       <Menu />
 
-      <div className="flex flex-grow flex-col">
+      <div className="flex flex-grow flex-col gap-4">
         <MainNavigation />
         <Outlet />
       </div>

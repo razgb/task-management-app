@@ -11,7 +11,7 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="text-primary m-4 mr-0 w-72 rounded-2xl bg-secondaryBg p-1">
+    <div className="text-primary m-4 mr-0 w-72 rounded-2xl bg-secondaryBg p-3">
       <div className="h-full rounded-xl bg-primaryBg p-4">
         <div className="mb-16 flex justify-between gap-2">
           <Button
@@ -35,7 +35,7 @@ export default function Menu() {
         </div>
 
         <MenuAccordion>
-          <MenuAccordion.tab title="Recent">
+          <MenuAccordion.group title="Recent">
             <MenuAccordion.item>Human Body</MenuAccordion.item>
             <MenuAccordion.item>Cultures</MenuAccordion.item>
             <MenuAccordion.item>Algebra</MenuAccordion.item>
@@ -44,7 +44,21 @@ export default function Menu() {
             <MenuAccordion.item>Literature</MenuAccordion.item>
             <MenuAccordion.item>Landforms</MenuAccordion.item>
             <MenuAccordion.item>Painting</MenuAccordion.item>
-          </MenuAccordion.tab>
+          </MenuAccordion.group>
+
+          <MenuAccordion.group title="Work">
+            <MenuAccordion.item>Human Body</MenuAccordion.item>
+            <MenuAccordion.item>Cultures</MenuAccordion.item>
+            <MenuAccordion.item>Algebra</MenuAccordion.item>
+            <MenuAccordion.item>Chemistry</MenuAccordion.item>
+          </MenuAccordion.group>
+
+          <MenuAccordion.group title="Personal">
+            <MenuAccordion.item>Human Body</MenuAccordion.item>
+            <MenuAccordion.item>Cultures</MenuAccordion.item>
+            <MenuAccordion.item>Algebra</MenuAccordion.item>
+            <MenuAccordion.item>Chemistry</MenuAccordion.item>
+          </MenuAccordion.group>
         </MenuAccordion>
       </div>
     </div>
