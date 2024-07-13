@@ -12,7 +12,7 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="text-primary m-4 mr-0 w-72 rounded-3xl bg-secondaryBg p-3">
+    <div className="text-primary m-4 mr-0 w-72 min-w-[300px] rounded-3xl bg-secondaryBg p-3">
       <div className="h-full rounded-2xl bg-primaryBg p-4">
         <div className="mb-16 flex justify-between gap-2">
           <Button
