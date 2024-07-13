@@ -5,11 +5,12 @@
 .light {
   --heading: #262626;
   --heading-sub: #112d4e; /* Old secondary default might change */
-  --text: #525252;
+  --text: #3d3d3d;
 
   --primary-bg: #f9f7f7;
   --secondary-bg: #f1ebe4;
   --secondary-bg-weak: #f8f5f2;
+  --secondary-bg-strong: #f0e6d8;
 
   /* --accent-bg: #f1ebe4;
   --accent-bg-weak: #f8f5f2; */
@@ -58,6 +59,7 @@
   --primary-bg: #1a1a1a;
   --secondary-bg: #2c2c2c;
   --secondary-bg-weak: #333333;
+  --secondary-bg-strong: #272727;
 
   --icon-bg: #2c2c2c;
   --icon-bg-strong: #3a3a3a;

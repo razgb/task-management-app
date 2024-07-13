@@ -12,6 +12,10 @@ export default function DashboardPage() {
         <CurrentDate />
         <TotalTaskProgress />
       </div>
+
+      <div className="col-span-2 flex w-full items-center justify-center">
+        <h2>reserved for calendar</h2>
+      </div>
     </div>
   );
 }

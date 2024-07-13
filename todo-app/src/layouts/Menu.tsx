@@ -1,18 +1,19 @@
 import { ICON_SIZE } from "../todoAppConfig";
-import { PanelLeftOpen, PanelRightOpen, PlusIcon } from "lucide-react";
+import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
 
 import Button from "../components/shared/Button";
 
 import { useState } from "react";
-import MenuAccordion from "../components/menu/MenuAccordion";
+// import MenuAccordion from "../components/menu/MenuAccordion";
 import NewTaskButton from "../components/menu/NewTaskButton";
+import { MenuButtons } from "../components/menu/MenuButtons";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="text-primary m-4 mr-0 w-72 rounded-2xl bg-secondaryBg p-3">
-      <div className="h-full rounded-xl bg-primaryBg p-4">
+    <div className="text-primary m-4 mr-0 w-72 rounded-3xl bg-secondaryBg p-3">
+      <div className="h-full rounded-2xl bg-primaryBg p-4">
         <div className="mb-16 flex justify-between gap-2">
           <Button
             variant="ghost-icon"
@@ -34,7 +35,9 @@ export default function Menu() {
           <NewTaskButton>{isOpen ? "New task" : null}</NewTaskButton>
         </div>
 
-        <MenuAccordion>
+        <MenuButtons />
+
+        {/* <MenuAccordion>
           <MenuAccordion.group title="Recent">
             <MenuAccordion.item>Human Body</MenuAccordion.item>
             <MenuAccordion.item>Cultures</MenuAccordion.item>
@@ -59,7 +62,7 @@ export default function Menu() {
             <MenuAccordion.item>Algebra</MenuAccordion.item>
             <MenuAccordion.item>Chemistry</MenuAccordion.item>
           </MenuAccordion.group>
-        </MenuAccordion>
+        </MenuAccordion> */}
       </div>
     </div>
   );

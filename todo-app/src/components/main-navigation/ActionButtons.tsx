@@ -1,4 +1,4 @@
-import { Bell, User, Settings, Sun, Moon } from "lucide-react";
+import { Bell, User, Sun, Moon } from "lucide-react";
 import { ICON_SIZE } from "../../todoAppConfig";
 const iconClasses = "stroke-iconStroke";
 import Button from "../shared/Button";
@@ -31,10 +31,6 @@ export default function ActionButtons() {
 
       <Button variant="icon">
         <User size={ICON_SIZE} className={iconClasses} />
-      </Button>
-
-      <Button variant="icon">
-        <Settings size={ICON_SIZE} className={iconClasses} />
       </Button>
     </div>
   );

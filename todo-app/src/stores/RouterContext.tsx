@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 
-export type ValidUrlPaths = "/" | "/tasks" | "/dashboard";
+export type ValidUrlPaths = "/" | "/task-groups" | "/dashboard" | "/settings";
 
 interface RouterContextType {
   path: string; // on page load, path could be anything.

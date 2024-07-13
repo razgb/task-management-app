@@ -1,4 +1,6 @@
 import DashboardPage from "../pages/DashboardPage.tsx";
+import GroupTaskExpanded from "../pages/GroupTaskExpanded.tsx";
+import SettingsPage from "../pages/SettingsPage.tsx";
 import useRouter from "../stores/useRouter.tsx";
 
 export default function Outlet() {
@@ -16,8 +18,19 @@ export default function Outlet() {
       break;
     }
 
-    case "/tasks": {
-      content = <></>;
+    case "/task-groups": {
+      content = <GroupTaskExpanded />;
+      break;
+    }
+
+    // need to change this.
+    case "/task-groups/:id": {
+      content = <GroupTaskExpanded />;
+      break;
+    }
+
+    case "/settings": {
+      content = <SettingsPage />;
       break;
     }
 

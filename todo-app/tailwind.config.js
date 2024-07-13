@@ -9,6 +9,7 @@ export default {
         text: "var(--text)",
 
         primaryBg: "var(--primary-bg)",
+        secondaryBgStrong: "var(--secondary-bg-strong)",
         secondaryBg: "var(--secondary-bg)",
         secondaryBgWeak: "var(--secondary-bg-weak)",
         // accentBg: "var(--accent-bg)",

@@ -1,13 +1,16 @@
+import { useEffect, useState } from "react";
+
 export default function CurrentDate() {
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   const userLocale = navigator.language || "en-US";
-  const now = new Date();
-  const date = now.toLocaleDateString(userLocale, {
+  const date = currentDate.toLocaleDateString(userLocale, {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const time = now.toLocaleTimeString(userLocale, {
+  const time = currentDate.toLocaleTimeString(userLocale, {
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,
@@ -19,6 +22,12 @@ export default function CurrentDate() {
         return `${p1}${suffix}`;
       })
     : date;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentDate(new Date());
+    }, 15 * 1000);
+  });
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-1 rounded-2xl bg-primaryBg p-3">
