@@ -14,7 +14,7 @@ export default function TaskGroup({ title, description }: TaskGroupProps) {
     : null;
 
   return (
-    <div className="min-h-[150px] w-full rounded-xl bg-secondaryBgWeak p-4">
+    <div className="max-h-[200px] min-h-[150px] w-full rounded-xl bg-secondaryBgWeak p-4">
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-xl font-semibold">{title}</h2>
         <Button variant="ghost-icon">

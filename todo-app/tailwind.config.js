@@ -13,6 +13,8 @@ export default {
           100: "var(--primary-100)",
         },
 
+        primaryBg: "var(--primary-bg)",
+
         secondary: {
           100: "var(--secondary-100)",
           200: "var(--secondary-200)",
@@ -22,12 +24,18 @@ export default {
           900: "var(--secondary-900)",
         },
 
-        primaryBg: "var(--primary-bg)",
+        accent: {
+          100: "var(--accent-100)",
+          200: "var(--accent-200)",
+          300: "var(--accent-300)",
+          500: "var(--accent-500)",
+          700: "var(--accent-700)",
+          900: "var(--accent-900)",
+        },
+
         secondaryBgStrong: "var(--secondary-bg-strong)",
         secondaryBg: "var(--secondary-bg)",
         secondaryBgWeak: "var(--secondary-bg-weak)",
-        // accentBg: "var(--accent-bg)",
-        // accentBgWeak: "var(--accent-bg-weak)",
 
         iconBg: "var(--icon-bg)",
         iconBgStrong: "var(--icon-bg-strong)",
@@ -66,5 +74,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

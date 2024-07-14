@@ -23,6 +23,11 @@
   --secondary-bg: var(--secondary-500);
   --secondary-bg-strong: var(--secondary-700);
 
+  --accent-300: #dfd0ce;
+  --accent-500: #cfb8b4;
+  --accent-700: #bfa19b;
+  --accent-900: #AF8A83;
+
   --icon-bg-weak: var(--secondary-300);
   --icon-bg: var(--secondary-500);
   --icon-bg-strong: var(--secondary-700);

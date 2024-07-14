@@ -45,7 +45,10 @@ export default function ThemeAccordion() {
       {open && (
         <div className="flex flex-col items-start overflow-hidden rounded-b-3xl">
           <ThemeAccordionButton
-            onClick={() => changeAppTheme("light", "user")}
+            onClick={() => {
+              changeAppTheme("light", "user");
+              setOpen(false);
+            }}
             icon={<Sun />}
             selected={theme === "light" && themeController === "user"}
           >
@@ -53,7 +56,10 @@ export default function ThemeAccordion() {
           </ThemeAccordionButton>
 
           <ThemeAccordionButton
-            onClick={() => changeAppTheme("dark", "user")}
+            onClick={() => {
+              changeAppTheme("dark", "user");
+              setOpen(false);
+            }}
             icon={<Moon />}
             selected={theme === "dark" && themeController === "user"}
           >
@@ -61,7 +67,10 @@ export default function ThemeAccordion() {
           </ThemeAccordionButton>
 
           <ThemeAccordionButton
-            onClick={() => changeAppTheme(null, "system")}
+            onClick={() => {
+              changeAppTheme(null, "system");
+              setOpen(false);
+            }}
             icon={<Monitor />}
             selected={themeController === "system"}
           >

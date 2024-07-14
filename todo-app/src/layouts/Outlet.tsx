@@ -1,5 +1,5 @@
 import DashboardPage from "../pages/DashboardPage.tsx";
-import GroupTaskExpanded from "../pages/GroupTaskExpanded.tsx";
+import GroupTaskExpanded from "../pages/TaskGroupsPage.tsx";
 import SettingsPage from "../pages/SettingsPage.tsx";
 import useRouter from "../stores/useRouter.tsx";
 
@@ -46,10 +46,3 @@ export default function Outlet() {
     </div>
   );
 }
-
-/*
-
-    <div className="m-4 flex-grow rounded-3xl bg-secondaryBg p-3">
-      <div className="h-full w-full rounded-2xl bg-primaryBg">{content}</div>
-    </div>
-*/
