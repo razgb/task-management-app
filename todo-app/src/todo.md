@@ -25,6 +25,6 @@ no order:
 - seems to be a layout shift between page components.
 
 1.  Create task viewer with edit button too.
-1.  Setup task builder with a form and input elements.
-1.  On saving, write to localStorage with permission modal.
-1.  For now save all tasks to recents block.
+2.  Setup task builder with a form and input elements.
+3.  On saving, write to localStorage with permission modal.
+4.  For now save all tasks to recents block.

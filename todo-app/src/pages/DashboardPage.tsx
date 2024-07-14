@@ -1,4 +1,4 @@
-import CurrentDate from "../components/dashboard/CurrentDate";
+import CurrentDateWidget from "../components/dashboard/CurrentDateWidget";
 import RecentTaskGroups from "../components/dashboard/RecentTaskGroups";
 import TotalTaskProgress from "../components/dashboard/TotalTaskProgress";
 
@@ -9,7 +9,7 @@ export default function DashboardPage() {
       <RecentTaskGroups />
 
       <div className="flex flex-col gap-3">
-        <CurrentDate />
+        <CurrentDateWidget />
         <TotalTaskProgress />
       </div>
 

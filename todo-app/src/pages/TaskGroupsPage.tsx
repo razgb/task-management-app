@@ -8,13 +8,13 @@ export default function TaskGroupsPage() {
       <TaskGroup
         key={i}
         title="App architecture"
-        description="Technical blueprint outlining the app's structure, components, and how they interact. Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and"
+        description="Technical blueprint outlining the app's structure, components, and how they interact."
       />,
     );
   }
 
   return (
-    <div className="grid h-full max-h-[calc(100vh-10rem)] grid-cols-3 rounded-2xl bg-primaryBg p-3">
+    <div className="grid h-full grid-cols-3 gap-4 overflow-hidden rounded-2xl bg-primaryBg p-3">
       <TaskGroupColumn output={output} variant="draft" />
       <TaskGroupColumn output={output} variant="in-progress" />
       <TaskGroupColumn output={output} variant="complete" />
@@ -29,9 +29,11 @@ type TaskGroupColumnType = {
 
 function TaskGroupColumn({ output, variant }: TaskGroupColumnType) {
   return (
-    <div className="scrollbar-thin scrollbar-thumb-secondary-900 scrollbar-track-transparent grid grid-cols-1 content-start gap-4 overflow-y-scroll p-6">
-      <h2 className="mb-2 text-2xl font-bold capitalize">{variant}</h2>
-      {output}
+    <div className="flex h-full flex-col overflow-hidden p-4">
+      <h2 className="mb-4 text-2xl font-bold capitalize">{variant}</h2>
+      <div className="scrollbar-thumb-scrollbar flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-track-transparent">
+        <div className="grid grid-cols-1 content-start gap-4">{output}</div>
+      </div>
     </div>
   );
 }

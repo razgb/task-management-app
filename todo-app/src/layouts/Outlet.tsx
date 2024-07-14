@@ -41,7 +41,7 @@ export default function Outlet() {
   }
 
   return (
-    <div className="m-4 flex-grow rounded-3xl bg-secondaryBg p-3">
+    <div className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3">
       {content}
     </div>
   );

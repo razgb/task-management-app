@@ -37,6 +37,8 @@ export default {
         secondaryBg: "var(--secondary-bg)",
         secondaryBgWeak: "var(--secondary-bg-weak)",
 
+        scrollbar: "var(--scrollbar)",
+
         iconBg: "var(--icon-bg)",
         iconBgStrong: "var(--icon-bg-strong)",
         iconBgStrongest: "var(--icon-bg-strongest)",

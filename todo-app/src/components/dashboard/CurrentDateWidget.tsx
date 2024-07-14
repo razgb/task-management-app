@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function CurrentDate() {
+export default function CurrentDateWidget() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const userLocale = navigator.language || "en-US";
@@ -25,6 +25,7 @@ export default function CurrentDate() {
 
   useEffect(() => {
     setTimeout(() => {
+      if (!currentDate) return;
       setCurrentDate(new Date());
     }, 15 * 1000);
   });

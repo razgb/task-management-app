@@ -26,7 +26,7 @@
   --accent-300: #dfd0ce;
   --accent-500: #cfb8b4;
   --accent-700: #bfa19b;
-  --accent-900: #AF8A83;
+  --accent-900: #af8a83;
 
   --icon-bg-weak: var(--secondary-300);
   --icon-bg: var(--secondary-500);
@@ -36,6 +36,8 @@
   --btn-bg: var(--secondary-300);
   --btn-hover: var(--secondary-500);
   --btn-active: var(--secondary-700);
+
+  --scrollbar: var(--secondary-900);
 
   --progress: ;
   --progress-text: ;
@@ -71,7 +73,7 @@
   --text-placeholder: #737373;
 
   --primary-100: #1a1a1a;
-  /*  */
+
   --primary-bg: var(--primary-100);
 
   --secondary-100: #515151;
@@ -80,7 +82,7 @@
   --secondary-500: #2c2c2c;
   --secondary-700: #272727;
   --secondary-900: #1f1f1f;
-  /*  */
+
   --secondary-bg-weak: var(--secondary-300);
   --secondary-bg: var(--secondary-500);
   --secondary-bg-strong: var(--secondary-700);
@@ -93,6 +95,8 @@
   --btn-bg: var(--secondary-300);
   --btn-hover: var(--secondary-500);
   --btn-active: var(--secondary-700);
+
+  --scrollbar: #6d6d6d;
 
   --progress: ;
   --progress-text: ;

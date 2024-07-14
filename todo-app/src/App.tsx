@@ -8,12 +8,15 @@ function App() {
   const { theme } = useTheme();
 
   return (
-    <div className={`${theme} flex h-screen bg-primaryBg text-text`}>
+    <div className={`${theme} flex h-screen gap-4 bg-primaryBg p-4 text-text`}>
       <Menu />
 
-      <div className="flex flex-grow flex-col gap-4">
+      <div className="flex flex-1 flex-col">
         <MainNavigation />
-        <Outlet />
+
+        <div className="flex-1 overflow-hidden">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
