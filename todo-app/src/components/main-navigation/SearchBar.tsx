@@ -7,7 +7,7 @@ export default function SearchBar() {
       <input
         placeholder="Search tasks"
         type="text"
-        className="h-full w-full bg-transparent text-text outline-none placeholder:text-stone-400"
+        className="placeholder:text-textPlaceholder h-full w-full bg-transparent text-text outline-none"
       />
     </div>
   );

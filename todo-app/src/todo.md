@@ -23,7 +23,6 @@ no order:
 
 - Dashboard component: calendar, maybe shadcn? Challenge: make my own.
 - seems to be a layout shift between page components.
-- format function for the description of task group component.
 
 1.  Create task viewer with edit button too.
 1.  Setup task builder with a form and input elements.

@@ -14,9 +14,9 @@ export default function TaskGroup({ title, description }: TaskGroupProps) {
     : null;
 
   return (
-    <div className="min-h-[150px] w-full rounded-xl bg-secondaryBg p-4">
+    <div className="min-h-[150px] w-full rounded-xl bg-secondaryBgWeak p-4">
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-xl">{title}</h2>
+        <h2 className="text-xl font-semibold">{title}</h2>
         <Button variant="ghost-icon">
           <MoveDiagonal size={20} />
         </Button>
@@ -25,7 +25,7 @@ export default function TaskGroup({ title, description }: TaskGroupProps) {
       <p className="mb-4 max-w-[45ch] text-sm">{formattedDescription}</p>
 
       <div className="flex items-center gap-2 self-end font-semibold">
-        <div className="h-4 w-full rounded-full bg-secondaryBgWeak">
+        <div className="h-4 w-full rounded-full bg-secondaryBgStrong">
           <div
             className="h-full rounded-full bg-text"
             style={{ width: completion + "%" }}

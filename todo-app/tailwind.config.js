@@ -7,6 +7,20 @@ export default {
         heading: "var(--heading)",
         headingSub: "var(--heading-sub)",
         text: "var(--text)",
+        textPlaceholder: "var(--text-placeholder)",
+
+        primary: {
+          100: "var(--primary-100)",
+        },
+
+        secondary: {
+          100: "var(--secondary-100)",
+          200: "var(--secondary-200)",
+          300: "var(--secondary-300)",
+          500: "var(--secondary-500)",
+          700: "var(--secondary-700)",
+          900: "var(--secondary-900)",
+        },
 
         primaryBg: "var(--primary-bg)",
         secondaryBgStrong: "var(--secondary-bg-strong)",

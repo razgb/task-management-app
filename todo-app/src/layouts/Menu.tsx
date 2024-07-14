@@ -4,9 +4,9 @@ import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
 import Button from "../components/shared/Button";
 
 import { useState } from "react";
-// import MenuAccordion from "../components/menu/MenuAccordion";
 import NewTaskButton from "../components/menu/NewTaskButton";
 import { MenuButtons } from "../components/menu/MenuButtons";
+import ThemeAccordion from "../components/menu/ThemeAccordion";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
@@ -14,7 +14,7 @@ export default function Menu() {
   return (
     <div className="text-primary m-4 mr-0 w-72 min-w-[300px] rounded-3xl bg-secondaryBg p-3">
       <div className="h-full rounded-2xl bg-primaryBg p-4">
-        <div className="mb-16 flex justify-between gap-2">
+        <div className="mb-16 flex items-center justify-between gap-2">
           <Button
             variant="ghost-icon"
             onClick={() => setIsOpen((prev) => !prev)}
@@ -37,32 +37,7 @@ export default function Menu() {
 
         <MenuButtons />
 
-        {/* <MenuAccordion>
-          <MenuAccordion.group title="Recent">
-            <MenuAccordion.item>Human Body</MenuAccordion.item>
-            <MenuAccordion.item>Cultures</MenuAccordion.item>
-            <MenuAccordion.item>Algebra</MenuAccordion.item>
-            <MenuAccordion.item>Chemistry</MenuAccordion.item>
-            <MenuAccordion.item>Wars</MenuAccordion.item>
-            <MenuAccordion.item>Literature</MenuAccordion.item>
-            <MenuAccordion.item>Landforms</MenuAccordion.item>
-            <MenuAccordion.item>Painting</MenuAccordion.item>
-          </MenuAccordion.group>
-
-          <MenuAccordion.group title="Work">
-            <MenuAccordion.item>Human Body</MenuAccordion.item>
-            <MenuAccordion.item>Cultures</MenuAccordion.item>
-            <MenuAccordion.item>Algebra</MenuAccordion.item>
-            <MenuAccordion.item>Chemistry</MenuAccordion.item>
-          </MenuAccordion.group>
-
-          <MenuAccordion.group title="Personal">
-            <MenuAccordion.item>Human Body</MenuAccordion.item>
-            <MenuAccordion.item>Cultures</MenuAccordion.item>
-            <MenuAccordion.item>Algebra</MenuAccordion.item>
-            <MenuAccordion.item>Chemistry</MenuAccordion.item>
-          </MenuAccordion.group>
-        </MenuAccordion> */}
+        <ThemeAccordion />
       </div>
     </div>
   );
