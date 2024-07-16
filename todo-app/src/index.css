@@ -47,6 +47,7 @@
   --btn-active: var(--secondary-700);
 
   --scrollbar: var(--secondary-900);
+  --checkbox: var(--text-weak);
 
   --progress: ;
   --progress-text: ;
@@ -107,6 +108,7 @@
   --btn-active: var(--secondary-700);
 
   --scrollbar: #6d6d6d;
+  --checkbox: #bababa;
 
   --progress: ;
   --progress-text: ;

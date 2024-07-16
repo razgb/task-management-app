@@ -39,6 +39,7 @@ export default {
         secondaryBgWeak: "var(--secondary-bg-weak)",
 
         scrollbar: "var(--scrollbar)",
+        checkbox: "var(--checkbox)",
 
         iconBg: "var(--icon-bg)",
         iconBgStrong: "var(--icon-bg-strong)",

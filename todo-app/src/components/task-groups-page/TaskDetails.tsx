@@ -95,9 +95,9 @@ function ToDoItem({ title, description, completed }: ToDoItemType) {
         aria-label="Mark as complete"
       >
         {checked ? (
-          <SquareCheck size={32} className="stroke-textWeak" />
+          <SquareCheck size={32} className="stroke-checkbox" />
         ) : (
-          <Square size={32} className="stroke-textWeak" />
+          <Square size={32} className="stroke-checkbox" />
         )}
       </button>
     </li>

@@ -5,7 +5,9 @@ export type ValidUrlPaths =
   | "/dashboard"
   | "/tasks"
   | "/tasks/details"
-  | "/settings";
+  | "/settings"
+  | "/timer"
+  | null;
 
 interface RouterContextType {
   path: string; // on page load, path could be anything.
