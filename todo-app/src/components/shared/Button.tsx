@@ -4,12 +4,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "ghost" | "icon" | "ghost-icon";
   textsize?: "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
   transitionDuration?: number;
+  "aria-label"?: string;
 }
 
 export default function Button({
   variant = "default",
   textsize = "base",
   transitionDuration = 200,
+  "aria-label": ariaLabel,
   ...props
 }: ButtonProps) {
   let classes = `transition-colors duration-${transitionDuration} text-${textsize} `;
@@ -38,7 +40,7 @@ export default function Button({
   }
 
   return (
-    <button className={classes} {...props}>
+    <button className={classes} aria-label={ariaLabel} {...props}>
       {props.children}
     </button>
   );

@@ -1,6 +1,11 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
-export type ValidUrlPaths = "/" | "/task-groups" | "/dashboard" | "/settings";
+export type ValidUrlPaths =
+  | "/"
+  | "/dashboard"
+  | "/tasks"
+  | "/tasks/details"
+  | "/settings";
 
 interface RouterContextType {
   path: string; // on page load, path could be anything.
@@ -40,6 +45,16 @@ function RouterProvider({ children }: { children: ReactNode }) {
     path,
     updatePath,
   };
+
+  useEffect(() => {
+    window.addEventListener("popstate", () => {
+      setPath(window.location.pathname);
+    });
+
+    return () => {
+      window.removeEventListener("popstate", () => {});
+    };
+  }, []);
 
   return (
     <RouterContext.Provider value={value}>{children}</RouterContext.Provider>

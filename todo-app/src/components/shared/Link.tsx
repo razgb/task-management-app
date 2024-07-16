@@ -5,9 +5,15 @@ type LinkProps = {
   to: ValidUrlPaths;
   children: React.ReactNode;
   className?: string;
+  ariaLabel?: string;
 };
 
-export default function Link({ to, children, className }: LinkProps) {
+export default function Link({
+  to,
+  children,
+  className,
+  ariaLabel,
+}: LinkProps) {
   const { updatePath } = useRouter();
 
   return (
@@ -18,6 +24,7 @@ export default function Link({ to, children, className }: LinkProps) {
         updatePath(to);
       }}
       className={className}
+      aria-label={ariaLabel}
     >
       {children}
     </a>

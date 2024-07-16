@@ -7,6 +7,7 @@ export default {
         heading: "var(--heading)",
         headingSub: "var(--heading-sub)",
         text: "var(--text)",
+        textWeak: "var(--text-weak)",
         textPlaceholder: "var(--text-placeholder)",
 
         primary: {

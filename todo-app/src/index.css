@@ -2,22 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+.light ::selection {
+  background-color: #e0d9d2;
+  color: #000;
+}
+.dark ::selection {
+  background-color: #b6b6b6;
+  color: #000;
+}
+
 .light {
   --heading: #152823;
   --heading-sub: #1c352f;
   --text: #0e1b17;
+  --text-weak: #152823;
   --text-placeholder: #488879;
 
-  --primary-100: #fbf8f9;
-
+  --primary-100: #fff;
   --primary-bg: var(--primary-100);
 
-  --secondary-100: #e4f1ed;
+  --secondary-100: #deeee8;
   --secondary-200: #d7eae3;
   --secondary-300: #c9e3da;
   --secondary-500: #bbddd2;
   --secondary-700: #aed6c9;
-  --secondary-900: #a0cfc0;
+  --secondary-900: #5cad93;
 
   --secondary-bg-weak: var(--secondary-300);
   --secondary-bg: var(--secondary-500);
@@ -70,13 +79,14 @@
   --heading: #f9f7f7;
   --heading-sub: #dbe2ef;
   --text: #d4d4d4;
+  --text-weak: #b3b3b3;
   --text-placeholder: #737373;
 
   --primary-100: #1a1a1a;
 
   --primary-bg: var(--primary-100);
 
-  --secondary-100: #515151;
+  --secondary-100: #403f3f;
   --secondary-200: #3a3a3a;
   --secondary-300: #333;
   --secondary-500: #2c2c2c;

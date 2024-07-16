@@ -19,12 +19,18 @@
 
 12-07-2024: Don't think about beauty or features. Finish raw functionality first.
 
-no order:
+things to do: deadline 1st Aug.
 
-- Dashboard component: calendar, maybe shadcn? Challenge: make my own.
-- seems to be a layout shift between page components.
-
-1.  Create task viewer with edit button too.
-2.  Setup task builder with a form and input elements.
-3.  On saving, write to localStorage with permission modal.
-4.  For now save all tasks to recents block.
+- the task group creator
+- Quick task creator that goes inside the general test group that's premade for users.
+- pomodoro widget
+  -> when turned on user can also see it in the dashboard page.
+  -> can be paused, and reset inside the dashboard.
+  -> notifications for the user when using since they'll be tabbed out alot.
+- fixing design of application for larger screen sizes: font sizes and padding.
+- the phone design of the application.
+- find a better icon and name for the application.
+- settings page UI fix.
+  -> validation and sanitization functions for name.
+- set up firebase for the application.
+- flatten the architecture as much as possible with the collections.

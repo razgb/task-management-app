@@ -1,6 +1,6 @@
 import { ValidUrlPaths } from "../../stores/RouterContext";
 import useRouter from "../../stores/useRouter";
-import { Settings, LayoutDashboard, ListTodo, Palette } from "lucide-react";
+import { Settings, LayoutDashboard, ListTodo } from "lucide-react";
 
 export function MenuButtons() {
   return (
@@ -11,8 +11,8 @@ export function MenuButtons() {
         </MenuButton>
       </li>
       <li>
-        <MenuButton to="/task-groups" icon={<ListTodo />}>
-          Task Groups
+        <MenuButton to="/tasks" icon={<ListTodo />}>
+          Tasks
         </MenuButton>
       </li>
       <li>
@@ -37,11 +37,10 @@ function MenuButton({ to, children, icon }: MenuButtonProps) {
     <div
       role="button"
       tabIndex={0}
-      className="flex items-center gap-2 rounded-3xl bg-btnBg px-4 py-2 text-lg hover:bg-btnHover active:bg-btnActive"
+      className="flex select-none items-center gap-2 rounded-3xl bg-btnBg px-4 py-2 text-lg hover:bg-btnHover active:bg-btnActive"
       onClick={() => updatePath(to)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
           updatePath(to);
         }
       }}

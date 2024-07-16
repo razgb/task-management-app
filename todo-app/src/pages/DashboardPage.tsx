@@ -1,12 +1,11 @@
 import CurrentDateWidget from "../components/dashboard/CurrentDateWidget";
-import RecentTaskGroups from "../components/dashboard/RecentTaskGroups";
+import RecentTasks from "../components/dashboard/RecentTasks";
 import TotalTaskProgress from "../components/dashboard/TotalTaskProgress";
 
-// bento grid style
 export default function DashboardPage() {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-[2fr,1fr]">
-      <RecentTaskGroups />
+      <RecentTasks />
 
       <div className="flex flex-col gap-3">
         <CurrentDateWidget />
