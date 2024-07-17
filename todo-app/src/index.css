@@ -24,13 +24,16 @@
   --secondary-100: #deeee8;
   --secondary-200: #d7eae3;
   --secondary-300: #c9e3da;
-  --secondary-500: #bbddd2;
-  --secondary-700: #aed6c9;
-  --secondary-900: #5cad93;
+  --secondary-400: #bbddd2;
+  --secondary-500: #a0cfc0;
+  --secondary-600: #a0cfc0;
+  --secondary-700: #1c362d;
+  --secondary-800: #152821;
+  --secondary-900: #0e1b16;
 
   --secondary-bg-weak: var(--secondary-300);
-  --secondary-bg: var(--secondary-500);
-  --secondary-bg-strong: var(--secondary-700);
+  --secondary-bg: var(--secondary-400);
+  --secondary-bg-strong: var(--secondary-500);
 
   --accent-300: #dfd0ce;
   --accent-500: #cfb8b4;
@@ -43,10 +46,14 @@
   --icon-stroke: #1b362e;
 
   --btn-bg: var(--secondary-300);
-  --btn-hover: var(--secondary-500);
-  --btn-active: var(--secondary-700);
+  --btn-hover: var(--secondary-400);
+  --btn-active: var(--secondary-500);
 
-  --scrollbar: var(--secondary-900);
+  --main-button-bg: var(--secondary-700);
+  --main-button-bg-hover: var(--secondary-800);
+  --main-button-bg-active: var(--secondary-900);
+
+  --scrollbar: var(--secondary-200);
   --checkbox: var(--text-weak);
 
   --progress: ;
@@ -87,16 +94,19 @@
 
   --primary-bg: var(--primary-100);
 
-  --secondary-100: #403f3f;
-  --secondary-200: #3a3a3a;
+  --secondary-100: #272727;
+  --secondary-200: #2c2c2c;
   --secondary-300: #333;
-  --secondary-500: #2c2c2c;
-  --secondary-700: #272727;
-  --secondary-900: #1f1f1f;
+  --secondary-400: #3a3a3a;
+  --secondary-500: #403f3f;
+  --secondary-600: #f2f2f2;
+  --secondary-700: #e5e5e5;
+  --secondary-800: #d8d8d8;
+  --secondary-900: #cccccc;
 
   --secondary-bg-weak: var(--secondary-300);
-  --secondary-bg: var(--secondary-500);
-  --secondary-bg-strong: var(--secondary-700);
+  --secondary-bg: var(--secondary-400);
+  --secondary-bg-strong: var(--secondary-500);
 
   --icon-bg: #2c2c2c;
   --icon-bg-strong: #3a3a3a;
@@ -104,8 +114,12 @@
   --icon-stroke: #dbe2ef;
 
   --btn-bg: var(--secondary-300);
-  --btn-hover: var(--secondary-500);
-  --btn-active: var(--secondary-700);
+  --btn-hover: var(--secondary-400);
+  --btn-active: var(--secondary-500);
+
+  --main-button-bg: var(--secondary-700);
+  --main-button-bg-hover: var(--secondary-800);
+  --main-button-bg-active: var(--secondary-900);
 
   --scrollbar: #6d6d6d;
   --checkbox: #bababa;

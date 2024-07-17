@@ -6,12 +6,12 @@ export default function RecentTasks() {
   return (
     <div className="rounded-2xl bg-primaryBg p-8">
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Recent Task Groups</h2>
+        <h2 className="text-3xl font-bold">Recent Tasks</h2>
         <Link
           to="/tasks"
           className="rounded-full bg-secondaryBg p-2 hover:bg-secondaryBgStrong"
         >
-          <MoveDiagonal size={30} />
+          <MoveDiagonal size={24} />
         </Link>
       </div>
 

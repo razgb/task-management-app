@@ -27,7 +27,7 @@ export default function ThemeAccordion() {
         role="button"
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex items-center justify-between gap-4 bg-btnBg px-4 py-2 text-lg hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
+        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 text-lg font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
       >
         <div className="flex items-center gap-2">
           <div aria-hidden="true">
@@ -98,7 +98,7 @@ function ThemeAccordionButton({
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-secondary-500"
+      className="flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-btnHover"
     >
       <span className="flex items-center gap-2">
         {icon}

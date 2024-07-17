@@ -21,7 +21,9 @@ export default {
           200: "var(--secondary-200)",
           300: "var(--secondary-300)",
           500: "var(--secondary-500)",
+          600: "var(--secondary-600)",
           700: "var(--secondary-700)",
+          800: "var(--secondary-800)",
           900: "var(--secondary-900)",
         },
 
@@ -49,6 +51,10 @@ export default {
         btnBg: "var(--btn-bg)",
         btnHover: "var(--btn-hover)",
         btnActive: "var(--btn-active)",
+
+        mainButtonBg: "var(--main-button-bg)",
+        mainButtonBgHover: "var(--main-button-bg-hover)",
+        mainButtonBgActive: "var(--main-button-bg-active)",
 
         progress: "var(--progress)",
         progressText: "var(--progress-text)",

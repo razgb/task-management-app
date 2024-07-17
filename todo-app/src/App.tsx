@@ -3,7 +3,6 @@ import Menu from "./layouts/Menu";
 import MainNavigation from "./layouts/MainNavigation";
 import Outlet from "./layouts/Outlet";
 import useTheme from "./stores/useTheme";
-
 function App() {
   const { theme } = useTheme();
 
