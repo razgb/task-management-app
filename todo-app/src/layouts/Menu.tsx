@@ -16,11 +16,6 @@ export default function Menu() {
             <h1 className="text-2xl font-bold text-heading">TaskBuddy</h1>
           </div>
 
-          <Button variant="icon-text">
-            <Plus size={24} />
-            <span className="text-lg">New task</span>
-          </Button>
-
           <MenuLinksToPages />
 
           <ThemeAccordion />

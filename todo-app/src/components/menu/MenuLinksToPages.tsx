@@ -1,9 +1,14 @@
-import { Settings, LayoutDashboard, ListTodo, Timer } from "lucide-react";
+import { Settings, LayoutDashboard, ListTodo, Timer, Plus } from "lucide-react";
 import MenuButton from "./MenuButton";
 
 export default function MenuLinksToPages() {
   return (
     <ul className="flex flex-col gap-2">
+      <li>
+        <MenuButton to="/task-creator" variant="contrast" icon={<Plus />}>
+          New task
+        </MenuButton>
+      </li>
       <li>
         <MenuButton to="/dashboard" icon={<LayoutDashboard />}>
           Dashboard

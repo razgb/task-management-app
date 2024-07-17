@@ -1,8 +1,9 @@
 import DashboardPage from "../pages/DashboardPage.tsx";
 import SettingsPage from "../pages/SettingsPage.tsx";
 import useRouter from "../stores/useRouter.tsx";
-import TaskDetails from "../components/task-groups-page/TaskDetails.tsx";
+import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
 import TasksPage from "../pages/TasksPage.tsx";
+import TaskCreator from "../pages/TaskCreator.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
@@ -16,6 +17,11 @@ export default function Outlet() {
 
     case "/dashboard": {
       content = <DashboardPage />;
+      break;
+    }
+
+    case "/task-creator": {
+      content = <TaskCreator />;
       break;
     }
 

@@ -7,6 +7,7 @@ export type ValidUrlPaths =
   | "/tasks/details"
   | "/settings"
   | "/timer"
+  | "/task-creator"
   | null;
 
 interface RouterContextType {
