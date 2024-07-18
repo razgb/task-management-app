@@ -18,7 +18,7 @@ export default function Link({
 
   return (
     <a
-      href={to}
+      href={to || "/"}
       onClick={(e) => {
         e.preventDefault();
         updatePath(to);

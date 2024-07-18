@@ -1,7 +1,8 @@
 export const todoItems = [
   {
     title: "Implement User Authentication",
-    description: "Secure user login and registration using JWT authentication.",
+    description:
+      "Secure user login and registration using JWT authentication and registration using JWT authentication.",
     completed: false,
   },
   {

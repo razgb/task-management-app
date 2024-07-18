@@ -4,7 +4,7 @@ import Link from "../shared/Link";
 
 export default function RecentTasks() {
   return (
-    <div className="rounded-2xl bg-primaryBg p-8">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8">
       <div className="mb-8 flex items-center justify-between">
         <h2 className="text-3xl font-bold">Recent Tasks</h2>
         <Link
@@ -15,14 +15,14 @@ export default function RecentTasks() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid h-fit grid-cols-1 gap-4 overflow-y-scroll p-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
         <Task
           title="Research the impact of climate change on coral reefs"
-          description="Read scientific articles and gather data on the effects of climate change on coral reefs."
+          description=""
           hideGrabIcon={true}
         />
         <Task
-          title="Analyze the causes of the French Revolution"
+          title="Analyze causes of the Revolution"
           description="Study primary and secondary sources to understand the social, economic, and political factors that led to the French Revolution."
           hideGrabIcon={true}
         />

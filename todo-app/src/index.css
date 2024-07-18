@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .light ::selection {
-  background-color: var(--secondary-bg-weak);
-  color: var(--text);
+  background-color: var(--secondary-900);
+  color: var(--secondary-100);
 }
 .dark ::selection {
   background-color: #b6b6b6;
