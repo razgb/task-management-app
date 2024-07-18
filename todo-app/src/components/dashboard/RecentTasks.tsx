@@ -17,23 +17,23 @@ export default function RecentTasks() {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Task
-          title="App specifics"
-          description="Detailed specifications for the app's functionality, features, and user interactions."
+          title="Research the impact of climate change on coral reefs"
+          description="Read scientific articles and gather data on the effects of climate change on coral reefs."
           hideGrabIcon={true}
         />
         <Task
-          title="App design"
-          description="Visual design elements, user interface (UI) layout, and overall aesthetic of the app."
+          title="Analyze the causes of the French Revolution"
+          description="Study primary and secondary sources to understand the social, economic, and political factors that led to the French Revolution."
           hideGrabIcon={true}
         />
         <Task
-          title="App notes"
-          description="General notes, ideas, and brainstorming related to the app's development."
+          title="Learn about the history of artificial intelligence"
+          description="Explore the development of AI from its early beginnings to modern advancements."
           hideGrabIcon={true}
         />
         <Task
-          title="App architecture"
-          description="Technical blueprint outlining the app's structure, components, and how they interact. Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact.Technical blueprint outlining the app's structure, components, and how they interact."
+          title="Create a digital painting using Adobe Photoshop"
+          description="Experiment with different tools and techniques to create a unique digital artwork."
           hideGrabIcon={true}
         />
       </div>

@@ -27,9 +27,9 @@
   --secondary-400: #bbddd2;
   --secondary-500: #a0cfc0;
   --secondary-600: #a0cfc0;
-  --secondary-700: #1c362d;
-  --secondary-800: #152821;
-  --secondary-900: #0e1b16;
+  --secondary-700: #152821;
+  --secondary-800: #0e1b16;
+  --secondary-900: #070d0b;
 
   --secondary-bg-weak: var(--secondary-300);
   --secondary-bg: var(--secondary-400);
@@ -55,6 +55,7 @@
 
   --scrollbar: var(--secondary-200);
   --checkbox: var(--text-weak);
+  --focus-outline: var(--secondary-400);
 
   --progress: ;
   --progress-text: ;
@@ -99,19 +100,14 @@
   --secondary-300: #333;
   --secondary-400: #3a3a3a;
   --secondary-500: #403f3f;
-  --secondary-600: #f2f2f2;
-  --secondary-700: #e5e5e5;
-  --secondary-800: #d8d8d8;
-  --secondary-900: #cccccc;
+  --secondary-600: #cccccc;
+  --secondary-700: #d8d8d8;
+  --secondary-800: #e5e5e5;
+  --secondary-900: #f2f2f2;
 
   --secondary-bg-weak: var(--secondary-300);
   --secondary-bg: var(--secondary-400);
   --secondary-bg-strong: var(--secondary-500);
-
-  --icon-bg: #2c2c2c;
-  --icon-bg-strong: #3a3a3a;
-  --icon-bg-strongest: #474747;
-  --icon-stroke: #dbe2ef;
 
   --btn-bg: var(--secondary-300);
   --btn-hover: var(--secondary-400);
@@ -121,8 +117,14 @@
   --main-button-bg-hover: var(--secondary-800);
   --main-button-bg-active: var(--secondary-900);
 
+  --icon-bg: #2c2c2c;
+  --icon-bg-strong: #3a3a3a;
+  --icon-bg-strongest: #474747;
+  --icon-stroke: #dbe2ef;
+
   --scrollbar: #6d6d6d;
   --checkbox: #bababa;
+  --focus-outline: var(--secondary-400);
 
   --progress: ;
   --progress-text: ;

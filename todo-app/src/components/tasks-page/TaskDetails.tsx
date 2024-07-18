@@ -7,19 +7,21 @@ export default function TaskDetails() {
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg px-6 py-12">
       <div className="mx-auto flex h-full w-full max-w-[800px] flex-col gap-4">
         <div className="flex h-full max-h-8 gap-4">
-          <div className="flex w-full max-w-[150px] items-center gap-1 rounded-xl bg-secondaryBg px-2 py-1">
+          <div className="flex w-full max-w-[150px] items-center rounded-xl bg-secondaryBg px-2 py-1">
             <ProgressBar completion={50} width={1} />
-            <p className="flex-shrink-0 text-sm font-light">50%</p>
+            <p className="flex-shrink-0 text-sm font-light text-textWeak">
+              50%
+            </p>
           </div>
 
-          <p className="flex items-center rounded-xl bg-secondaryBg p-2 text-sm">
+          <p className="flex items-center rounded-xl bg-secondaryBg p-2 text-sm font-light text-textWeak">
             Last edited: 16-07-2024
           </p>
         </div>
 
         <h1 className="text-3xl font-bold capitalize">app architecture</h1>
 
-        <p className="mb-8 max-w-[75ch] text-lg">
+        <p className="mb-8 max-w-[75ch] text-lg text-textWeak">
           A well-designed app architecture is crucial for building robust,
           scalable, and maintainable applications. It provides a clear structure
           and organization for your code, making it easier to understand,
@@ -84,7 +86,7 @@ function ToDoItem({ title, description, completed }: ToDoItemType) {
         <div>
           <h3 className="text-lg font-bold">{title}</h3>
 
-          <p className="text-textWeak max-w-[60ch]">{description}</p>
+          <p className="max-w-[60ch] text-textWeak">{description}</p>
         </div>
       </div>
 

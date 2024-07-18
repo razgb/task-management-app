@@ -1,10 +1,9 @@
 import logo from "../assets/logo.jpg";
 
-import { LogOut, Plus } from "lucide-react";
+import { LogOut } from "lucide-react";
 import MenuButton from "../components/menu/MenuButton";
 import ThemeAccordion from "../components/menu/ThemeAccordion";
 import MenuLinksToPages from "../components/menu/MenuLinksToPages";
-import Button from "../components/shared/Button";
 
 export default function Menu() {
   return (

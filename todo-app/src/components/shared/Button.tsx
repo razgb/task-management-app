@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "ghost" | "icon" | "ghost-icon" | "icon-text";
+  variant?: "default" | "text" | "ghost" | "icon" | "ghost-icon" | "icon-text";
   textsize?: "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
   transitionDuration?: number;
   "aria-label"?: string;
@@ -18,7 +18,12 @@ export default function Button({
 
   switch (variant) {
     case "default": {
-      classes += `rounded-full bg-black px-6 py-2 text-white`;
+      classes += `rounded-full bg-secondaryBgWeak hover:bg-secondaryBg active:bg-secondaryBgStrong px-6 py-2 text-text`;
+      break;
+    }
+
+    case "text": {
+      classes += `text-text text-textWeak hover:text-text`;
       break;
     }
 

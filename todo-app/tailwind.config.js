@@ -42,6 +42,7 @@ export default {
 
         scrollbar: "var(--scrollbar)",
         checkbox: "var(--checkbox)",
+        focusOutline: "var(--focus-outline)",
 
         iconBg: "var(--icon-bg)",
         iconBgStrong: "var(--icon-bg-strong)",

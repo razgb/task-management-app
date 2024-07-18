@@ -21,7 +21,7 @@ export default function ProgressBar({
       className={`${heightClasses[width]} w-full overflow-hidden rounded-full bg-secondaryBgStrong`}
     >
       <div
-        className={`h-full rounded-full bg-text`}
+        className={`h-full rounded-full bg-textWeak`}
         style={{ width: completion + "%" }}
       ></div>
     </div>
