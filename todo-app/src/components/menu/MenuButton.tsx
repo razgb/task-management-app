@@ -33,6 +33,15 @@ export default function MenuButton({
     <a
       className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 text-lg font-medium ${buttonBgStyles}`}
       onClick={() => validPath && updatePath(to)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          validPath && updatePath(to);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Navigate to ${children} page.`}
     >
       {icon && <span aria-hidden="true">{icon}</span>}
       <span>{children}</span>

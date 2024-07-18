@@ -17,9 +17,9 @@ export default function Task({ title, description, hideGrabIcon }: TaskProps) {
     : null;
 
   return (
-    <div className="flex w-full flex-col justify-between gap-2 rounded-xl bg-secondaryBgWeak p-4">
+    <div className="flex w-full flex-col justify-between rounded-xl bg-secondaryBgWeak p-4">
       <div>
-        <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{title}</h2>
           <button
             className={`cursor-grab rounded-full p-2 hover:bg-secondary-200 ${
@@ -77,12 +77,3 @@ function formatDescription(desc: string) {
     return mostlyFormattedDesc.join(" ") + " " + lastWord + "...";
   }
 }
-
-// <Button
-//   variant="ghost-icon"
-//   aria-label={`Move to title:${title} board details.`}
-// >
-//   <Link to={`/tasks/details`}>
-//     <MoveIcon size={20} aria-hidden={true} />
-//   </Link>
-// </Button>

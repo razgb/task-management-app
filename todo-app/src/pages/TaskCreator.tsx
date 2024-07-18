@@ -1,11 +1,11 @@
 import Button from "../components/shared/Button";
 
-export default function TaskCreator() {
-  const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
-  const labelStyles = "text-xl font-medium";
-  const inputStyles =
-    "w-full hover:bg-secondaryBg rounded-xl text-lg bg-secondaryBgWeak p-3 outline-none focus:outline-focusOutline focus:outline-2 transition-colors";
+const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
+const labelStyles = "text-xl font-medium";
+const inputStyles =
+  "w-full hover:bg-secondaryBg rounded-xl text-lg bg-secondaryBgWeak p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
 
+export default function TaskCreator() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("Form submitted");
@@ -16,8 +16,6 @@ export default function TaskCreator() {
       <h2 className="mb-8 text-3xl font-bold">Create new task</h2>
 
       <form onSubmit={handleSubmit} className="flex gap-16">
-        {/* Future me: this needs a lot of refining, my head hurts alot 
-        and I can't think coherently. goodluck. shoudn't be too hard.  */}
         <div className="flex w-full max-w-[1000px] flex-col gap-3">
           <div className={inputContainerStyle}>
             <label className={labelStyles} htmlFor="taskName">
@@ -47,7 +45,15 @@ export default function TaskCreator() {
             <label className={labelStyles} htmlFor="priority">
               Priority Level
             </label>
-            <select id="priority" className={`${inputStyles} cursor-pointer`}>
+
+            <select
+              id="priority"
+              required
+              className={`${inputStyles} cursor-pointer`}
+            >
+              <option value="" disabled selected>
+                Select priority
+              </option>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
