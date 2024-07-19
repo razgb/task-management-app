@@ -9,6 +9,9 @@ export default {
         text: "var(--text)",
         textWeak: "var(--text-weak)",
         textPlaceholder: "var(--text-placeholder)",
+        textContrast: "var(--text-contrast)",
+
+        testing: "#443344",
 
         primary: {
           100: "var(--primary-100)",
@@ -20,11 +23,20 @@ export default {
           100: "var(--secondary-100)",
           200: "var(--secondary-200)",
           300: "var(--secondary-300)",
+          400: "var(--secondary-400)",
           500: "var(--secondary-500)",
           600: "var(--secondary-600)",
           700: "var(--secondary-700)",
           800: "var(--secondary-800)",
           900: "var(--secondary-900)",
+        },
+
+        experimental: {
+          100: "var(--experimental-100)",
+          300: "var(--experimental-300)",
+          500: "var(--experimental-500)",
+          700: "var(--experimental-700)",
+          900: "var(--experimental-900)",
         },
 
         accent: {
@@ -82,6 +94,15 @@ export default {
 
         cardBg: "var(--card-bg)",
         cardBorder: "var(--card-border)",
+      },
+      animation: {
+        wave: "wave 1s linear infinite",
+      },
+      keyframes: {
+        wave: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
     },
   },

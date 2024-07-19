@@ -97,7 +97,7 @@ export default function TaskCreator() {
 
           <div className={`${inputContainerStyle} w-1/3`}>
             <label className={labelStyles} htmlFor="dueDate">
-              Due Date <span className="text-textWeak">(optional)</span>
+              Due Date <span className="text-sm text-textWeak">(optional)</span>
             </label>
             <input
               type="date"
@@ -112,12 +112,12 @@ export default function TaskCreator() {
 
           <div className={inputContainerStyle}>
             <label className={labelStyles} htmlFor="priority">
-              Priority Level <span className="text-textWeak">(optional)</span>
+              Priority Level{" "}
+              <span className="text-sm text-textWeak">(optional)</span>
             </label>
 
             <select
               id="priority"
-              required
               className={`${inputStyles} cursor-pointer`}
               value={state.priority}
               onChange={(e) =>
@@ -136,10 +136,10 @@ export default function TaskCreator() {
           <div className={inputContainerStyle}>
             <div className="flex items-center gap-2">
               <label className={labelStyles} htmlFor="description">
-                Description <span className="text-textWeak">(optional)</span>
+                Description
               </label>
               <span className="text-sm text-textWeak">
-                {`${getWordCount(state.description)}/30 words`}
+                {`(optional) ${getWordCount(state.description)}/30 words`}
               </span>
             </div>
 

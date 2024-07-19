@@ -41,7 +41,7 @@ export default function Task({ title, description, hideGrabIcon }: TaskProps) {
           </p>
         </div>
 
-        <div className={`${description ? "" : "hidden"} hidden max-w-[60%]`}>
+        <div className={`${description ? "" : "hidden"} max-w-[60%]`}>
           <div
             className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-200 p-2 transition-colors hover:bg-secondary-100"
             role="button"

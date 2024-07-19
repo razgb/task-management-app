@@ -3,7 +3,7 @@ export default function TotalTaskProgress() {
   // const completion = 1; // testing
 
   return (
-    <div className="flex h-full flex-col justify-center rounded-2xl bg-primaryBg px-16">
+    <div className="flex h-full flex-col justify-center rounded-2xl bg-primaryBg px-12">
       <h2 className="mb-2 text-2xl font-semibold capitalize">total progress</h2>
 
       <div className="flex items-center gap-2">

@@ -25,7 +25,7 @@ export default function MenuButton({
       break;
     case "contrast":
       buttonBgStyles =
-        " bg-mainButtonBg hover:bg-mainButtonBgHover active:bg-mainButtonBgActive text-secondary-100";
+        " bg-mainButtonBg hover:bg-mainButtonBgHover active:bg-mainButtonBgActive text-textContrast";
       break;
   }
 

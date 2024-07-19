@@ -6,6 +6,7 @@ type LinkProps = {
   children: React.ReactNode;
   className?: string;
   ariaLabel?: string;
+  role?: string;
 };
 
 export default function Link({
@@ -13,6 +14,7 @@ export default function Link({
   children,
   className,
   ariaLabel,
+  role,
 }: LinkProps) {
   const { updatePath } = useRouter();
 
@@ -25,6 +27,7 @@ export default function Link({
       }}
       className={className}
       aria-label={ariaLabel}
+      role={role}
     >
       {children}
     </a>

@@ -30,10 +30,10 @@ type TaskGroupColumnType = {
 
 function TaskColumn({ output, variant }: TaskGroupColumnType) {
   return (
-    <div className="flex h-full flex-col overflow-hidden px-4 py-4">
+    <div className="flex h-full flex-col overflow-hidden p-4">
       <h2 className="mb-4 text-2xl font-bold capitalize">{variant}</h2>
-      <div className="flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-        <div className="grid grid-cols-1 content-start gap-4">{output}</div>
+      <div className="flex-1 overflow-y-auto p-2 pr-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
+        <div className="grid grid-cols-1 content-start gap-3">{output}</div>
       </div>
     </div>
   );
