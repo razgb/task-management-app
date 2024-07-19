@@ -10,12 +10,10 @@ type TaskProps = {
 };
 
 export default function Task({ title, description, hideGrabIcon }: TaskProps) {
-  const completion = Math.floor(Math.random() * 100);
   const updatePath = useRouter().updatePath;
 
-  const formattedDescription = description
-    ? formatDescription(description)
-    : null;
+  const completion = Math.floor(Math.random() * 100);
+  const formattedDescription = formatDescription(description, 30);
 
   return (
     <div>
@@ -70,19 +68,18 @@ export default function Task({ title, description, hideGrabIcon }: TaskProps) {
   );
 }
 
-function formatDescription(desc: string) {
-  if (!desc.length) return null;
+/**
+ * Truncates a description to a specified word limit, appending "..." if truncated.
+ */
+function formatDescription(
+  desc: string | undefined,
+  wordLimit: number,
+): string {
+  if (desc == undefined) return "";
 
-  const splitDesc = desc.split(" ");
-  const numberOfWords = splitDesc.length;
-  if (numberOfWords < 30) return desc;
+  const words = desc.trim().split(/\s+/);
+  if (words.length <= wordLimit) return desc;
 
-  const mostlyFormattedDesc = splitDesc.slice(0, 30);
-  const lastWord = mostlyFormattedDesc.pop();
-
-  if (lastWord!.endsWith(".")) {
-    return mostlyFormattedDesc.join(" ") + " " + lastWord!.slice(0, -1) + "...";
-  } else {
-    return mostlyFormattedDesc.join(" ") + " " + lastWord + "...";
-  }
+  const truncated = words.slice(0, wordLimit).join(" ");
+  return truncated.replace(/[!?,.:;]+$/, "") + "...";
 }
