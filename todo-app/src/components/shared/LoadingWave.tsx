@@ -2,17 +2,29 @@ import useTheme from "../../stores/useTheme";
 
 export default function LoadingWave({ loading }: { loading: boolean }) {
   const { theme } = useTheme();
+  let containerStyles = "";
 
-  const containerStyles =
-    theme === "light" ? "bg-secondary-300 h-3" : "bg-primaryBg h-2";
+  // might add more themes in the future.
+  switch (theme) {
+    case "light":
+      containerStyles += " h-3";
+
+      if (loading) {
+        containerStyles += " bg-secondary-300";
+      } else {
+        containerStyles += " bg-primaryBg";
+      }
+      break;
+    case "dark":
+      containerStyles += "bg-primaryBg h-2";
+      break;
+  }
+
   const waveStyles = loading ? "opacity-100" : "opacity-0";
-
   return (
-    <div
-      className={`overflow-hidden ${containerStyles} ${waveStyles} transition-colors`}
-    >
+    <div className={`overflow-hidden ${containerStyles} transition-colors`}>
       <div
-        className={`h-full w-full animate-wave bg-gradient-to-r from-secondary-100 via-secondary-600 to-secondary-100`}
+        className={`h-full w-full ${waveStyles} animate-wave bg-gradient-to-r from-secondary-100 via-secondary-600 to-secondary-100`}
       ></div>
     </div>
   );
