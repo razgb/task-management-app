@@ -8,9 +8,11 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
   const waveStyles = loading ? "opacity-100" : "opacity-0";
 
   return (
-    <div className={`overflow-hidden ${containerStyles} transition-colors`}>
+    <div
+      className={`overflow-hidden ${containerStyles} ${waveStyles} transition-colors`}
+    >
       <div
-        className={`${waveStyles} h-full w-full animate-wave bg-gradient-to-r from-secondary-100 via-secondary-600 to-secondary-100`}
+        className={`h-full w-full animate-wave bg-gradient-to-r from-secondary-100 via-secondary-600 to-secondary-100`}
       ></div>
     </div>
   );

@@ -1,14 +1,27 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-export type ValidUrlPaths =
-  | "/"
-  | "/dashboard"
-  | "/tasks"
-  | "/tasks/details"
-  | "/settings"
-  | "/timer"
-  | "/task-creator"
-  | null;
+export const Routes = {
+  dashboard: "/dashboard",
+  tasks: {
+    index: "/tasks",
+    details: "/tasks/details",
+  },
+  settings: {
+    index: "/settings",
+    tasks: "/settings/tasks",
+    accountManagement: "/settings/account-management",
+    accessibility: "/settings/accessibility",
+    activityLog: "/settings/activity-log",
+    faq: "/settings/frequently-asked-questions",
+  },
+  timer: "/timer",
+  taskCreator: "/task-creator",
+} as const;
+
+type ExtractValues<T> =
+  T extends Record<string, infer U> ? ExtractValues<U> : T;
+
+export type ValidUrlPaths = ExtractValues<typeof Routes>;
 
 interface RouterContextType {
   path: string; // on page load, path could be anything.
@@ -38,7 +51,7 @@ function RouterProvider({ children }: { children: ReactNode }) {
       setPath(newPath);
       window.history.pushState(null, "", newPath);
     } else {
-      const updatedPath = `/${path}/${newPath}`;
+      const updatedPath = `${path}/${newPath}`;
       setPath(updatedPath);
       window.history.pushState(null, "", updatedPath);
     }

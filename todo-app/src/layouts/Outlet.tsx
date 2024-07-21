@@ -4,10 +4,21 @@ import useRouter from "../stores/useRouter.tsx";
 import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
 import TasksPage from "../pages/TasksPage.tsx";
 import TaskCreator from "../pages/TaskCreator.tsx";
+import ErrorPage from "../pages/ErrorPage.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
   let content: React.ReactNode | null = null;
+
+  // Checks for sub settings routes in the path. SettingsPage handles the rest.
+  if (new RegExp("/settings(/.*)?$").test(path)) {
+    content = <SettingsPage />;
+    return (
+      <div className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3">
+        {content}
+      </div>
+    );
+  }
 
   switch (path) {
     case "/": {
@@ -30,7 +41,6 @@ export default function Outlet() {
       break;
     }
 
-    // need to change this.
     case "/tasks/details": {
       content = <TaskDetails />;
       break;
@@ -42,7 +52,7 @@ export default function Outlet() {
     }
 
     default: {
-      content = <div>404</div>; // later we need to create custom component to then fix this shit.
+      content = <ErrorPage />;
       break;
     }
   }

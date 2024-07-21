@@ -1,34 +1,16 @@
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-<!--  -->
-
 12-07-2024: Don't think about beauty or features. Finish raw functionality first.
 
 things to do: deadline 1st Aug.
 
-- settings page UI fix.
-  -> validation and sanitization functions for name.
-
 ===== WIDGET IDEAS =====
 
 - Calendar view and being able to see posts that have been given a deadline. Expanded UI too.
+
 - Analytics chart that shows number of tasks completed per day.
-- create reminder widget for upcoming tasks. Expanded UI too.
+
+- create reminder widget for upcoming tasks. For the 4 most upcoming widgets.  
+  -> If the user happens to not use due dates, remove the widget entirely.
+
 - pomodoro widget
   -> when turned on user can also see it in the dashboard page.
   -> can be paused, and reset inside the dashboard.
