@@ -9,6 +9,7 @@ export default function TasksPage() {
       title={item.title}
       description={item.description}
       hideGrabIcon={false}
+      hasSubtasks={item.hasSubtasks}
     />
   ));
 

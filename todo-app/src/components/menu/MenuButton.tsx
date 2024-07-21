@@ -39,9 +39,8 @@ export default function MenuButton({
           validPath && updatePath(to);
         }
       }}
-      role="button"
       tabIndex={0}
-      aria-label={`Navigate to ${children} page.`}
+      aria-label={`Navigate to ${children} page inside app.`}
     >
       {icon && <span aria-hidden="true">{icon}</span>}
       <span>{children}</span>

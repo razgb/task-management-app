@@ -17,7 +17,6 @@ export default function ErrorPage() {
       <Link
         to="/dashboard"
         className="rounded-full bg-secondaryBgWeak px-6 py-2 text-lg font-medium text-text transition-colors duration-200 hover:bg-secondaryBg active:bg-secondaryBgStrong"
-        role="button"
         aria-label="Back to Dashboard"
       >
         Back to Dashboard

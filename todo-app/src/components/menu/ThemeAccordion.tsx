@@ -25,6 +25,7 @@ export default function ThemeAccordion() {
     <div>
       <div
         role="button"
+        aria-label="Show theme options."
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
         className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 text-lg font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}

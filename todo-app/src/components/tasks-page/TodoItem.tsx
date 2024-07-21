@@ -9,6 +9,10 @@ type ToDoItemType = {
 export default function ToDoItem({ title, completed }: ToDoItemType) {
   const [checked, setChecked] = useState(completed || false);
 
+  const ariaLabel = checked
+    ? "Toggle action to mark as incomplete."
+    : "Toggle action to mark as complete.";
+
   return (
     <li className="flex items-center justify-between gap-4 rounded bg-secondary-100 px-4 py-3 hover:bg-secondary-200">
       <div className="flex gap-4">
@@ -23,7 +27,7 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
         onClick={() => setChecked((prev) => !prev)}
         role="checkbox"
         aria-checked={checked ? "true" : "false"}
-        aria-label="Mark as complete"
+        aria-label={ariaLabel}
       >
         {checked ? (
           <SquareCheck size={32} className="stroke-checkbox" />

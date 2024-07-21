@@ -97,7 +97,6 @@ function SettingsTab({
     <Link
       to={to}
       className="flex items-center gap-2 rounded-xl bg-secondary-200 px-4 py-2 hover:bg-secondary-300"
-      role="button"
       ariaLabel={`Settings tab for ${title}.`}
     >
       {icon}

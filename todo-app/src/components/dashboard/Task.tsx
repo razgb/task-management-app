@@ -1,15 +1,21 @@
 import { MoveIcon, SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/useRouter";
+import Link from "../shared/Link";
 
 type TaskProps = {
   title: string;
   description?: string;
-  // subtasks?: string[];
+  hasSubtasks: boolean;
   hideGrabIcon?: boolean;
 };
 
-export default function Task({ title, description, hideGrabIcon }: TaskProps) {
+export default function Task({
+  title,
+  description,
+  hasSubtasks,
+  hideGrabIcon,
+}: TaskProps) {
   const updatePath = useRouter().updatePath;
 
   const completion = Math.floor(Math.random() * 100);
@@ -41,27 +47,42 @@ export default function Task({ title, description, hideGrabIcon }: TaskProps) {
           </p>
         </div>
 
-        <div className={`${description ? "" : "hidden"} max-w-[60%]`}>
-          <div
-            className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-200 p-2 transition-colors hover:bg-secondary-100"
-            role="button"
-            tabIndex={0}
-            onClick={() => updatePath("/tasks/details")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ")
-                updatePath("/tasks/details");
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold">Sub Tasks</h3>
-              <SquareArrowOutUpRight size={16} aria-hidden={true} />
-            </div>
+        <div className="mt-1 items-start">
+          {hasSubtasks ? (
+            <div className={`${hasSubtasks ? "" : "hidden"} max-w-[60%]`}>
+              <div
+                className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-200 p-2 transition-colors hover:bg-secondary-100"
+                role="link"
+                aria-label={`Navigate to subtasks for task named ${title}.`}
+                tabIndex={0}
+                onClick={() => updatePath("/tasks/details")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    updatePath("/tasks/details");
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold">Sub Tasks</h3>
+                  <SquareArrowOutUpRight size={16} aria-hidden={true} />
+                </div>
 
-            <div className="flex items-center gap-2">
-              <ProgressBar completion={completion} width={2} />
-              <span className="text-sm font-semibold">{completion}%</span>
+                <div className="flex items-center gap-2">
+                  <ProgressBar completion={completion} width={2} />
+                  <span className="text-sm font-semibold">{completion}%</span>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            !hideGrabIcon && (
+              <Link
+                to="/tasks"
+                className="rounded-lg bg-secondary-900 px-3 py-2 text-xs font-semibold text-textContrast hover:bg-secondary-700"
+                aria-label={`Navigate to add subtasks for task named ${title}.`}
+              >
+                Add Subtasks
+              </Link>
+            )
+          )}
         </div>
       </div>
     </div>
