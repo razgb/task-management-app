@@ -16,6 +16,7 @@ export const Routes = {
   },
   timer: "/timer",
   taskCreator: "/task-creator",
+  habitTracker: "/habit-tracker",
 } as const;
 
 type ExtractValues<T> =

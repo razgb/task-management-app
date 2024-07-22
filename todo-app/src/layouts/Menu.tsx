@@ -21,7 +21,8 @@ export default function Menu() {
         </div>
 
         <div>
-          <MenuButton to={null} icon={<LogOut />}>
+          {/* temp logout button link */}
+          <MenuButton to="/dashboard" icon={<LogOut />}>
             Logout
           </MenuButton>
         </div>

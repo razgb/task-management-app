@@ -51,6 +51,12 @@ export default function Outlet() {
       break;
     }
 
+    case "/habit-tracker": {
+      // temp
+      content = <ErrorPage />;
+      break;
+    }
+
     default: {
       content = <ErrorPage />;
       break;

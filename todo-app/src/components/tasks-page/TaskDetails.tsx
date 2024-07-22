@@ -2,7 +2,7 @@ import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
 
-import { todoItems } from "./dummyItems"; // temporary items for testing.
+import { subTasksData } from "./subTaskData";
 
 export default function TaskDetails() {
   return (
@@ -41,7 +41,7 @@ export default function TaskDetails() {
 
         <div className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4">
           <ul className="flex h-full flex-col gap-2 overflow-y-scroll pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-            {todoItems.map((item, index) => (
+            {subTasksData.map((item, index) => (
               <ToDoItem
                 key={index}
                 title={item.title}

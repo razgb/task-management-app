@@ -1,8 +1,10 @@
-12-07-2024: Don't think about beauty or features. Finish raw functionality first.
+12-07-2024:
 
 things to do: deadline 1st Aug.
 
 ===== WIDGET IDEAS =====
+
+- Habit tracker.
 
 - Calendar view and being able to see posts that have been given a deadline. Expanded UI too.
 

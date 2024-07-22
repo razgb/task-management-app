@@ -1,4 +1,11 @@
-import { Settings, LayoutDashboard, ListTodo, Timer, Plus } from "lucide-react";
+import {
+  Settings,
+  LayoutDashboard,
+  ListTodo,
+  Timer,
+  Plus,
+  NotebookText,
+} from "lucide-react";
 import MenuButton from "./MenuButton";
 
 export default function MenuLinksToPages() {
@@ -27,6 +34,11 @@ export default function MenuLinksToPages() {
       <li>
         <MenuButton to="/timer" icon={<Timer />}>
           Timer
+        </MenuButton>
+      </li>
+      <li>
+        <MenuButton to="/habit-tracker" icon={<NotebookText />}>
+          Habit Tracker
         </MenuButton>
       </li>
     </ul>

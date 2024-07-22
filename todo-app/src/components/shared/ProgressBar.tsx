@@ -18,10 +18,10 @@ export default function ProgressBar({
 }) {
   return (
     <div
-      className={`${heightClasses[width]} w-full overflow-hidden rounded-full bg-secondaryBgStrong`}
+      className={`${heightClasses[width]} w-full overflow-hidden rounded-full bg-secondary-200`}
     >
       <div
-        className={`h-full rounded-full bg-textWeak`}
+        className={`h-full rounded-full bg-secondary-700`}
         style={{ width: completion + "%" }}
       ></div>
     </div>

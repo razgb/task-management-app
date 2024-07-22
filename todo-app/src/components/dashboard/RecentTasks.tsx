@@ -2,10 +2,18 @@ import { MoveDiagonal } from "lucide-react";
 import Task from "./Task";
 import Link from "../shared/Link";
 
+/*
+Choice one: add a check to see if total number of tasks 
+a user has is larger than 3/4 to then render this recent task container.  
+----------
+Choice two: we can just show a cute svg icon of a person saying your 
+tasks will show up here. 
+*/
+
 export default function RecentTasks() {
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between">
         <h2 className="text-3xl font-bold">Recent Tasks</h2>
         <Link
           to="/tasks"
