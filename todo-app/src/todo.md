@@ -4,6 +4,15 @@ things to do: deadline 1st Aug.
 
 ===== WIDGET IDEAS =====
 
+- Settings:
+  -> Color blind mode.
+  -> User profile.
+  -> FAQ setup & animations.
+  -> Task settings.
+  -> Activity log setup for notifications. (might remove this tbh)
+
+- Maybe an admin link for setting up notifications but it's out of scope.
+
 - Habit tracker.
 
 - Calendar view and being able to see posts that have been given a deadline. Expanded UI too.

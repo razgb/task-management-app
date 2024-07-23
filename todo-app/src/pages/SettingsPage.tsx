@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 
 import AccountSettings from "./sub-settings/AccountSettings";
-import Accessibility from "./sub-settings/Accessibility";
 import ActivitySettings from "./sub-settings/ActivitySettings";
 import FaqSettings from "./sub-settings/FaqSettings";
 import TaskSettings from "./sub-settings/TaskSettings";
@@ -15,8 +14,12 @@ import TaskSettings from "./sub-settings/TaskSettings";
 import Link from "../components/shared/Link";
 import { ValidUrlPaths } from "../stores/RouterContext";
 import useRouter from "../stores/useRouter";
+import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
+import useFontSize from "../stores/accessibility/useFontSize";
 
 function SettingsPage() {
+  const fontSizes = useFontSize();
+
   const { path } = useRouter();
   let pageToRender: React.ReactNode | null = null;
 
@@ -25,7 +28,7 @@ function SettingsPage() {
       pageToRender = <AccountSettings />;
       break;
     case "/settings/accessibility":
-      pageToRender = <Accessibility />;
+      pageToRender = <AccessibilitySettings />;
       break;
     case "/settings/activity-log":
       pageToRender = <ActivitySettings />;
@@ -43,7 +46,12 @@ function SettingsPage() {
       <div className="flex h-full flex-col">
         <div className={`flex h-full gap-6`}>
           <div className="z-10 flex h-full w-1/2 flex-col gap-6 rounded-2xl p-6">
-            <h2 className="text-3xl font-bold text-heading">Settings</h2>
+            <h2
+              className="font-bold text-heading"
+              style={{ fontSize: `${fontSizes["3xl"]}px` }}
+            >
+              Settings
+            </h2>
             <SettingsTab
               to="/settings/tasks"
               icon={<CalendarCog />}
@@ -93,6 +101,8 @@ function SettingsTab({
   title: string;
   to: ValidUrlPaths;
 }) {
+  const fontSizes = useFontSize();
+
   return (
     <Link
       to={to}
@@ -100,7 +110,12 @@ function SettingsTab({
       ariaLabel={`Settings tab for ${title}.`}
     >
       {icon}
-      <h3 className="text-lg font-medium capitalize">{title}</h3>
+      <h3
+        className="font-medium capitalize"
+        style={{ fontSize: `${fontSizes.lg}px` }}
+      >
+        {title}
+      </h3>
     </Link>
   );
 }
