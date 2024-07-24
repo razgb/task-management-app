@@ -1,6 +1,7 @@
 import { MoveDiagonal } from "lucide-react";
 import Task from "./Task";
 import Link from "../shared/Link";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 /*
 Choice one: add a check to see if total number of tasks 
@@ -11,15 +12,19 @@ tasks will show up here.
 */
 
 export default function RecentTasks() {
+  const fontSizes = useFontSize();
+
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-3xl font-bold">Recent Tasks</h2>
+        <h2 className="font-bold" style={{ fontSize: `${fontSizes["3xl"]}px` }}>
+          Recent Tasks
+        </h2>
         <Link
           to="/tasks"
           className="rounded-full bg-secondaryBg p-2 hover:bg-secondaryBgStrong"
         >
-          <MoveDiagonal size={24} />
+          <MoveDiagonal size={fontSizes["2xl"]} />
         </Link>
       </div>
 

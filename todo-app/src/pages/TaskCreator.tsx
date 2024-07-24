@@ -1,11 +1,12 @@
 import { useReducer } from "react";
 import Button from "../components/shared/Button";
 import Link from "../components/shared/Link";
+import useFontSize from "../stores/accessibility/useFontSize";
 
 const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
-const labelStyles = "text-xl font-medium";
+const labelStyles = "font-medium";
 const inputStyles =
-  "w-full hover:bg-secondaryBg rounded-xl text-lg bg-secondaryBgWeak p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
+  "w-full hover:bg-secondaryBg rounded-xl bg-secondaryBgWeak p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
 
 type TaskFormState = {
   taskName: string;
@@ -55,6 +56,8 @@ function reducer(state: TaskFormState, action: TaskFormAction) {
 }
 
 export default function TaskCreator() {
+  const fontSizes = useFontSize();
+
   const [state, dispatch] = useReducer(reducer, {
     taskName: "",
     dueDate: "",
@@ -69,16 +72,28 @@ export default function TaskCreator() {
 
   return (
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
-      <h2 className="mb-8 text-3xl font-bold">Create new task</h2>
+      <h2
+        className="mb-8 font-bold"
+        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+      >
+        Create new task
+      </h2>
 
       <form onSubmit={handleSubmit} className="flex gap-16">
         <div className="flex w-full max-w-[800px] flex-col gap-3">
           <div className={inputContainerStyle}>
             <div className="flex items-center gap-2">
-              <label className={`${labelStyles} inline`} htmlFor="taskName">
+              <label
+                className={`${labelStyles} inline`}
+                htmlFor="taskName"
+                style={{ fontSize: `${fontSizes.xl}px` }}
+              >
                 Task Title
               </label>
-              <span className="text-sm text-textWeak">
+              <span
+                className="text-textWeak"
+                style={{ fontSize: `${fontSizes.sm}px` }}
+              >
                 {`${getWordCount(state.taskName)}/10 words`}
               </span>
             </div>
@@ -87,6 +102,7 @@ export default function TaskCreator() {
               type="text"
               id="taskName"
               className={inputStyles}
+              style={{ fontSize: `${fontSizes.lg}px` }}
               value={state.taskName}
               onChange={(e) =>
                 dispatch({ type: "setName", payload: e.target.value })
@@ -96,13 +112,24 @@ export default function TaskCreator() {
           </div>
 
           <div className={`${inputContainerStyle} w-1/3`}>
-            <label className={labelStyles} htmlFor="dueDate">
-              Due Date <span className="text-sm text-textWeak">(optional)</span>
+            <label
+              className={labelStyles}
+              htmlFor="dueDate"
+              style={{ fontSize: `${fontSizes.xl}px` }}
+            >
+              Due Date{" "}
+              <span
+                className="text-textWeak"
+                style={{ fontSize: `${fontSizes.sm}px` }}
+              >
+                (optional)
+              </span>
             </label>
             <input
               type="date"
               id="dueDate"
               className={`${inputStyles} cursor-pointer`}
+              style={{ fontSize: `${fontSizes.lg}px` }}
               value={state.dueDate}
               onChange={(e) =>
                 dispatch({ type: "setDueDate", payload: e.target.value })
@@ -111,14 +138,24 @@ export default function TaskCreator() {
           </div>
 
           <div className={inputContainerStyle}>
-            <label className={labelStyles} htmlFor="priority">
+            <label
+              className={labelStyles}
+              htmlFor="priority"
+              style={{ fontSize: `${fontSizes.xl}px` }}
+            >
               Priority Level{" "}
-              <span className="text-sm text-textWeak">(optional)</span>
+              <span
+                className="text-textWeak"
+                style={{ fontSize: `${fontSizes.sm}px` }}
+              >
+                (optional)
+              </span>
             </label>
 
             <select
               id="priority"
               className={`${inputStyles} cursor-pointer`}
+              style={{ fontSize: `${fontSizes.lg}px` }}
               value={state.priority}
               onChange={(e) =>
                 dispatch({ type: "setPriority", payload: e.target.value })
@@ -135,10 +172,17 @@ export default function TaskCreator() {
 
           <div className={inputContainerStyle}>
             <div className="flex items-center gap-2">
-              <label className={labelStyles} htmlFor="description">
+              <label
+                className={labelStyles}
+                htmlFor="description"
+                style={{ fontSize: `${fontSizes.xl}px` }}
+              >
                 Description
               </label>
-              <span className="text-sm text-textWeak">
+              <span
+                className="text-textWeak"
+                style={{ fontSize: `${fontSizes.sm}px` }}
+              >
                 {`(optional) ${getWordCount(state.description)}/30 words`}
               </span>
             </div>
@@ -147,6 +191,7 @@ export default function TaskCreator() {
               placeholder="Add some details about your task..."
               id="description"
               className={`${inputStyles} h-32 resize-none overflow-y-hidden`}
+              style={{ fontSize: `${fontSizes.lg}px` }}
               value={state.description}
               onChange={(e) =>
                 dispatch({ type: "setDescription", payload: e.target.value })
@@ -158,7 +203,7 @@ export default function TaskCreator() {
             <Link className="text-textWeak hover:text-text" to="/dashboard">
               Cancel
             </Link>
-            <Button textsize="xl" variant="default">
+            <Button style={{ fontSize: `${fontSizes.xl}px` }} variant="default">
               Create
             </Button>
           </div>

@@ -7,7 +7,7 @@ import useFontSize from "../../../stores/accessibility/useFontSize";
 import { useState } from "react";
 import { AccessibilityContextType } from "../../../stores/accessibility/AccessibilityContext";
 
-const labelStyles = "text-lg font-medium text-text";
+const labelStyles = "font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
 
 export default function AccessibilitySettings() {
@@ -24,6 +24,7 @@ export default function AccessibilitySettings() {
     increaseLetterSpacing,
     defaultTimeout,
     dyslexicMode,
+    fontSizeMultiplier,
   } = accessibility;
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -68,12 +69,12 @@ export default function AccessibilitySettings() {
             className={`${labelStyles}`}
             htmlFor="fontSize"
           >
-            Font Size
+            Text size multiplier
           </label>
 
           <div className="flex items-center gap-4">
             <select
-              defaultValue={"1"}
+              defaultValue={fontSizeMultiplier}
               id="fontSize"
               className={`w-full rounded-xl bg-secondaryBg p-3`}
               aria-label="Select text size multiplier"
@@ -157,7 +158,7 @@ export default function AccessibilitySettings() {
         />
 
         <div className="mt-4">
-          <Button type="submit" textsize="xl" variant="default">
+          <Button type="submit" style={{ fontSize: `${fontSizes.xl}px` }}>
             Save Changes
           </Button>
         </div>

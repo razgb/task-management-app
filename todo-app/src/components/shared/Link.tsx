@@ -1,5 +1,6 @@
 import useRouter from "../../stores/useRouter";
 import { ValidUrlPaths } from "../../stores/RouterContext";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 type LinkProps = {
   to: ValidUrlPaths;
@@ -15,6 +16,7 @@ export default function Link({
   className,
   ariaLabel,
 }: LinkProps) {
+  const fontSizes = useFontSize();
   const { updatePath } = useRouter();
 
   return (
@@ -26,6 +28,9 @@ export default function Link({
       }}
       className={className}
       aria-label={ariaLabel}
+      style={{
+        fontSize: `${fontSizes.base}px`,
+      }}
     >
       {children}
     </a>

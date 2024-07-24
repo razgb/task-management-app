@@ -1,27 +1,22 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, CSSProperties } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "text" | "ghost" | "icon" | "ghost-icon" | "icon-text";
-  textsize?: "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+  variant?: "text" | "ghost" | "icon" | "ghost-icon" | "icon-text";
   transitionDuration?: number;
   "aria-label"?: string;
+  style?: CSSProperties;
 }
 
 export default function Button({
-  variant = "default",
-  textsize = "base",
+  variant,
   transitionDuration = 200,
   "aria-label": ariaLabel,
+  style,
   ...props
 }: ButtonProps) {
-  let classes = `transition-colors duration-${transitionDuration} text-${textsize} `;
+  let classes = `transition-colors duration-${transitionDuration} `;
 
   switch (variant) {
-    case "default": {
-      classes += `rounded-full bg-secondaryBgWeak hover:bg-secondaryBg active:bg-secondaryBgStrong px-6 py-2 text-text`;
-      break;
-    }
-
     case "text": {
       classes += `text-text text-textWeak hover:text-text`;
       break;
@@ -47,10 +42,22 @@ export default function Button({
       classes += `flex items-center gap-1 rounded-full bg-mainButtonBg hover:bg-mainButtonBgHover font-medium active:bg-mainButtonBgActive px-4 py-2 text-secondary-100`;
       break;
     }
+
+    default: {
+      classes += `rounded-full bg-secondaryBgWeak hover:bg-secondaryBg active:bg-secondaryBgStrong px-6 py-2 text-text`;
+      break;
+    }
   }
 
   return (
-    <button className={classes} aria-label={ariaLabel} {...props}>
+    <button
+      style={{
+        ...style,
+      }}
+      className={classes}
+      aria-label={ariaLabel}
+      {...props}
+    >
       {props.children}
     </button>
   );

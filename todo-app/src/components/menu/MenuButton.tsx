@@ -1,4 +1,5 @@
 import { ValidUrlPaths } from "../../stores/RouterContext";
+import useFontSize from "../../stores/accessibility/useFontSize";
 import useRouter from "../../stores/useRouter";
 
 type MenuButtonProps = {
@@ -14,6 +15,7 @@ export default function MenuButton({
   icon,
   variant = "default",
 }: MenuButtonProps) {
+  const fontSizes = useFontSize();
   const { updatePath } = useRouter();
   const validPath = to !== null;
 
@@ -31,8 +33,9 @@ export default function MenuButton({
 
   return (
     <a
-      className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 text-lg font-medium ${buttonBgStyles}`}
+      className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 font-medium ${buttonBgStyles}`}
       onClick={() => validPath && updatePath(to)}
+      style={{ fontSize: `${fontSizes.lg}px` }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -43,7 +46,7 @@ export default function MenuButton({
       aria-label={`Navigate to ${children} page inside app.`}
     >
       {icon && <span aria-hidden="true">{icon}</span>}
-      <span>{children}</span>
+      <span style={{ fontSize: `${fontSizes.base}px` }}>{children}</span>
     </a>
   );
 }

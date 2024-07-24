@@ -3,6 +3,7 @@ import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/useRouter";
 import Link from "../shared/Link";
 import { useState } from "react";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 export type TaskType = {
   title: string;
@@ -22,6 +23,7 @@ export default function Task({
   hideGrabIcon,
   status,
 }: TaskType) {
+  const fontSizes = useFontSize();
   const updatePath = useRouter().updatePath;
   const [isDraggable, setIsDraggable] = useState(false);
   const [taskData] = useState({
@@ -51,7 +53,12 @@ export default function Task({
             description ? "mb-1" : undefined
           } flex items-center justify-between`}
         >
-          <h2 className="text-lg font-semibold">{title}</h2>
+          <h2
+            className="font-semibold"
+            style={{ fontSize: `${fontSizes.lg}px` }}
+          >
+            {title}
+          </h2>
           <button
             onMouseLeave={() => setIsDraggable(false)}
             onMouseDown={() => setIsDraggable(true)}
@@ -59,15 +66,19 @@ export default function Task({
               hideGrabIcon ? "hidden" : ""
             }`}
           >
-            <span className="absolute -left-1/2 -top-5 min-w-16 rounded bg-secondary-700 px-1 py-0.5 text-xs font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100">
+            <span
+              className="absolute -left-1/2 -top-5 min-w-16 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
+              style={{ fontSize: `${fontSizes.xs}px` }}
+            >
               Drag task
             </span>
-            <MoveIcon size={20} aria-hidden={true} />
+            <MoveIcon size={fontSizes.xl} aria-hidden={true} />
           </button>
         </div>
 
         <p
-          className={`${description && "mb-2"} max-w-[45ch] text-sm text-textWeak 2xl:text-base`}
+          className={`${description && "mb-2"} max-w-[45ch] text-textWeak 2xl:text-base`}
+          style={{ fontSize: `${fontSizes.sm}px` }}
         >
           {description}
         </p>
@@ -88,7 +99,12 @@ export default function Task({
               }}
             >
               <div className="flex items-center gap-2">
-                <h3 className="font-semibold">Sub Tasks</h3>
+                <h3
+                  className="font-semibold"
+                  style={{ fontSize: `${fontSizes.base}px` }}
+                >
+                  Sub Tasks
+                </h3>
                 <SquareArrowOutUpRight size={16} aria-hidden={true} />
               </div>
 
@@ -97,7 +113,10 @@ export default function Task({
                   completion={taskData.subtaskCompletion}
                   width={2}
                 />
-                <span className="text-sm font-semibold">
+                <span
+                  className="font-semibold"
+                  style={{ fontSize: `${fontSizes.sm}px` }}
+                >
                   {taskData.subtaskCompletion}%
                 </span>
               </div>
@@ -107,7 +126,7 @@ export default function Task({
           !hideGrabIcon && (
             <Link
               to="/tasks"
-              className="rounded-lg bg-secondary-400 px-3 py-2 text-xs font-semibold text-text hover:bg-secondary-500"
+              className="rounded-lg bg-secondary-400 px-3 py-2 font-semibold text-text hover:bg-secondary-500"
               aria-label={`Navigate to add subtasks for task named ${title}.`}
             >
               Add Subtasks

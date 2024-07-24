@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 export default function CurrentDateWidget() {
+  const fontSizes = useFontSize();
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const userLocale = navigator.language || "en-US";
@@ -33,9 +36,19 @@ export default function CurrentDateWidget() {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-1 rounded-2xl bg-primaryBg p-3">
       <div>
-        <p className="text-4xl font-semibold">{time}</p>
+        <p
+          className="font-semibold"
+          style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        >
+          {time}
+        </p>
       </div>
-      <p className="text-xl font-semibold">{formattedDate}</p>
+      <p
+        className="font-semibold"
+        style={{ fontSize: `${fontSizes["2xl"]}px` }}
+      >
+        {formattedDate}
+      </p>
     </div>
   );
 }

@@ -1,11 +1,19 @@
 import useAccessibility from "./useAccessibility";
 
-type FontSizeKey = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
+export type FontSizeMapType = {
+  xs: number;
+  sm: number;
+  base: number;
+  lg: number;
+  xl: number;
+  "2xl": number;
+  "3xl": number;
+};
 
-export default function useFontSize(): Record<FontSizeKey, number> {
+export default function useFontSize(): FontSizeMapType {
   const { fontSizeMultiplier } = useAccessibility()["accessibility"];
 
-  const fontSizeMap = {
+  const fontSizeMap: FontSizeMapType = {
     xs: 12 * fontSizeMultiplier,
     sm: 14 * fontSizeMultiplier,
     base: 16 * fontSizeMultiplier,

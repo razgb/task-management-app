@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import useFontSize from "../../../stores/accessibility/useFontSize";
 
 type FaqItem = {
   question: string;
@@ -43,18 +44,24 @@ function Accordion({
   isOpen: boolean;
   toggleAccordion: () => void;
 }) {
+  const fontSizes = useFontSize();
+
   return (
     <div className="mb-4 overflow-hidden rounded-xl bg-secondaryBgWeak">
       <button
         className="flex w-full items-center justify-between p-4 text-left text-lg font-medium text-text focus:outline-none"
         onClick={toggleAccordion}
       >
-        <span>{item.question}</span>
-        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        <span style={{ fontSize: `${fontSizes.base}px` }}>{item.question}</span>
+        {isOpen ? (
+          <ChevronUp size={fontSizes.xl} />
+        ) : (
+          <ChevronDown size={fontSizes.xl} />
+        )}
       </button>
       {isOpen && (
         <div className="p-4 pt-0 text-textWeak">
-          <p>{item.answer}</p>
+          <p style={{ fontSize: `${fontSizes.base}px` }}>{item.answer}</p>
         </div>
       )}
     </div>
@@ -62,6 +69,8 @@ function Accordion({
 }
 
 export default function FaqSettings() {
+  const fontSizes = useFontSize();
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -70,10 +79,16 @@ export default function FaqSettings() {
 
   return (
     <div className="h-full overflow-y-auto rounded-2xl bg-primaryBg p-6">
-      <h2 className="mb-4 text-3xl font-bold text-heading">
+      <h2
+        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        className="mb-4 font-bold text-heading"
+      >
         Frequently Asked Questions
       </h2>
-      <p className="mb-8 text-lg text-textWeak">
+      <p
+        style={{ fontSize: `${fontSizes.base}px` }}
+        className="mb-8 text-lg text-textWeak"
+      >
         If you can't find the answer to your question here, please contact us at{" "}
         <a
           href="mailto:admin@admin.com"

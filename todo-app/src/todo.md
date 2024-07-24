@@ -4,6 +4,13 @@ things to do: deadline 1st Aug.
 
 ===== WIDGET IDEAS =====
 
+Take a look at how I removed font sizes from classNames in @ErrorPage.tsx. Replace both icons sizes with the closest font size value you can and add the styles to each element that has one. If an element does not have a text size class or style please add it to it. Such as a normal p element with no specified sizes. Here is the original font size hook source @useFontSize.tsx.
+
+- button style inconsistencies with textsize prop and useFontSize hook
+
+- padding inconsistency with font size increases in
+  accessibility.
+
 - Settings:
   -> Color blind mode.
   -> User profile.

@@ -1,16 +1,28 @@
 import { AlertTriangle } from "lucide-react";
 import Link from "../components/shared/Link";
+import useFontSize from "../stores/accessibility/useFontSize";
 
 export default function ErrorPage() {
+  const fontSizes = useFontSize();
+
   return (
     <div className="flex h-full flex-col items-center justify-center rounded-2xl bg-primaryBg p-6">
-      <AlertTriangle size={64} className="mb-4 text-textWeak" />
+      <AlertTriangle
+        size={2 * fontSizes["3xl"]}
+        className="mb-4 text-textWeak"
+      />
 
-      <h1 className="mb-2 text-4xl font-bold text-heading">
+      <h1
+        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        className="mb-2 font-bold text-heading"
+      >
         404 - Page Not Found
       </h1>
 
-      <p className="mb-6 text-xl text-textWeak">
+      <p
+        style={{ fontSize: `${fontSizes.xl}px` }}
+        className="mb-6 text-textWeak"
+      >
         Oops! The page you're looking for doesn't exist.
       </p>
 

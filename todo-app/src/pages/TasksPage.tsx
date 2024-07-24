@@ -6,6 +6,7 @@ import {
   inProgressTasksData,
   completeTasksData,
 } from "../components/tasks-page/taskData.ts";
+import useFontSize from "../stores/accessibility/useFontSize.tsx";
 
 export default function TasksPage() {
   const [draftTasks, setDraftTasks] = useState<TaskType[]>(
@@ -81,6 +82,8 @@ type TaskGroupColumnType = {
 };
 
 function TaskColumn({ variant, tasks, taskColumnMap }: TaskGroupColumnType) {
+  const fontSizes = useFontSize();
+
   const output = tasks.map((item) => (
     <Task
       key={Math.random()}
@@ -122,7 +125,12 @@ function TaskColumn({ variant, tasks, taskColumnMap }: TaskGroupColumnType) {
       onDragOver={handleDragOver}
       className="flex h-full flex-col overflow-hidden p-4"
     >
-      <h2 className="mb-4 text-2xl font-bold capitalize">{variant}</h2>
+      <h2
+        style={{ fontSize: `${fontSizes["2xl"]}px` }}
+        className="mb-4 font-bold capitalize"
+      >
+        {variant}
+      </h2>
       <div className="flex-1 overflow-y-auto p-2 pr-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
         <div className="grid grid-cols-1 content-start gap-3">{output}</div>
       </div>

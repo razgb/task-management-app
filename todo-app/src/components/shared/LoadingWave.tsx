@@ -7,7 +7,7 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
   // might add more themes in the future.
   switch (theme) {
     case "light":
-      containerStyles += " h-3";
+      containerStyles += " h-4";
 
       if (loading) {
         containerStyles += " bg-secondary-300";
@@ -16,7 +16,7 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
       }
       break;
     case "dark":
-      containerStyles += "bg-primaryBg h-2";
+      containerStyles += "bg-primaryBg h-4";
       break;
   }
 

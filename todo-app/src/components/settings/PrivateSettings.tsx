@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import Button from "../shared/Button";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 export default function PrivateSettings() {
+  const fontSizes = useFontSize();
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
 
-  const labelStyles = "text-lg font-medium";
+  const labelStyles = "font-medium";
   function handleEmailChange(e: InputEventType) {
     setEmail(e.target.value);
   }
@@ -36,7 +39,11 @@ export default function PrivateSettings() {
   return (
     <form className="flex max-w-[800px] flex-col gap-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
-        <label className={labelStyles} htmlFor="email">
+        <label
+          style={{ fontSize: `${fontSizes.base}px` }}
+          className={labelStyles}
+          htmlFor="email"
+        >
           Email
         </label>
         <input
@@ -44,11 +51,16 @@ export default function PrivateSettings() {
           id="email"
           value={email}
           onChange={handleEmailChange}
+          style={{ fontSize: `${fontSizes.base}px` }}
         />
       </div>
 
       <div>
-        <label className={labelStyles} htmlFor="username">
+        <label
+          style={{ fontSize: `${fontSizes.base}px` }}
+          className={labelStyles}
+          htmlFor="username"
+        >
           Username
         </label>
         <input
@@ -56,11 +68,16 @@ export default function PrivateSettings() {
           id="username"
           value={username}
           onChange={handleUsernameChange}
+          style={{ fontSize: `${fontSizes.base}px` }}
         />
       </div>
 
       <div>
-        <label className={labelStyles} htmlFor="password">
+        <label
+          style={{ fontSize: `${fontSizes.base}px` }}
+          className={labelStyles}
+          htmlFor="password"
+        >
           New Password
         </label>
         <input
@@ -68,6 +85,7 @@ export default function PrivateSettings() {
           id="password"
           value={password}
           onChange={handlePasswordChange}
+          style={{ fontSize: `${fontSizes.base}px` }}
         />
       </div>
 
@@ -80,10 +98,13 @@ export default function PrivateSettings() {
           id="profilePicture"
           accept="image/*"
           onChange={handleProfilePictureChange}
+          style={{ fontSize: `${fontSizes.base}px` }}
         />
       </div>
       <div>
-        <Button type="submit">Save Changes</Button>
+        <Button style={{ fontSize: `${fontSizes.base}px` }} type="submit">
+          Save Changes
+        </Button>
       </div>
     </form>
   );

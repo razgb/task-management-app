@@ -9,8 +9,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import useTheme from "../../stores/useTheme";
+import useFontSize from "../../stores/accessibility/useFontSize";
 
 export default function ThemeAccordion() {
+  const fontSizes = useFontSize();
+
   const [open, setOpen] = useState(false);
   const { changeAppTheme, theme, themeController } = useTheme();
 
@@ -28,13 +31,13 @@ export default function ThemeAccordion() {
         aria-label="Show theme options."
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 text-lg font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
+        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 ${fontSizes["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
       >
         <div className="flex items-center gap-2">
           <div aria-hidden="true">
             <Palette />
           </div>
-          <span>Theme</span>
+          <span style={{ fontSize: `${fontSizes.base}px` }}>Theme</span>
         </div>
 
         <div aria-hidden="true">
@@ -96,17 +99,23 @@ function ThemeAccordionButton({
   onClick,
   selected,
 }: ThemeAccordionButtonProps) {
+  const fontSizes = useFontSize();
+
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-btnHover"
+      className={`flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-btnHover`}
+      style={{ fontSize: `${fontSizes.base}px` }}
     >
-      <span className="flex items-center gap-2">
+      <span
+        style={{ fontSize: `${fontSizes.base}px` }}
+        className="flex items-center gap-2"
+      >
         {icon}
         {children}
       </span>
 
-      {selected && <CheckCircle2Icon size={20} />}
+      {selected && <CheckCircle2Icon size={fontSizes["xl"]} />}
     </button>
   );
 }

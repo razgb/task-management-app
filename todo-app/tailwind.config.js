@@ -96,7 +96,7 @@ export default {
         cardBorder: "var(--card-border)",
       },
       animation: {
-        wave: "wave 1s linear infinite",
+        wave: "wave 0.75s linear infinite",
       },
       keyframes: {
         wave: {

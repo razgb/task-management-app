@@ -6,10 +6,10 @@ import {
   UserRound,
 } from "lucide-react";
 
-import AccountSettings from "./sub-settings/AccountSettings";
-import ActivitySettings from "./sub-settings/ActivitySettings";
-import FaqSettings from "./sub-settings/FaqSettings";
-import TaskSettings from "./sub-settings/TaskSettings";
+import AccountSettings from "./sub-settings/account-settings/AccountSettings";
+import ActivitySettings from "./sub-settings/activity-settings/ActivitySettings";
+import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
+import TaskSettings from "./sub-settings/task-settings/TaskSettings";
 
 import Link from "../components/shared/Link";
 import { ValidUrlPaths } from "../stores/RouterContext";
@@ -54,27 +54,27 @@ function SettingsPage() {
             </h2>
             <SettingsTab
               to="/settings/tasks"
-              icon={<CalendarCog />}
+              icon={<CalendarCog size={fontSizes["2xl"]} />}
               title="Task settings"
             />
             <SettingsTab
               to="/settings/account-management"
-              icon={<UserRound />}
+              icon={<UserRound size={fontSizes["2xl"]} />}
               title="Account management"
             />
             <SettingsTab
               to="/settings/accessibility"
-              icon={<AccessibilityIcon />}
+              icon={<AccessibilityIcon size={fontSizes["2xl"]} />}
               title="Accessibility"
             />
             <SettingsTab
               to="/settings/activity-log"
-              icon={<Activity />}
+              icon={<Activity size={fontSizes["2xl"]} />}
               title="Activity log"
             />
             <SettingsTab
               to="/settings/frequently-asked-questions"
-              icon={<Info />}
+              icon={<Info size={fontSizes["2xl"]} />}
               title="FAQ"
             />
           </div>
