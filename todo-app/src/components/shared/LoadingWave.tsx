@@ -7,7 +7,7 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
   // might add more themes in the future.
   switch (theme) {
     case "light":
-      containerStyles += " h-4";
+      containerStyles += " h-3";
 
       if (loading) {
         containerStyles += " bg-secondary-300";
@@ -16,13 +16,13 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
       }
       break;
     case "dark":
-      containerStyles += "bg-primaryBg h-4";
+      containerStyles += "bg-primaryBg h-3";
       break;
   }
 
   const waveStyles = loading ? "opacity-100" : "opacity-0";
   return (
-    <div className={`overflow-hidden ${containerStyles} transition-colors`}>
+    <div className={`overflow-hidden ${containerStyles} transition-all`}>
       <div
         className={`h-full w-full ${waveStyles} animate-wave bg-gradient-to-r from-secondary-100 via-secondary-600 to-secondary-100`}
       ></div>

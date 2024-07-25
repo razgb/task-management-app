@@ -1,7 +1,12 @@
 import { ButtonHTMLAttributes, CSSProperties } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "text" | "ghost" | "icon" | "ghost-icon" | "icon-text";
+  variant?:
+    | "text"
+    | "icon"
+    | "ghost-icon"
+    | "constrast-default"
+    | "constrast-icon-text";
   transitionDuration?: number;
   "aria-label"?: string;
   style?: CSSProperties;
@@ -22,13 +27,8 @@ export default function Button({
       break;
     }
 
-    case "ghost": {
-      classes += `text-text font-semibold hover:bg-secondary-ultralight`;
-      break;
-    }
-
     case "icon": {
-      classes += `w-16 h-16 rounded-full flex items-center justify-center bg-iconBg hover:bg-iconBgStrong active:bg-iconBg`;
+      classes += `w-12 h-12 rounded-full flex items-center justify-center bg-secondary-100 hover:bg-secondary-200 active:bg-secondary-100`;
       break;
     }
 
@@ -37,8 +37,13 @@ export default function Button({
       break;
     }
 
-    case "icon-text": {
-      classes += `flex items-center gap-1 rounded-full bg-mainButtonBg hover:bg-mainButtonBgHover font-medium active:bg-mainButtonBgActive px-4 py-2 text-secondary-100`;
+    case "constrast-default": {
+      classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-6 py-2 text-textContrast`;
+      break;
+    }
+
+    case "constrast-icon-text": {
+      classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-6 py-2 text-textContrast flex items-center gap-2`;
       break;
     }
 

@@ -8,11 +8,11 @@ function App() {
   const { theme } = useTheme();
 
   return (
-    <div className={`${theme} flex h-screen flex-col`}>
+    <div className={`${theme} flex h-screen flex-col bg-primaryBg`}>
       <LoadingWave loading={false} />
 
       <div
-        className={`flex flex-1 gap-3 overflow-hidden bg-primaryBg p-4 text-text`}
+        className={`lg: mx-auto flex w-full flex-1 gap-3 overflow-hidden bg-primaryBg p-4 text-text xl:max-w-[1280px] 2xl:max-w-[1400px]`}
       >
         <Menu />
 

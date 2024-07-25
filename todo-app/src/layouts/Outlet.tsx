@@ -5,6 +5,7 @@ import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
 import TasksPage from "../pages/TasksPage.tsx";
 import TaskCreator from "../pages/TaskCreator.tsx";
 import ErrorPage from "../pages/ErrorPage.tsx";
+import TimerPage from "../pages/TimerPage.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
@@ -48,6 +49,11 @@ export default function Outlet() {
 
     case "/settings": {
       content = <SettingsPage />;
+      break;
+    }
+
+    case "/timer": {
+      content = <TimerPage />;
       break;
     }
 

@@ -14,9 +14,9 @@ export default function TotalTaskProgress() {
       </h2>
 
       <div className="flex items-center gap-2">
-        <div className="h-6 w-full overflow-hidden rounded-2xl bg-secondaryBgWeak">
+        <div className="h-6 w-full overflow-hidden rounded-2xl bg-secondary-200">
           <div
-            className="h-full rounded-2xl bg-textWeak"
+            className="h-full rounded-2xl bg-secondary-700"
             style={{ width: completion + "%" }}
           ></div>
         </div>

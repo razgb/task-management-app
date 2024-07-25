@@ -4,38 +4,40 @@ import { MoveDiagonalIcon, PauseIcon, PlayIcon } from "lucide-react";
 import Link from "../shared/Link";
 import useTimer from "../../stores/timer/useTimer";
 
-export default function PomodoroTimerWidget() {
+export default function TimerWidget() {
   const fontSizes = useFontSize();
-  const { timerState, timerSettings, updateTimerState, updateTimerSettings } =
-    useTimer();
+  const timerState = useTimer()["state"]["timerState"];
 
   let content = null;
   switch (timerState) {
     case "running":
       content = (
-        <Button variant="icon">
+        <Button variant="constrast-icon-text">
           <PauseIcon />
+          <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
         </Button>
       );
       break;
     case "paused":
       content = (
-        <Button variant="icon">
+        <Button variant="constrast-icon-text">
           <PlayIcon />
+          <span style={{ fontSize: fontSizes["base"] }}>Resume</span>
         </Button>
       );
       break;
     case "stopped":
       content = (
-        <Button variant="icon">
+        <Button variant="constrast-icon-text">
           <PlayIcon />
+          <span style={{ fontSize: fontSizes["base"] }}>Start</span>
         </Button>
       );
       break;
   }
 
   return (
-    <div className="relative flex h-full flex-col items-center justify-center rounded-2xl bg-primaryBg p-3">
+    <div className="relative flex h-full flex-col items-center justify-center gap-2 rounded-2xl bg-primaryBg p-3">
       <Link
         className="absolute right-2 top-2 self-end rounded-full bg-primaryBg p-2 transition-colors hover:bg-secondaryBgWeak"
         to="/timer"

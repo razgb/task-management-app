@@ -1,5 +1,5 @@
 import CurrentDateWidget from "../components/dashboard/CurrentDateWidget";
-import PomodoroTimerWidget from "../components/dashboard/PomodoroTimerWidget";
+import TimerWidget from "../components/dashboard/TimerWidget";
 import RecentTasks from "../components/dashboard/RecentTasks";
 import TotalTaskProgress from "../components/dashboard/TotalTaskProgress";
 import TimerContextProvider from "../stores/timer/TimerContextProvider";
@@ -21,7 +21,7 @@ export default function DashboardPage() {
 
       <div className="col-span-1 row-span-1">
         <TimerContextProvider>
-          <PomodoroTimerWidget />
+          <TimerWidget />
         </TimerContextProvider>
       </div>
     </div>

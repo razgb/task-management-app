@@ -17,7 +17,7 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
     : "Toggle action to mark as complete.";
 
   return (
-    <li className="flex items-center justify-between gap-4 rounded bg-secondary-100 px-4 py-3 hover:bg-secondary-200">
+    <li className="flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 hover:bg-secondary-300">
       <div className="flex gap-4">
         <button
           style={{ fontSize: `${fontSizes.base}px` }}
