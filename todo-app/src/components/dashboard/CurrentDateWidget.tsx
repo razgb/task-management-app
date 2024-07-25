@@ -34,7 +34,7 @@ export default function CurrentDateWidget() {
   });
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-1 rounded-2xl bg-primaryBg p-3">
+    <div className="flex h-full flex-col items-center justify-center rounded-2xl bg-primaryBg p-3">
       <div>
         <p
           className="font-semibold"
@@ -43,10 +43,7 @@ export default function CurrentDateWidget() {
           {time}
         </p>
       </div>
-      <p
-        className="font-semibold"
-        style={{ fontSize: `${fontSizes["2xl"]}px` }}
-      >
+      <p className="" style={{ fontSize: `${fontSizes["lg"]}px` }}>
         {formattedDate}
       </p>
     </div>

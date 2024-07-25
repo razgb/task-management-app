@@ -7,7 +7,7 @@ export default function TotalTaskProgress() {
   return (
     <div className="flex h-full flex-col justify-center rounded-2xl bg-primaryBg px-12">
       <h2
-        className="mb-2 font-semibold capitalize"
+        className="font-semibold capitalize"
         style={{ fontSize: `${fontSizes["2xl"]}px` }}
       >
         total progress

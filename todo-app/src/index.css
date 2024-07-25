@@ -130,8 +130,7 @@
   --main-button-bg-active: var(--secondary-900);
 
   --icon-bg: #2c2c2c;
-  --icon-bg-strong: #3a3a3a;
-  --icon-bg-strongest: #474747;
+  --icon-bg-strong: #333;
   --icon-stroke: #dbe2ef;
 
   --scrollbar: #6d6d6d;

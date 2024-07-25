@@ -28,8 +28,7 @@ export default function Button({
     }
 
     case "icon": {
-      // have no idea what to call this, might just delete.
-      classes += `w-16 h-16 rounded-full flex items-center justify-center bg-iconBg hover:bg-iconBgStrong`;
+      classes += `w-16 h-16 rounded-full flex items-center justify-center bg-iconBg hover:bg-iconBgStrong active:bg-iconBg`;
       break;
     }
 

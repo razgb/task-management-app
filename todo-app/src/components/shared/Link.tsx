@@ -7,7 +7,6 @@ type LinkProps = {
   children: React.ReactNode;
   className?: string;
   ariaLabel?: string;
-  role?: string;
 };
 
 export default function Link({

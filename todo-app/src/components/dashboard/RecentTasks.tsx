@@ -22,9 +22,9 @@ export default function RecentTasks() {
         </h2>
         <Link
           to="/tasks"
-          className="rounded-full bg-secondaryBg p-2 hover:bg-secondaryBgStrong"
+          className="rounded-full bg-primaryBg p-2 transition-colors hover:bg-secondaryBgWeak"
         >
-          <MoveDiagonal size={fontSizes["2xl"]} />
+          <MoveDiagonal size={fontSizes["3xl"]} />
         </Link>
       </div>
 
