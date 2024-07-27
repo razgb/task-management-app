@@ -6,6 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "icon"
     | "ghost-icon"
     | "constrast-default"
+    | "icon-text"
     | "constrast-icon-text";
   transitionDuration?: number;
   "aria-label"?: string;
@@ -39,6 +40,11 @@ export default function Button({
 
     case "constrast-default": {
       classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-6 py-2 text-textContrast`;
+      break;
+    }
+
+    case "icon-text": {
+      classes += `rounded-full bg-secondaryBgWeak hover:secondaryBg active:bg-secondary-bg-secondaryWeak px-6 py-2 text-text flex items-center gap-2`;
       break;
     }
 

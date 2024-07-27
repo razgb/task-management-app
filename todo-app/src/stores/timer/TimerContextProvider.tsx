@@ -1,9 +1,9 @@
-import { useReducer } from "react";
+import { Reducer, useEffect, useReducer, useRef } from "react";
 import { TimerContext } from "./TimerContext";
 
 export type ReducerStateType = {
   timerValue: number;
-  timerState: "running" | "paused" | "stopped";
+  timerState: "active" | "paused" | "stopped";
   timerSettings: {
     breakDuration: number;
     workDuration: number;
@@ -12,33 +12,62 @@ export type ReducerStateType = {
 };
 
 export type ReducerActionType = {
-  payload: Partial<ReducerStateType>;
-  type: "updateTimerValue" | "updateTimerState" | "updateTimerSettings";
+  payload: Partial<ReducerStateType> | null;
+  type: "countDown" | "pause" | "reset" | "updateTimerSettings";
+};
+
+const defaultTimerState: ReducerStateType = {
+  timerValue: 25 * 60, // seconds
+  timerState: "paused",
+  timerSettings: {
+    breakDuration: 5 * 60,
+    workDuration: 25 * 60,
+    autoSwitch: true,
+  },
 };
 
 function reducer(
   state: ReducerStateType,
   action: ReducerActionType,
 ): ReducerStateType {
-  if (action.payload == undefined) return state;
   const payload = action.payload;
 
   switch (action.type) {
-    case "updateTimerValue": {
-      if (payload.timerValue == undefined || payload.timerValue < 0) {
-        return state;
+    case "countDown": {
+      if (state.timerValue == 0) {
+        return {
+          ...defaultTimerState,
+        };
       }
 
-      return { ...state, timerValue: payload.timerValue };
+      return {
+        ...state,
+        timerValue: state.timerValue - 1,
+        timerState: "active",
+      };
     }
-    case "updateTimerState": {
-      if (payload.timerState == undefined) {
-        return state;
-      }
 
-      return { ...state, timerState: payload.timerState };
+    case "pause": {
+      return {
+        ...state,
+        timerState: "paused",
+      };
     }
+
+    case "reset": {
+      return {
+        ...defaultTimerState,
+      };
+    }
+
     case "updateTimerSettings": {
+      if (payload == null) {
+        console.warn(
+          "payload equals null in updateTimerSettings switch branch.",
+        );
+        return state;
+      }
+
       return {
         ...state,
         timerSettings: {
@@ -47,6 +76,7 @@ function reducer(
         },
       };
     }
+
     default:
       console.warn(
         "Seems to be an error, default switch case reached inside the timer context.",
@@ -60,15 +90,32 @@ export default function TimerContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [state, dispatch] = useReducer(reducer, {
-    timerValue: 0,
-    timerState: "stopped",
-    timerSettings: {
-      breakDuration: 5,
-      workDuration: 25,
-      autoSwitch: true,
-    },
-  });
+  const [state, dispatch] = useReducer<
+    Reducer<ReducerStateType, ReducerActionType>
+  >(reducer, defaultTimerState);
+
+  const intervalRef = useRef<number | undefined>(undefined); // doesn't refresh component. maintains state.
+
+  useEffect(() => {
+    const timerState = state.timerState;
+
+    switch (timerState) {
+      case "active": {
+        intervalRef.current = setInterval(() => {
+          dispatch({ payload: null, type: "countDown" });
+        }, 1000);
+        break;
+      }
+      case "paused": {
+        clearInterval(intervalRef.current);
+        break;
+      }
+      case "stopped": {
+        clearInterval(intervalRef.current);
+        break;
+      }
+    }
+  }, [state.timerState]);
 
   return (
     <TimerContext.Provider

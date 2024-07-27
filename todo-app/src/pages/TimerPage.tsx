@@ -1,37 +1,39 @@
 import TimerContextProvider from "../stores/timer/TimerContextProvider";
 import Button from "../components/shared/Button";
-import { Minus, PauseIcon, PlayIcon, Plus } from "lucide-react";
+import { Minus, PauseIcon, PlayIcon, Plus, TimerResetIcon } from "lucide-react";
 
 import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
 
 export function TimerPageComponent() {
   const fontSizes = useFontSize();
-  const { state } = useTimer();
-
+  const { state, dispatch } = useTimer();
   const { timerState } = state;
 
-  let content = null;
+  function loopCountDown() {
+    dispatch({ payload: null, type: "countDown" });
+  }
+  function resetCountDown() {
+    // if (intervalRef.current) clearInterval(intervalRef.current);
+    dispatch({ payload: null, type: "reset" });
+  }
+  function pauseCountDown() {
+    dispatch({ payload: null, type: "pause" });
+  }
+
+  let buttonState = null;
   switch (timerState) {
-    case "running":
-      content = (
-        <Button variant="constrast-icon-text">
+    case "active":
+      buttonState = (
+        <Button variant="constrast-icon-text" onClick={pauseCountDown}>
           <PauseIcon />
           <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
         </Button>
       );
       break;
     case "paused":
-      content = (
-        <Button variant="constrast-icon-text">
-          <PlayIcon />
-          <span>Start</span>
-        </Button>
-      );
-      break;
-    case "stopped":
-      content = (
-        <Button variant="constrast-icon-text">
+      buttonState = (
+        <Button variant="constrast-icon-text" onClick={loopCountDown}>
           <PlayIcon />
           <span>Start</span>
         </Button>
@@ -50,12 +52,16 @@ export function TimerPageComponent() {
                 style={{ fontSize: `${fontSizes["6xl"]}px` }}
                 className="font-semibold text-headingSub"
               >
-                00:00
+                {formatSecondsToDigitalFormat(state.timerValue)}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-2">
+          {/* <div
+            className={`flex items-center justify-center gap-2 ${
+              timerState == "active" ? "opacity-0" : ""
+            }`}
+          >
             <Button variant="icon">
               <Minus />
             </Button>
@@ -65,10 +71,15 @@ export function TimerPageComponent() {
             <Button variant="icon">
               <Plus />
             </Button>
-          </div>
+          </div> */}
 
           <div className="flex items-center justify-center gap-2">
-            {content}
+            <Button onClick={resetCountDown} variant="icon-text">
+              <TimerResetIcon />
+              <span>Reset</span>
+            </Button>
+
+            {buttonState}
           </div>
         </div>
 
@@ -88,4 +99,10 @@ export default function TimerPage() {
       <TimerPageComponent />
     </TimerContextProvider>
   );
+}
+
+function formatSecondsToDigitalFormat(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = (seconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${remainingSeconds}`;
 }
