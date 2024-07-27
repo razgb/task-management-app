@@ -1,6 +1,11 @@
 import TimerContextProvider from "../stores/timer/TimerContextProvider";
 import Button from "../components/shared/Button";
-import { Minus, PauseIcon, PlayIcon, Plus, TimerResetIcon } from "lucide-react";
+import {
+  //  Minus , Plus,
+  PauseIcon,
+  PlayIcon,
+  TimerResetIcon,
+} from "lucide-react";
 
 import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
@@ -10,16 +15,9 @@ export function TimerPageComponent() {
   const { state, dispatch } = useTimer();
   const { timerState } = state;
 
-  function loopCountDown() {
-    dispatch({ payload: null, type: "countDown" });
-  }
-  function resetCountDown() {
-    // if (intervalRef.current) clearInterval(intervalRef.current);
-    dispatch({ payload: null, type: "reset" });
-  }
-  function pauseCountDown() {
-    dispatch({ payload: null, type: "pause" });
-  }
+  const activateCountDown = () => dispatch({ payload: null, type: "activate" });
+  const resetCountDown = () => dispatch({ payload: null, type: "reset" });
+  const pauseCountDown = () => dispatch({ payload: null, type: "pause" });
 
   let buttonState = null;
   switch (timerState) {
@@ -33,7 +31,7 @@ export function TimerPageComponent() {
       break;
     case "paused":
       buttonState = (
-        <Button variant="constrast-icon-text" onClick={loopCountDown}>
+        <Button variant="constrast-icon-text" onClick={activateCountDown}>
           <PlayIcon />
           <span>Start</span>
         </Button>

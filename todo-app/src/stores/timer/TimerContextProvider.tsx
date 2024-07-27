@@ -1,4 +1,4 @@
-import { Reducer, useEffect, useReducer, useRef } from "react";
+import { Reducer, useEffect, useReducer, useRef, useState } from "react";
 import { TimerContext } from "./TimerContext";
 
 export type ReducerStateType = {
@@ -12,8 +12,8 @@ export type ReducerStateType = {
 };
 
 export type ReducerActionType = {
-  payload: Partial<ReducerStateType> | null;
-  type: "countDown" | "pause" | "reset" | "updateTimerSettings";
+  payload: Partial<ReducerStateType> | number | null;
+  type: "updateTimer" | "activate" | "pause" | "reset" | "updateTimerSettings";
 };
 
 const defaultTimerState: ReducerStateType = {
@@ -33,8 +33,8 @@ function reducer(
   const payload = action.payload;
 
   switch (action.type) {
-    case "countDown": {
-      if (state.timerValue == 0) {
+    case "updateTimer": {
+      if (state.timerValue === 0 || typeof payload !== "number") {
         return {
           ...defaultTimerState,
         };
@@ -42,18 +42,23 @@ function reducer(
 
       return {
         ...state,
-        timerValue: state.timerValue - 1,
+        timerValue: state.timerValue - payload,
         timerState: "active",
       };
     }
 
+    case "activate": {
+      return {
+        ...state,
+        timerState: "active",
+      };
+    }
     case "pause": {
       return {
         ...state,
         timerState: "paused",
       };
     }
-
     case "reset": {
       return {
         ...defaultTimerState,
@@ -61,9 +66,9 @@ function reducer(
     }
 
     case "updateTimerSettings": {
-      if (payload == null) {
+      if (payload == null || typeof payload === "number") {
         console.warn(
-          "payload equals null in updateTimerSettings switch branch.",
+          "error updating timer settings in switch branch, received null or number value instead an object of ReducerActionType.",
         );
         return state;
       }
@@ -94,28 +99,66 @@ export default function TimerContextProvider({
     Reducer<ReducerStateType, ReducerActionType>
   >(reducer, defaultTimerState);
 
-  const intervalRef = useRef<number | undefined>(undefined); // doesn't refresh component. maintains state.
+  const [animationState, setAnimationState] = useState<"on" | "off">("off");
+  const rAF_ID = useRef<number | undefined>(undefined);
+
+  const lastUpdateTime = useRef<number>(0);
+  const accumulatedTime = useRef<number>(0);
+
+  function countDownTimer() {
+    const interval = 1000; // 1 second
+
+    const updateTimer = (currentTime: number) => {
+      if (lastUpdateTime.current === 0) {
+        lastUpdateTime.current = currentTime;
+      }
+
+      const elapsedTime = currentTime - lastUpdateTime.current;
+      accumulatedTime.current += elapsedTime;
+
+      if (accumulatedTime.current >= interval) {
+        const secondsToSubtract = Math.floor(accumulatedTime.current / 1000);
+        dispatch({ payload: secondsToSubtract, type: "updateTimer" });
+        accumulatedTime.current %= 1000; // Keep the remainder for the next update
+      }
+
+      lastUpdateTime.current = currentTime;
+      rAF_ID.current = requestAnimationFrame(updateTimer);
+    };
+
+    // Start the animation (recursive function)
+    rAF_ID.current = requestAnimationFrame(updateTimer);
+  }
 
   useEffect(() => {
     const timerState = state.timerState;
+    const animationID = rAF_ID.current;
 
     switch (timerState) {
       case "active": {
-        intervalRef.current = setInterval(() => {
-          dispatch({ payload: null, type: "countDown" });
-        }, 1000);
+        if (animationState === "off") {
+          setAnimationState("on");
+          lastUpdateTime.current = 0; // Reset the last update time
+          accumulatedTime.current = 0; // Reset the accumulated time
+          countDownTimer();
+        }
         break;
       }
       case "paused": {
-        clearInterval(intervalRef.current);
+        if (animationID) {
+          cancelAnimationFrame(animationID);
+          setAnimationState("off");
+        }
         break;
       }
       case "stopped": {
-        clearInterval(intervalRef.current);
-        break;
+        if (animationID) {
+          cancelAnimationFrame(animationID);
+          setAnimationState("off");
+        }
       }
     }
-  }, [state.timerState]);
+  }, [state.timerState, animationState]);
 
   return (
     <TimerContext.Provider
