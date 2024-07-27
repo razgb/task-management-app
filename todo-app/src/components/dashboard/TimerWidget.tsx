@@ -59,7 +59,7 @@ export default function TimerWidget() {
 
       <h2
         style={{ fontSize: `${fontSizes["5xl"]}px` }}
-        className="font-semibold text-headingSub"
+        className="font-semibold text-text"
       >
         {formatSecondsToDigitalFormat(timerValue)}
       </h2>

@@ -12,7 +12,7 @@ function App() {
       <LoadingWave loading={false} />
 
       <div
-        className={`flex w-full flex-1 gap-3 overflow-hidden bg-primaryBg p-4 text-text`}
+        className={`flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg p-6 text-text`}
       >
         <Menu />
 

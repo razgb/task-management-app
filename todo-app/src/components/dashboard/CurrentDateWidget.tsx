@@ -38,7 +38,7 @@ export default function CurrentDateWidget() {
       <div>
         <p
           className="font-semibold"
-          style={{ fontSize: `${fontSizes["3xl"]}px` }}
+          style={{ fontSize: `${fontSizes["4xl"]}px` }}
         >
           {time}
         </p>
