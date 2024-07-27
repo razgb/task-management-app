@@ -2,7 +2,6 @@ import CurrentDateWidget from "../components/dashboard/CurrentDateWidget";
 import TimerWidget from "../components/dashboard/TimerWidget";
 import RecentTasks from "../components/dashboard/RecentTasks";
 import TotalTaskProgress from "../components/dashboard/TotalTaskProgress";
-import TimerContextProvider from "../stores/timer/TimerContextProvider";
 
 export default function DashboardPage() {
   return (
@@ -20,9 +19,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="col-span-1 row-span-1">
-        <TimerContextProvider>
-          <TimerWidget />
-        </TimerContextProvider>
+        <TimerWidget />
       </div>
     </div>
   );

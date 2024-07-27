@@ -1,4 +1,3 @@
-import TimerContextProvider from "../stores/timer/TimerContextProvider";
 import Button from "../components/shared/Button";
 import {
   //  Minus , Plus,
@@ -9,8 +8,9 @@ import {
 
 import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
+import formatSecondsToDigitalFormat from "../util/formatSecondsToDigitalFormat";
 
-export function TimerPageComponent() {
+export default function TimerPage() {
   const fontSizes = useFontSize();
   const { state, dispatch } = useTimer();
   const { timerState } = state;
@@ -89,18 +89,4 @@ export function TimerPageComponent() {
       </div>
     </div>
   );
-}
-
-export default function TimerPage() {
-  return (
-    <TimerContextProvider>
-      <TimerPageComponent />
-    </TimerContextProvider>
-  );
-}
-
-function formatSecondsToDigitalFormat(seconds: number) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = (seconds % 60).toString().padStart(2, "0");
-  return `${minutes}:${remainingSeconds}`;
 }

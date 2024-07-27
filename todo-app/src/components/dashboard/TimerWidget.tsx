@@ -4,32 +4,44 @@ import { MoveDiagonalIcon, PauseIcon, PlayIcon } from "lucide-react";
 import Link from "../shared/Link";
 import useTimer from "../../stores/timer/useTimer";
 
+import formatSecondsToDigitalFormat from "../../util/formatSecondsToDigitalFormat";
+
 export default function TimerWidget() {
   const fontSizes = useFontSize();
-  const timerState = useTimer()["state"]["timerState"];
+  const { state, dispatch } = useTimer();
+  const { timerState, timerValue } = state;
 
   let content = null;
   switch (timerState) {
-    case "running":
+    case "active":
       content = (
-        <Button variant="constrast-icon-text">
-          <PauseIcon />
-          <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
+        <Button
+          variant="constrast-icon-text"
+          onClick={() => dispatch({ payload: null, type: "pause" })}
+        >
+          <PauseIcon size={fontSizes["xl"]} />
+          <span style={{ fontSize: fontSizes["sm"] }}>Pause</span>
         </Button>
       );
       break;
     case "paused":
       content = (
-        <Button variant="constrast-icon-text">
-          <PlayIcon />
-          <span style={{ fontSize: fontSizes["base"] }}>Resume</span>
+        <Button
+          variant="constrast-icon-text"
+          onClick={() => dispatch({ payload: null, type: "activate" })}
+        >
+          <PlayIcon size={fontSizes["xl"]} />
+          <span style={{ fontSize: fontSizes["sm"] }}>Resume</span>
         </Button>
       );
       break;
     case "stopped":
       content = (
-        <Button variant="constrast-icon-text">
-          <PlayIcon />
+        <Button
+          variant="constrast-icon-text"
+          onClick={() => dispatch({ payload: null, type: "activate" })}
+        >
+          <PlayIcon size={fontSizes["xl"]} />
           <span style={{ fontSize: fontSizes["base"] }}>Start</span>
         </Button>
       );
@@ -49,10 +61,20 @@ export default function TimerWidget() {
         style={{ fontSize: `${fontSizes["5xl"]}px` }}
         className="font-semibold text-headingSub"
       >
-        00:00
+        {formatSecondsToDigitalFormat(timerValue)}
       </h2>
 
-      <div className="flex items-center justify-center gap-2">{content}</div>
+      <div className="flex items-center justify-center gap-2">
+        <Button
+          onClick={() => dispatch({ payload: null, type: "reset" })}
+          variant="text"
+          style={{ fontSize: fontSizes["sm"] }}
+        >
+          reset
+        </Button>
+
+        {content}
+      </div>
     </div>
   );
 }

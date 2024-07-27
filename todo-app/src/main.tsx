@@ -6,13 +6,16 @@ import "./index.css";
 import { RouterProvider } from "./stores/RouterContext.tsx";
 import ThemeContextProvider from "./stores/ThemeContext.tsx";
 import AccessibilityContextProvider from "./stores/accessibility/AccessibilityProvider.tsx";
+import TimerContextProvider from "./stores/timer/TimerContextProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider>
       <ThemeContextProvider>
         <AccessibilityContextProvider>
-          <App />
+          <TimerContextProvider>
+            <App />
+          </TimerContextProvider>
         </AccessibilityContextProvider>
       </ThemeContextProvider>
     </RouterProvider>

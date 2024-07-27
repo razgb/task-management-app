@@ -86,7 +86,8 @@ function reducer(
       console.warn(
         "Seems to be an error, default switch case reached inside the timer context.",
       );
-      return state;
+
+    // return state;
   }
 }
 

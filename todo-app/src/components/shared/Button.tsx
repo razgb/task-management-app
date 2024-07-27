@@ -39,7 +39,7 @@ export default function Button({
     }
 
     case "constrast-default": {
-      classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-6 py-2 text-textContrast`;
+      classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-4 py-2 text-textContrast`;
       break;
     }
 
