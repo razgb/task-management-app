@@ -45,7 +45,7 @@ function SettingsPage() {
     <div className={`h-full rounded-2xl bg-primaryBg p-12`}>
       <div className="flex h-full flex-col">
         <div className={`flex h-full gap-6`}>
-          <div className="z-10 flex h-full w-1/2 flex-col gap-6 rounded-2xl p-6">
+          <div className="z-10 flex h-full w-1/2 flex-col gap-4 rounded-2xl p-6">
             <h2
               className="font-bold text-heading"
               style={{ fontSize: `${fontSizes["3xl"]}px` }}
@@ -106,7 +106,7 @@ function SettingsTab({
   return (
     <Link
       to={to}
-      className="flex items-center gap-2 rounded-xl bg-secondary-200 px-4 py-2 hover:bg-secondary-300"
+      className="flex items-center gap-2 rounded-xl bg-secondary-200 px-4 py-3 hover:bg-secondary-300"
       ariaLabel={`Settings tab for ${title}.`}
     >
       {icon}

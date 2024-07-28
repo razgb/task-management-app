@@ -9,6 +9,7 @@ import {
 import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
 import formatSecondsToDigitalFormat from "../util/formatSecondsToDigitalFormat";
+import TimerSettingsForm from "../components/settings/timer-page/TimerSettingsForm";
 
 export default function TimerPage() {
   const fontSizes = useFontSize();
@@ -20,31 +21,28 @@ export default function TimerPage() {
   const pauseCountDown = () => dispatch({ payload: null, type: "pause" });
 
   let buttonState = null;
-  switch (timerState) {
-    case "active":
-      buttonState = (
-        <Button variant="constrast-icon-text" onClick={pauseCountDown}>
-          <PauseIcon />
-          <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
-        </Button>
-      );
-      break;
-    case "paused":
-      buttonState = (
-        <Button variant="constrast-icon-text" onClick={activateCountDown}>
-          <PlayIcon />
-          <span>Start</span>
-        </Button>
-      );
-      break;
+  if (timerState === "active") {
+    buttonState = (
+      <Button variant="constrast-icon-text" onClick={pauseCountDown}>
+        <PauseIcon />
+        <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
+      </Button>
+    );
+  } else if (timerState === "paused" || timerState === "off") {
+    buttonState = (
+      <Button variant="constrast-icon-text" onClick={activateCountDown}>
+        <PlayIcon />
+        <span>Start</span>
+      </Button>
+    );
   }
 
   return (
     <div className="h-full rounded-2xl bg-primaryBg p-3">
-      <div className="flex h-full flex-col items-center gap-8">
+      <div className="relative flex h-full flex-col items-center gap-8">
         <div className="flex flex-col gap-4 px-3 py-6">
-          {/* ^ this px-3 words but since the h and w of the rounded display is constant. Design breaks. */}
-          <div className="h-48 w-48 rounded-full bg-secondary-100 md:h-72 md:w-72">
+          {/* ^ this px-3 works but since the h and w of the rounded display is constant. Design breaks. */}
+          <div className="h-48 w-48 rounded-full bg-secondary-300 md:h-72 md:w-72">
             <div className="flex h-full items-center justify-center">
               <h2
                 style={{ fontSize: `${fontSizes["6xl"]}px` }}
@@ -81,11 +79,7 @@ export default function TimerPage() {
           </div>
         </div>
 
-        <div className="w-full flex-1 flex-shrink-0 rounded-2xl bg-secondary-200 p-6">
-          <h2 className="font-semibold" style={{ fontSize: fontSizes["xl"] }}>
-            Timer settings
-          </h2>
-        </div>
+        <TimerSettingsForm />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import { Reducer, useEffect, useReducer, useRef, useState } from "react";
 import { TimerContext } from "./TimerContext";
+import reducer, { defaultTimerState } from "./reducer";
 
 export type ReducerStateType = {
   timerValue: number;
-  timerState: "active" | "paused" | "stopped";
+  timerState: "active" | "paused" | "off";
   timerSettings: {
     breakDuration: number;
     workDuration: number;
@@ -15,81 +16,6 @@ export type ReducerActionType = {
   payload: Partial<ReducerStateType> | number | null;
   type: "updateTimer" | "activate" | "pause" | "reset" | "updateTimerSettings";
 };
-
-const defaultTimerState: ReducerStateType = {
-  timerValue: 25 * 60, // seconds
-  timerState: "paused",
-  timerSettings: {
-    breakDuration: 5 * 60,
-    workDuration: 25 * 60,
-    autoSwitch: true,
-  },
-};
-
-function reducer(
-  state: ReducerStateType,
-  action: ReducerActionType,
-): ReducerStateType {
-  const payload = action.payload;
-
-  switch (action.type) {
-    case "updateTimer": {
-      if (state.timerValue === 0 || typeof payload !== "number") {
-        return {
-          ...defaultTimerState,
-        };
-      }
-
-      return {
-        ...state,
-        timerValue: state.timerValue - payload,
-        timerState: "active",
-      };
-    }
-
-    case "activate": {
-      return {
-        ...state,
-        timerState: "active",
-      };
-    }
-    case "pause": {
-      return {
-        ...state,
-        timerState: "paused",
-      };
-    }
-    case "reset": {
-      return {
-        ...defaultTimerState,
-      };
-    }
-
-    case "updateTimerSettings": {
-      if (payload == null || typeof payload === "number") {
-        console.warn(
-          "error updating timer settings in switch branch, received null or number value instead an object of ReducerActionType.",
-        );
-        return state;
-      }
-
-      return {
-        ...state,
-        timerSettings: {
-          ...state.timerSettings,
-          ...payload.timerSettings,
-        },
-      };
-    }
-
-    default:
-      console.warn(
-        "Seems to be an error, default switch case reached inside the timer context.",
-      );
-
-      return state;
-  }
-}
 
 export default function TimerContextProvider({
   children,
@@ -152,7 +78,7 @@ export default function TimerContextProvider({
         }
         break;
       }
-      case "stopped": {
+      case "off": {
         if (animationID) {
           cancelAnimationFrame(animationID);
           setAnimationState("off");
