@@ -1,8 +1,10 @@
 import Button from "../components/shared/Button";
 import {
+  Minus,
   //  Minus , Plus,
   PauseIcon,
   PlayIcon,
+  Plus,
   TimerResetIcon,
 } from "lucide-react";
 
@@ -39,8 +41,8 @@ export default function TimerPage() {
 
   return (
     <div className="h-full rounded-2xl bg-primaryBg p-3">
-      <div className="relative flex h-full flex-col items-center gap-8">
-        <div className="flex flex-col gap-4 px-3 py-6">
+      <div className="relative flex h-full flex-col items-center gap-8 pt-[5%]">
+        <div className="flex flex-col gap-4">
           {/* ^ this px-3 works but since the h and w of the rounded display is constant. Design breaks. */}
           <div className="h-48 w-48 rounded-full bg-secondary-300 md:h-72 md:w-72">
             <div className="flex h-full items-center justify-center">
@@ -53,21 +55,21 @@ export default function TimerPage() {
             </div>
           </div>
 
-          {/* <div
+          <div
             className={`flex items-center justify-center gap-2 ${
               timerState == "active" ? "opacity-0" : ""
             }`}
           >
-            <Button variant="icon">
-              <Minus />
+            <Button variant="icon-text">
+              <Plus size={fontSizes["xl"]} />
+              <span
+                className="text-medium"
+                style={{ fontSize: fontSizes["base"] }}
+              >
+                5 mins
+              </span>
             </Button>
-            <p className="text-medium" style={{ fontSize: fontSizes["2xl"] }}>
-              30 mins
-            </p>
-            <Button variant="icon">
-              <Plus />
-            </Button>
-          </div> */}
+          </div>
 
           <div className="flex items-center justify-center gap-2">
             <Button onClick={resetCountDown} variant="icon-text">
@@ -77,6 +79,13 @@ export default function TimerPage() {
 
             {buttonState}
           </div>
+
+          <Button
+            onClick={() => dispatch({ payload: null, type: "toggleMode" })}
+            style={{ fontSize: fontSizes["base"] }}
+          >
+            Change mode to: {state.timerMode === "work" ? "break" : "work"}
+          </Button>
         </div>
 
         <TimerSettingsForm />

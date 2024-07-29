@@ -1,5 +1,27 @@
 import { createContext, Dispatch } from "react";
-import { ReducerActionType, ReducerStateType } from "./TimerContextProvider";
+
+export type ReducerStateType = {
+  timerValue: number;
+  timerMode: "work" | "break";
+  timerState: "active" | "paused" | "off";
+  timerSettings: {
+    breakDuration: number;
+    workDuration: number;
+    autoSwitch: boolean;
+  };
+};
+
+export type ReducerActionType = {
+  payload: Partial<ReducerStateType> | number | null;
+  type:
+    | "updateTimer"
+    | "activate"
+    | "pause"
+    | "reset"
+    | "updateTimerSettings"
+    | "toggleMode"
+    | "addTime";
+};
 
 // useReducer state type:
 export type TimerContextType = {
@@ -7,6 +29,6 @@ export type TimerContextType = {
   dispatch: Dispatch<ReducerActionType>;
 };
 
-export const TimerContext = createContext<undefined | TimerContextType>(
+export const TimerContext = createContext<TimerContextType | undefined>(
   undefined,
 );

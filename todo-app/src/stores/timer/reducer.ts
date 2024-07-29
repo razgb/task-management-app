@@ -1,16 +1,17 @@
-import { ReducerActionType, ReducerStateType } from "./TimerContextProvider";
+import { ReducerActionType, ReducerStateType } from "./TimerContext";
 
 const DEFAULT_TIMER_STATE: ReducerStateType = {
-  timerValue: 25 * 60, // 25 minutes in seconds
+  timerValue: 25 * 60,
+  timerMode: "work",
   timerState: "off",
   timerSettings: {
-    breakDuration: 5 * 60, // 5 minutes in seconds
     workDuration: 25 * 60, // 25 minutes in seconds
+    breakDuration: 5 * 60, // 5 minutes in seconds
     autoSwitch: true,
   },
 };
 
-function getStoredTimerState(): ReducerStateType {
+function getLocalStorageTimerSettings(): ReducerStateType {
   const storedTimerStateJSON = localStorage.getItem("timerSettings");
   if (!storedTimerStateJSON) return DEFAULT_TIMER_STATE;
 
@@ -21,8 +22,7 @@ function getStoredTimerState(): ReducerStateType {
     return DEFAULT_TIMER_STATE;
   }
 }
-
-export const defaultTimerState: ReducerStateType = getStoredTimerState();
+export let defaultTimerState: ReducerStateType = getLocalStorageTimerSettings();
 
 export default function reducer(
   state: ReducerStateType,
@@ -32,17 +32,57 @@ export default function reducer(
 
   switch (action.type) {
     case "updateTimer": {
-      if (state.timerValue === 0 || typeof payload !== "number" || null) {
+      if (typeof payload !== "number") {
+        console.warn(
+          "Invalid payload for updateTimer action - not a number",
+          `Payload: ${payload}`,
+        );
+        return state;
+      }
+
+      if (state.timerValue > 0) {
         return {
-          ...defaultTimerState,
+          ...state,
+          timerValue: state.timerValue - payload, // accumalated seconds.
         };
       }
 
+      if (state.timerSettings.autoSwitch === true && state.timerValue <= 0) {
+        if (state.timerMode === "work") {
+          return {
+            ...state,
+            timerMode: "break",
+            timerValue: state.timerSettings.breakDuration,
+          };
+        } else if (state.timerMode === "break") {
+          return {
+            ...state,
+            timerMode: "work",
+            timerValue: state.timerSettings.workDuration,
+          };
+        }
+      }
+
+      // Turn off timer since payload === 0.
       return {
-        ...state,
-        timerValue: state.timerValue - payload,
-        timerState: "active",
+        ...defaultTimerState,
       };
+    }
+
+    case "toggleMode": {
+      if (state.timerMode === "work") {
+        return {
+          ...defaultTimerState,
+          timerValue: state.timerSettings.breakDuration,
+          timerMode: "break",
+        };
+      } else {
+        return {
+          ...defaultTimerState,
+          timerValue: state.timerSettings.workDuration,
+          timerMode: "break",
+        };
+      }
     }
 
     case "activate": {
@@ -72,7 +112,7 @@ export default function reducer(
       }
 
       const newState = {
-        ...state,
+        ...defaultTimerState,
         timerValue: payload.timerSettings?.workDuration || state.timerValue,
         timerSettings: {
           ...state.timerSettings,
@@ -81,8 +121,13 @@ export default function reducer(
       };
 
       localStorage.setItem("timerSettings", JSON.stringify(newState));
+      defaultTimerState = newState;
       return newState;
     }
+
+    // case "addTime": {
+    //   break;
+    // }
 
     default:
       console.warn(

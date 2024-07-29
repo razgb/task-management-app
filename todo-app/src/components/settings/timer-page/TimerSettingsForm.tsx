@@ -42,16 +42,6 @@ export default function TimerSettingsForm() {
         },
       },
     });
-
-    // dispatch({
-    //   type: "updateTimer",
-    //   payload: dispatchValue,
-    // });
-
-    // dispatch({
-    //   type: "reset",
-    //   payload: null,
-    // });
   }
 
   return (

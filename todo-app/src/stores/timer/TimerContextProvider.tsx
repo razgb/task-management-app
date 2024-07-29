@@ -1,21 +1,7 @@
 import { Reducer, useEffect, useReducer, useRef, useState } from "react";
 import { TimerContext } from "./TimerContext";
 import reducer, { defaultTimerState } from "./reducer";
-
-export type ReducerStateType = {
-  timerValue: number;
-  timerState: "active" | "paused" | "off";
-  timerSettings: {
-    breakDuration: number;
-    workDuration: number;
-    autoSwitch: boolean;
-  };
-};
-
-export type ReducerActionType = {
-  payload: Partial<ReducerStateType> | number | null;
-  type: "updateTimer" | "activate" | "pause" | "reset" | "updateTimerSettings";
-};
+import { ReducerStateType, ReducerActionType } from "./TimerContext";
 
 export default function TimerContextProvider({
   children,
@@ -26,7 +12,7 @@ export default function TimerContextProvider({
     Reducer<ReducerStateType, ReducerActionType>
   >(reducer, defaultTimerState);
 
-  const [animationState, setAnimationState] = useState<"on" | "off">("off");
+  const [animationState, setAnimationState] = useState<"on" | "off">("off"); // toggle for timer countdown.
   const rAF_ID = useRef<number | undefined>(undefined);
 
   const lastUpdateTime = useRef<number>(0);
@@ -44,9 +30,11 @@ export default function TimerContextProvider({
       accumulatedTime.current += elapsedTime;
 
       if (accumulatedTime.current >= interval) {
-        const secondsToSubtract = Math.floor(accumulatedTime.current / 1000);
+        const secondsToSubtract = Math.floor(
+          accumulatedTime.current / interval,
+        );
         dispatch({ payload: secondsToSubtract, type: "updateTimer" });
-        accumulatedTime.current %= 1000; // Keep the remainder for the next update
+        accumulatedTime.current %= interval; // Keep the remainder for the next update
       }
 
       lastUpdateTime.current = currentTime;

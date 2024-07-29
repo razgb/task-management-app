@@ -15,27 +15,45 @@ export default function TimerWidget() {
   switch (timerState) {
     case "active":
       content = (
-        <Button
-          variant="constrast-icon-text"
-          onClick={() => dispatch({ payload: null, type: "pause" })}
-        >
-          <PauseIcon size={fontSizes["xl"]} />
-          <span style={{ fontSize: fontSizes["sm"] }}>Pause</span>
-        </Button>
+        <>
+          <Button
+            onClick={() => dispatch({ payload: null, type: "reset" })}
+            variant="text"
+            style={{ fontSize: fontSizes["sm"] }}
+          >
+            reset
+          </Button>
+          <Button
+            variant="constrast-icon-text"
+            onClick={() => dispatch({ payload: null, type: "pause" })}
+          >
+            <PauseIcon size={fontSizes["xl"]} />
+            <span style={{ fontSize: fontSizes["sm"] }}>Pause</span>
+          </Button>
+        </>
       );
       break;
     case "paused":
       content = (
-        <Button
-          variant="constrast-icon-text"
-          onClick={() => dispatch({ payload: null, type: "activate" })}
-        >
-          <PlayIcon size={fontSizes["xl"]} />
-          <span style={{ fontSize: fontSizes["sm"] }}>Resume</span>
-        </Button>
+        <>
+          <Button
+            onClick={() => dispatch({ payload: null, type: "reset" })}
+            variant="text"
+            style={{ fontSize: fontSizes["sm"] }}
+          >
+            reset
+          </Button>
+          <Button
+            variant="constrast-icon-text"
+            onClick={() => dispatch({ payload: null, type: "activate" })}
+          >
+            <PlayIcon size={fontSizes["xl"]} />
+            <span style={{ fontSize: fontSizes["sm"] }}>Resume</span>
+          </Button>
+        </>
       );
       break;
-    case "stopped":
+    case "off":
       content = (
         <Button
           variant="constrast-icon-text"
@@ -64,17 +82,7 @@ export default function TimerWidget() {
         {formatSecondsToDigitalFormat(timerValue)}
       </h2>
 
-      <div className="flex items-center justify-center gap-2">
-        <Button
-          onClick={() => dispatch({ payload: null, type: "reset" })}
-          variant="text"
-          style={{ fontSize: fontSizes["sm"] }}
-        >
-          reset
-        </Button>
-
-        {content}
-      </div>
+      <div className="flex items-center justify-center gap-2">{content}</div>
     </div>
   );
 }
