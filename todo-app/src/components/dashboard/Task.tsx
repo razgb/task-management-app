@@ -4,6 +4,8 @@ import useRouter from "../../stores/useRouter";
 import Link from "../shared/Link";
 import { useState } from "react";
 import useFontSize from "../../stores/accessibility/useFontSize";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 export type TaskType = {
   title: string;
@@ -24,6 +26,14 @@ export default function Task({
   status,
 }: TaskType) {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
+  const { accessibilityTextColor } = useAccessibilityTextColor();
   const updatePath = useRouter().updatePath;
   const [isDraggable, setIsDraggable] = useState(false);
   const [taskData] = useState({
@@ -46,6 +56,10 @@ export default function Task({
       onDragStart={handleStartDrag}
       draggable={isDraggable}
       className="flex flex-col justify-center rounded-xl bg-secondaryBgWeak p-3"
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+      }}
     >
       <div>
         <div
@@ -55,7 +69,10 @@ export default function Task({
         >
           <h2
             className="font-semibold"
-            style={{ fontSize: `${fontSizes.lg}px` }}
+            style={{
+              fontSize: `${fontSizes.lg}px`,
+              color: highContrastMode ? accessibilityTextColor : "",
+            }}
           >
             {title}
           </h2>
@@ -65,10 +82,18 @@ export default function Task({
             className={`group relative cursor-grab rounded-full p-2 hover:bg-secondary-200 ${
               hideGrabIcon ? "hidden" : ""
             }`}
+            style={{
+              transition: reduceAnimations ? "none" : "",
+              borderRadius: removeRoundEdges ? "0" : "",
+              color: highContrastMode ? accessibilityTextColor : "",
+            }}
           >
             <span
-              className="absolute -left-1/2 -top-5 min-w-16 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
-              style={{ fontSize: `${fontSizes.xs}px` }}
+              className="absolute -left-1/2 -top-5 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
+              style={{
+                fontSize: `${fontSizes.xs}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+              }}
             >
               Drag task
             </span>
@@ -78,7 +103,10 @@ export default function Task({
 
         <p
           className={`${description && "mb-2"} max-w-[45ch] text-textWeak 2xl:text-base`}
-          style={{ fontSize: `${fontSizes.sm}px` }}
+          style={{
+            fontSize: `${fontSizes.sm}px`,
+            color: highContrastMode ? accessibilityTextColor : "",
+          }}
         >
           {description}
         </p>
@@ -97,11 +125,18 @@ export default function Task({
                 if (e.key === "Enter" || e.key === " ")
                   updatePath("/tasks/details");
               }}
+              style={{
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
             >
               <div className="flex items-center gap-2">
                 <h3
                   className="font-semibold"
-                  style={{ fontSize: `${fontSizes.base}px` }}
+                  style={{
+                    fontSize: `${fontSizes.base}px`,
+                    color: highContrastMode ? accessibilityTextColor : "",
+                  }}
                 >
                   Sub Tasks
                 </h3>
@@ -115,7 +150,11 @@ export default function Task({
                 />
                 <span
                   className="font-semibold"
-                  style={{ fontSize: `${fontSizes.sm}px` }}
+                  style={{
+                    fontSize: `${fontSizes.sm}px`,
+                    color: highContrastMode ? accessibilityTextColor : "",
+                    letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                  }}
                 >
                   {taskData.subtaskCompletion}%
                 </span>

@@ -12,9 +12,16 @@ import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
 import formatSecondsToDigitalFormat from "../util/formatSecondsToDigitalFormat";
 import TimerSettingsForm from "../components/settings/timer-page/TimerSettingsForm";
+import useAccessibility from "../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 
 export default function TimerPage() {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const { removeRoundEdges, highContrastMode, increaseLetterSpacing } =
+    accessibility;
+
   const { state, dispatch } = useTimer();
   const { timerState } = state;
 
@@ -25,14 +32,14 @@ export default function TimerPage() {
   let buttonState = null;
   if (timerState === "active") {
     buttonState = (
-      <Button variant="constrast-icon-text" onClick={pauseCountDown}>
+      <Button variant="contrast-icon-text" onClick={pauseCountDown}>
         <PauseIcon />
         <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
       </Button>
     );
   } else if (timerState === "paused" || timerState === "off") {
     buttonState = (
-      <Button variant="constrast-icon-text" onClick={activateCountDown}>
+      <Button variant="contrast-icon-text" onClick={activateCountDown}>
         <PlayIcon />
         <span>Start</span>
       </Button>
@@ -40,13 +47,27 @@ export default function TimerPage() {
   }
 
   return (
-    <div className="h-full rounded-2xl bg-primaryBg p-3">
+    <div
+      className="h-full rounded-2xl bg-primaryBg p-3"
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+    >
       <div className="relative flex h-full flex-col items-center gap-8 pt-[5%]">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-48 w-48 rounded-full bg-secondary-300 md:h-80 md:w-80">
+          <div
+            className="h-48 w-48 rounded-full bg-secondary-300 md:h-80 md:w-80"
+            style={{
+              borderRadius: removeRoundEdges ? 0 : "",
+            }}
+          >
             <div className="flex h-full items-center justify-center">
               <h2
-                style={{ fontSize: `${fontSizes["6xl"]}px` }}
+                style={{
+                  fontSize: `${fontSizes["6xl"]}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+                }}
                 className="font-semibold text-headingSub"
               >
                 {formatSecondsToDigitalFormat(

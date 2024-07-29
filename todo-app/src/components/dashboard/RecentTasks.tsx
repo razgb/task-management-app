@@ -2,6 +2,8 @@ import { MoveDiagonal } from "lucide-react";
 import Task from "./Task";
 import Link from "../shared/Link";
 import useFontSize from "../../stores/accessibility/useFontSize";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 /*
 Choice one: add a check to see if total number of tasks 
@@ -13,11 +15,28 @@ tasks will show up here.
 
 export default function RecentTasks() {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
+    accessibility;
+
+  const { accessibilityTextColor } = useAccessibilityTextColor();
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8">
+    <div
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+      className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8"
+    >
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-bold" style={{ fontSize: `${fontSizes["3xl"]}px` }}>
+        <h2
+          className="font-bold"
+          style={{
+            fontSize: `${fontSizes["3xl"]}px`,
+            color: highContrastMode ? accessibilityTextColor : "",
+            letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          }}
+        >
           Recent Tasks
         </h2>
         <Link

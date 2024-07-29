@@ -10,13 +10,22 @@ import {
 import { useState } from "react";
 import useTheme from "../../stores/useTheme";
 import useFontSize from "../../stores/accessibility/useFontSize";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 export default function ThemeAccordion() {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    reduceAnimations,
+    highContrastMode,
+    increaseLetterSpacing,
+  } = accessibility;
 
   const [open, setOpen] = useState(false);
   const { changeAppTheme, theme, themeController } = useTheme();
-
+  const { accessibilityTextColor } = useAccessibilityTextColor();
   let borderStyles = "";
   if (open) {
     borderStyles = "rounded-t-3xl";
@@ -32,6 +41,12 @@ export default function ThemeAccordion() {
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
         className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 ${fontSizes["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
+        style={{
+          borderRadius: removeRoundEdges ? "0" : "",
+          transition: reduceAnimations ? "none" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
       >
         <div className="flex items-center gap-2">
           <div aria-hidden="true">
@@ -47,7 +62,12 @@ export default function ThemeAccordion() {
 
       {/* The body (buttons) of the accordion */}
       {open && (
-        <div className="flex flex-col items-start overflow-hidden rounded-b-3xl">
+        <div
+          style={{
+            borderRadius: removeRoundEdges ? "0" : "",
+          }}
+          className="flex flex-col items-start overflow-hidden rounded-b-3xl"
+        >
           <ThemeAccordionButton
             onClick={() => {
               changeAppTheme("light", "user");
@@ -100,12 +120,26 @@ function ThemeAccordionButton({
   selected,
 }: ThemeAccordionButtonProps) {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    reduceAnimations,
+    highContrastMode,
+    increaseLetterSpacing,
+  } = accessibility;
 
   return (
     <button
       onClick={onClick}
       className={`flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-btnHover`}
-      style={{ fontSize: `${fontSizes.base}px` }}
+      style={{
+        fontSize: `${fontSizes.base}px`,
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode ? accessibilityTextColor : "",
+      }}
     >
       <span
         style={{ fontSize: `${fontSizes.base}px` }}

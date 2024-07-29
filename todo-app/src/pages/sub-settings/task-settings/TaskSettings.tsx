@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Button from "../../../components/shared/Button";
 import useFontSize from "../../../stores/accessibility/useFontSize";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 export default function TaskSettings() {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
 
   const [defaultPriority, setDefaultPriority] = useState("medium");
   const [defaultDueDate, setDefaultDueDate] = useState("1");
@@ -24,11 +32,18 @@ export default function TaskSettings() {
   return (
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
       <h2
-        style={{ fontSize: fontSizes["3xl"] }}
+        style={{
+          fontSize: fontSizes["3xl"],
+          color: highContrastMode ? "#fff" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          borderRadius: removeRoundEdges ? "0" : "",
+          transition: reduceAnimations ? "none" : "",
+        }}
         className={`mb-8 font-bold text-heading`}
       >
         Task Settings
       </h2>
+
       <form
         className="flex max-w-[600px] flex-col gap-4"
         onSubmit={handleSubmit}

@@ -1,4 +1,6 @@
 import { ButtonHTMLAttributes, CSSProperties } from "react";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useTheme from "../../stores/useTheme";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
@@ -7,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "ghost-icon"
     | "constrast-default"
     | "icon-text"
-    | "constrast-icon-text";
+    | "contrast-icon-text";
   transitionDuration?: number;
   "aria-label"?: string;
   style?: CSSProperties;
@@ -21,6 +23,20 @@ export default function Button({
   ...props
 }: ButtonProps) {
   let classes = `transition-colors duration-${transitionDuration} `;
+  const { accessibility } = useAccessibility();
+  const { theme } = useTheme();
+  const {
+    removeRoundEdges,
+    reduceAnimations,
+    increaseLetterSpacing,
+    highContrastMode,
+  } = accessibility;
+
+  const textColorStyle = theme === "light" ? "#000" : "#fff";
+  const reverseTextColorStyle = theme === "light" ? "#fff" : "#000";
+  const textColor = variant?.toLowerCase().includes("contrast")
+    ? reverseTextColorStyle
+    : textColorStyle;
 
   switch (variant) {
     case "text": {
@@ -48,7 +64,7 @@ export default function Button({
       break;
     }
 
-    case "constrast-icon-text": {
+    case "contrast-icon-text": {
       classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-6 py-2 text-textContrast flex items-center gap-2`;
       break;
     }
@@ -63,6 +79,10 @@ export default function Button({
     <button
       style={{
         ...style,
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode ? textColor : "",
       }}
       className={classes}
       aria-label={ariaLabel}

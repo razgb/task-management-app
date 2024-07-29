@@ -1,11 +1,10 @@
-import Button from "../../../components/shared/Button";
-import { Moon, Type, Scan, Space, View, TimerReset } from "lucide-react";
-
+import { Moon, Type, Scan, Space } from "lucide-react";
 import ToggleField from "./ToggleField";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import useFontSize from "../../../stores/accessibility/useFontSize";
 import { useState } from "react";
 import { AccessibilityContextType } from "../../../stores/accessibility/AccessibilityContext";
+import { appConfigVariables } from "../../../appConfigVariables";
 
 const labelStyles = "font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
@@ -22,8 +21,6 @@ export default function AccessibilitySettings() {
     reduceAnimations,
     removeRoundEdges,
     increaseLetterSpacing,
-    defaultTimeout,
-    dyslexicMode,
     fontSizeMultiplier,
   } = accessibility;
 
@@ -37,6 +34,12 @@ export default function AccessibilitySettings() {
       className="flex h-full flex-col overflow-y-auto rounded-2xl bg-primaryBg p-6"
       role="region"
       aria-labelledby="accessibility-heading"
+      style={{
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing
+          ? appConfigVariables.letterSpacing
+          : "",
+      }}
     >
       <h2
         id="accessibility-heading"
@@ -55,6 +58,7 @@ export default function AccessibilitySettings() {
         <p id="form-description" className="sr-only">
           Customize accessibility settings for the application.
         </p>
+
         <div aria-live="polite" className="sr-only">
           {formStatus === "success" && "Accessibility settings updated"}
           {formStatus === "error" &&
@@ -76,7 +80,7 @@ export default function AccessibilitySettings() {
             <select
               defaultValue={fontSizeMultiplier}
               id="fontSize"
-              className={`w-full rounded-xl bg-secondaryBg p-3`}
+              className={`w-full rounded-xl bg-secondary-200 p-3`}
               aria-label="Select text size multiplier"
               aria-describedby="font-size-description"
               style={{ fontSize: `${fontSizes.base}px` }}
@@ -93,7 +97,6 @@ export default function AccessibilitySettings() {
               <option value="1">1x</option>
               <option value="1.25">1.25x</option>
               <option value="1.5">1.5x</option>
-              <option value="2">2x</option>
             </select>
             <p className="sr-only" id="font-size-description">
               Choose a multiplier to adjust the text size throughout the
@@ -140,28 +143,6 @@ export default function AccessibilitySettings() {
             })
           }
         />
-        <ToggleField
-          title="Dyslexia friendly mode"
-          label="Dyslexic Mode"
-          icon={<View size={20} />}
-          checked={dyslexicMode}
-          onChange={() => updateAccessibility({ dyslexicMode: !dyslexicMode })}
-        />
-        <ToggleField
-          title="Adjust session duration"
-          label="Default Timeout"
-          icon={<TimerReset size={20} />}
-          checked={defaultTimeout}
-          onChange={() =>
-            updateAccessibility({ defaultTimeout: !defaultTimeout })
-          }
-        />
-
-        <div className="mt-4">
-          <Button type="submit" style={{ fontSize: `${fontSizes.xl}px` }}>
-            Save Changes
-          </Button>
-        </div>
       </form>
     </div>
   );

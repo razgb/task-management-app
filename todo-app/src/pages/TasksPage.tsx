@@ -7,8 +7,12 @@ import {
   completeTasksData,
 } from "../components/tasks-page/taskData.ts";
 import useFontSize from "../stores/accessibility/useFontSize.tsx";
+import useAccessibility from "../stores/accessibility/useAccessibility.tsx";
 
 export default function TasksPage() {
+  const { accessibility } = useAccessibility();
+  const { removeRoundEdges } = accessibility;
+
   const [draftTasks, setDraftTasks] = useState<TaskType[]>(
     draftTasksData.map((task) => ({ ...task, hideGrabIcon: false })),
   );
@@ -40,7 +44,12 @@ export default function TasksPage() {
   };
 
   return (
-    <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-3">
+    <div
+      className="h-full overflow-hidden rounded-2xl bg-primaryBg p-3"
+      style={{
+        borderRadius: removeRoundEdges ? 0 : "",
+      }}
+    >
       <div className="grid h-full grid-cols-3">
         <TaskColumn
           taskColumnMap={taskColumnMap}
@@ -83,6 +92,13 @@ type TaskGroupColumnType = {
 
 function TaskColumn({ variant, tasks, taskColumnMap }: TaskGroupColumnType) {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    highContrastMode,
+    reduceAnimations,
+    increaseLetterSpacing,
+  } = accessibility;
 
   const output = tasks.map((item) => (
     <Task
@@ -124,9 +140,17 @@ function TaskColumn({ variant, tasks, taskColumnMap }: TaskGroupColumnType) {
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       className="flex h-full flex-col overflow-hidden p-4"
+      style={{
+        borderRadius: removeRoundEdges ? 0 : "",
+        transition: reduceAnimations ? "none" : "",
+      }}
     >
       <h2
-        style={{ fontSize: `${fontSizes["2xl"]}px` }}
+        style={{
+          fontSize: `${fontSizes["2xl"]}px`,
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          color: highContrastMode ? "#fff" : "",
+        }}
         className="mb-4 font-bold capitalize"
       >
         {variant}

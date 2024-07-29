@@ -2,6 +2,8 @@ import { useReducer } from "react";
 import Button from "../components/shared/Button";
 import Link from "../components/shared/Link";
 import useFontSize from "../stores/accessibility/useFontSize";
+import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
+import useAccessibility from "../stores/accessibility/useAccessibility";
 
 const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
 const labelStyles = "font-medium";
@@ -57,6 +59,14 @@ function reducer(state: TaskFormState, action: TaskFormAction) {
 
 export default function TaskCreator() {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    reduceAnimations,
+    removeRoundEdges,
+  } = accessibility;
+  const { accessibilityTextColor } = useAccessibilityTextColor();
 
   const [state, dispatch] = useReducer(reducer, {
     taskName: "",
@@ -86,13 +96,20 @@ export default function TaskCreator() {
               <label
                 className={`${labelStyles} inline`}
                 htmlFor="taskName"
-                style={{ fontSize: `${fontSizes.xl}px` }}
+                style={{
+                  fontSize: `${fontSizes.xl}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                }}
               >
                 Task Title
               </label>
               <span
                 className="text-textWeak"
-                style={{ fontSize: `${fontSizes.sm}px` }}
+                style={{
+                  fontSize: `${fontSizes.sm}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                }}
               >
                 {`${getWordCount(state.taskName)}/10 words`}
               </span>
@@ -102,7 +119,12 @@ export default function TaskCreator() {
               type="text"
               id="taskName"
               className={inputStyles}
-              style={{ fontSize: `${fontSizes.lg}px` }}
+              style={{
+                fontSize: `${fontSizes.lg}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
               value={state.taskName}
               onChange={(e) =>
                 dispatch({ type: "setName", payload: e.target.value })
@@ -115,7 +137,11 @@ export default function TaskCreator() {
             <label
               className={labelStyles}
               htmlFor="dueDate"
-              style={{ fontSize: `${fontSizes.xl}px` }}
+              style={{
+                fontSize: `${fontSizes.xl}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+              }}
             >
               Due Date{" "}
               <span
@@ -129,7 +155,12 @@ export default function TaskCreator() {
               type="date"
               id="dueDate"
               className={`${inputStyles} cursor-pointer`}
-              style={{ fontSize: `${fontSizes.lg}px` }}
+              style={{
+                fontSize: `${fontSizes.lg}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
               value={state.dueDate}
               onChange={(e) =>
                 dispatch({ type: "setDueDate", payload: e.target.value })
@@ -141,7 +172,11 @@ export default function TaskCreator() {
             <label
               className={labelStyles}
               htmlFor="priority"
-              style={{ fontSize: `${fontSizes.xl}px` }}
+              style={{
+                fontSize: `${fontSizes.xl}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+              }}
             >
               Priority Level{" "}
               <span
@@ -155,7 +190,12 @@ export default function TaskCreator() {
             <select
               id="priority"
               className={`${inputStyles} cursor-pointer`}
-              style={{ fontSize: `${fontSizes.lg}px` }}
+              style={{
+                fontSize: `${fontSizes.lg}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
               value={state.priority}
               onChange={(e) =>
                 dispatch({ type: "setPriority", payload: e.target.value })
@@ -175,7 +215,11 @@ export default function TaskCreator() {
               <label
                 className={labelStyles}
                 htmlFor="description"
-                style={{ fontSize: `${fontSizes.xl}px` }}
+                style={{
+                  fontSize: `${fontSizes.xl}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                }}
               >
                 Description
               </label>
@@ -191,7 +235,12 @@ export default function TaskCreator() {
               placeholder="Add some details about your task..."
               id="description"
               className={`${inputStyles} h-32 resize-none overflow-y-hidden`}
-              style={{ fontSize: `${fontSizes.lg}px` }}
+              style={{
+                fontSize: `${fontSizes.lg}px`,
+                color: highContrastMode ? accessibilityTextColor : "",
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
               value={state.description}
               onChange={(e) =>
                 dispatch({ type: "setDescription", payload: e.target.value })
@@ -203,9 +252,7 @@ export default function TaskCreator() {
             <Link className="text-textWeak hover:text-text" to="/dashboard">
               Cancel
             </Link>
-            <Button style={{ fontSize: `${fontSizes.xl}px` }} variant="default">
-              Create
-            </Button>
+            <Button>Create</Button>
           </div>
         </div>
       </form>

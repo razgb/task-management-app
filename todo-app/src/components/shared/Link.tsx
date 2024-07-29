@@ -1,5 +1,7 @@
 import useRouter from "../../stores/useRouter";
 import { ValidUrlPaths } from "../../stores/RouterContext";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useTheme from "../../stores/useTheme";
 
 type LinkProps = {
   to: ValidUrlPaths;
@@ -17,6 +19,14 @@ export default function Link({
   style,
 }: LinkProps) {
   const { updatePath } = useRouter();
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    reduceAnimations,
+    highContrastMode,
+    increaseLetterSpacing,
+  } = accessibility;
+  const { theme } = useTheme();
 
   return (
     <a
@@ -29,6 +39,10 @@ export default function Link({
       aria-label={ariaLabel}
       style={{
         ...style,
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode ? (theme === "light" ? "#000" : "#fff") : "",
       }}
     >
       {children}

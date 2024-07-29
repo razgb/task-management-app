@@ -1,11 +1,29 @@
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useFontSize from "../../stores/accessibility/useFontSize";
 
 export default function TotalTaskProgress() {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
   const completion = Math.floor(Math.random() * 100);
+  const { accessibility } = useAccessibility();
+  const {
+    increaseLetterSpacing,
+    highContrastMode,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
 
   return (
-    <div className="flex h-full flex-col justify-center rounded-2xl bg-primaryBg px-12">
+    <div
+      className="flex h-full flex-col justify-center rounded-2xl bg-primaryBg px-12"
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode ? accessibilityTextColor : "",
+      }}
+    >
       <h2
         className="font-semibold capitalize"
         style={{ fontSize: `${fontSizes["2xl"]}px` }}

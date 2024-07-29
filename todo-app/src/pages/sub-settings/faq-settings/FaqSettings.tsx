@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import useFontSize from "../../../stores/accessibility/useFontSize";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 type FaqItem = {
   question: string;
@@ -45,12 +47,30 @@ function Accordion({
   toggleAccordion: () => void;
 }) {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
 
   return (
-    <div className="mb-4 overflow-hidden rounded-xl bg-secondaryBgWeak">
+    <div
+      className="mb-4 overflow-hidden rounded-xl bg-secondary-200"
+      style={{
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+      }}
+    >
       <button
         className="flex w-full items-center justify-between p-4 text-left text-lg font-medium text-text focus:outline-none"
         onClick={toggleAccordion}
+        style={{
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
       >
         <span style={{ fontSize: `${fontSizes.base}px` }}>{item.question}</span>
         {isOpen ? (
@@ -59,9 +79,17 @@ function Accordion({
           <ChevronDown size={fontSizes.xl} />
         )}
       </button>
+
       {isOpen && (
         <div className="p-4 pt-0 text-textWeak">
-          <p style={{ fontSize: `${fontSizes.base}px` }}>{item.answer}</p>
+          <p
+            style={{
+              fontSize: `${fontSizes.base}px`,
+              color: highContrastMode ? accessibilityTextColor : "",
+            }}
+          >
+            {item.answer}
+          </p>
         </div>
       )}
     </div>

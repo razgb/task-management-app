@@ -13,13 +13,10 @@ export default function AccessibilityContextProvider({
     AccessibilityContextType["accessibility"]
   >({
     fontSizeMultiplier: 1,
-    reduceAnimations: false,
-    removeRoundEdges: false,
-    increaseLetterSpacing: false,
-    highContrastMode: false,
-    dyslexicMode: false,
-    colorBlindMode: "Normal",
-    defaultTimeout: false,
+    reduceAnimations: true,
+    removeRoundEdges: true,
+    increaseLetterSpacing: true,
+    highContrastMode: true,
   });
 
   function updateAccessibility(

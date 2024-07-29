@@ -6,16 +6,25 @@ import TasksPage from "../pages/TasksPage.tsx";
 import TaskCreator from "../pages/TaskCreator.tsx";
 import ErrorPage from "../pages/ErrorPage.tsx";
 import TimerPage from "../pages/TimerPage.tsx";
+import useAccessibility from "../stores/accessibility/useAccessibility";
 
 export default function Outlet() {
   const { path } = useRouter();
+  const { accessibility } = useAccessibility();
+  const { removeRoundEdges } = accessibility;
+
   let content: React.ReactNode | null = null;
 
   // Checks for sub settings routes in the path. SettingsPage handles the rest.
   if (new RegExp("/settings(/.*)?$").test(path)) {
     content = <SettingsPage />;
     return (
-      <div className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3">
+      <div
+        style={{
+          borderRadius: removeRoundEdges ? "0" : "",
+        }}
+        className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3"
+      >
         {content}
       </div>
     );
@@ -70,7 +79,12 @@ export default function Outlet() {
   }
 
   return (
-    <div className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3">
+    <div
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+      className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3"
+    >
       {content}
     </div>
   );

@@ -3,9 +3,16 @@ import useTimer from "../../../stores/timer/useTimer";
 import useFontSize from "../../../stores/accessibility/useFontSize";
 import Button from "../../shared/Button";
 import { SettingsIcon } from "lucide-react";
+import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
 export default function TimerSettingsForm() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const { highContrastMode, removeRoundEdges, increaseLetterSpacing } =
+    accessibility;
+
   const fontSizes = useFontSize();
   const { state, dispatch } = useTimer();
 
@@ -62,7 +69,11 @@ export default function TimerSettingsForm() {
           <label
             htmlFor="workDuration"
             className="mb-1 block"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
+            }}
           >
             Work Duration (minutes):
           </label>
@@ -72,7 +83,11 @@ export default function TimerSettingsForm() {
             min="1"
             max="60"
             className="w-full rounded bg-secondary-300 p-2"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
             value={state.timerSettings.workDuration / 60}
             onChange={(e) => handleSettingsChange(e, "workDuration")}
           />
@@ -82,7 +97,11 @@ export default function TimerSettingsForm() {
           <label
             htmlFor="breakDuration"
             className="mb-1 block"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
+            }}
           >
             Break Duration (minutes):
           </label>
@@ -93,7 +112,11 @@ export default function TimerSettingsForm() {
             max="60"
             value={state.timerSettings.breakDuration / 60}
             className="w-full rounded bg-secondary-300 p-2"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
             onChange={(e) => handleSettingsChange(e, "breakDuration")}
           />
         </div>
@@ -106,7 +129,14 @@ export default function TimerSettingsForm() {
             className="h-4 w-4"
             onChange={(e) => handleSettingsChange(e, "autoSwitch")}
           />
-          <label htmlFor="autoSwitch" style={{ fontSize: fontSizes["base"] }}>
+          <label
+            style={{
+              fontSize: fontSizes["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
+            }}
+            htmlFor="autoSwitch"
+          >
             Auto switch to break
           </label>
         </div>

@@ -1,9 +1,12 @@
 import useFontSize from "../../../stores/accessibility/useFontSize";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import { appConfigVariables } from "../../../appConfigVariables";
+import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 const labelStyles = "text-lg font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
 const toggleContainerStyle =
-  "flex items-center justify-between bg-secondaryBgWeak rounded-xl p-4";
+  "flex items-center justify-between bg-secondary-200 rounded-xl p-4";
 
 type ToggleFieldType = {
   title: string;
@@ -20,28 +23,67 @@ export default function ToggleField({
   ...props
 }: ToggleFieldType) {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    reduceAnimations,
+    removeRoundEdges,
+  } = accessibility;
 
   return (
-    <div className={inputContainerStyle}>
-      <label style={{ fontSize: fontSizes.base }} className={labelStyles}>
+    <div
+      className={inputContainerStyle}
+      style={{
+        letterSpacing: increaseLetterSpacing
+          ? appConfigVariables.letterSpacing
+          : "",
+      }}
+    >
+      <label
+        style={{
+          fontSize: fontSizes.base,
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
+        className={labelStyles}
+      >
         {title}
       </label>
-      <div className={toggleContainerStyle}>
+      <div
+        className={toggleContainerStyle}
+        style={{
+          borderRadius: removeRoundEdges ? "0" : "",
+          transition: reduceAnimations ? "none" : "",
+        }}
+      >
         <span className="flex items-center gap-2">
           {icon}
-          <span style={{ fontSize: fontSizes.base }}>{label}</span>
+          <span
+            style={{
+              fontSize: fontSizes.base,
+              color: highContrastMode ? accessibilityTextColor : "",
+            }}
+          >
+            {label}
+          </span>
         </span>
         <label className="relative inline-flex cursor-pointer items-center">
           <input type="checkbox" className="peer sr-only" {...props} />
 
           {/* prettier-ignore */}
-          <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute
+          <div className="peer h-6 w-11 rounded-full bg-gray-500 after:absolute
            after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full
             after:border after:border-gray-300 after:bg-white after:transition-all
-            after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full
-          peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4
-            peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700
-            dark:peer-focus:ring-blue-800"></div>
+            after:content-[''] peer-checked:bg-secondary-700 peer-checked:after:translate-x-full
+          peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-2
+            peer-focus:ring-secondary-100  
+            dark:peer-focus:ring-secondary-900"
+            style={{
+              borderRadius: removeRoundEdges ? "0" : "",
+              transition: reduceAnimations ? "none" : "",
+            }}
+          ></div>
         </label>
       </div>
     </div>

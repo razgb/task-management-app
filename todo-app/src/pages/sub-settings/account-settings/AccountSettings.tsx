@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Button from "../../../components/shared/Button";
 import useFontSize from "../../../stores/accessibility/useFontSize";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 export default function AccountSettings() {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -14,7 +22,7 @@ export default function AccountSettings() {
 
   const labelStyles = "font-medium text-text";
   const inputStyles =
-    "w-full rounded-xl bg-secondaryBgWeak p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
+    "w-full rounded-xl bg-secondary-200 p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
   const inputContainerStyle = "flex flex-col gap-2 mb-4";
 
   function handleEmailChange(e: InputEventType) {
@@ -44,11 +52,18 @@ export default function AccountSettings() {
   return (
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
       <h2
-        style={{ fontSize: fontSizes["3xl"] }}
+        style={{
+          fontSize: fontSizes["3xl"],
+          color: highContrastMode ? "#fff" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          borderRadius: removeRoundEdges ? "0" : "",
+          transition: reduceAnimations ? "none" : "",
+        }}
         className={`mb-4 font-bold text-heading`}
       >
         Account Settings
       </h2>
+
       <form
         className="flex max-w-[600px] flex-col gap-4"
         onSubmit={handleSubmit}

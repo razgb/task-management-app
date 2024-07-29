@@ -1,6 +1,9 @@
 import { ValidUrlPaths } from "../../stores/RouterContext";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useFontSize from "../../stores/accessibility/useFontSize";
 import useRouter from "../../stores/useRouter";
+import useTheme from "../../stores/useTheme";
 
 type MenuButtonProps = {
   to: ValidUrlPaths;
@@ -15,7 +18,17 @@ export default function MenuButton({
   icon,
   variant = "default",
 }: MenuButtonProps) {
+  const { accessibilityTextColor, reverseAccessibilityTextColor } =
+    useAccessibilityTextColor();
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    reduceAnimations,
+    highContrastMode,
+    increaseLetterSpacing,
+  } = accessibility;
+
   const { updatePath } = useRouter();
   const validPath = to !== null;
 
@@ -35,7 +48,17 @@ export default function MenuButton({
     <a
       className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 font-medium ${buttonBgStyles}`}
       onClick={() => validPath && updatePath(to)}
-      style={{ fontSize: `${fontSizes.lg}px` }}
+      style={{
+        fontSize: `${fontSizes.lg}px`,
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode
+          ? variant === "default"
+            ? accessibilityTextColor
+            : reverseAccessibilityTextColor
+          : "",
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();

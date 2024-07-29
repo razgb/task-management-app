@@ -16,11 +16,19 @@ import { ValidUrlPaths } from "../stores/RouterContext";
 import useRouter from "../stores/useRouter";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 import useFontSize from "../stores/accessibility/useFontSize";
+import useAccessibility from "../stores/accessibility/useAccessibility";
 
 function SettingsPage() {
-  const fontSizes = useFontSize();
-
   const { path } = useRouter();
+  const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
+
   let pageToRender: React.ReactNode | null = null;
 
   switch (path) {
@@ -42,16 +50,28 @@ function SettingsPage() {
   }
 
   return (
-    <div className={`h-full rounded-2xl bg-primaryBg p-12`}>
+    <div
+      className={`h-full rounded-2xl bg-primaryBg p-12`}
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+    >
       <div className="flex h-full flex-col">
         <div className={`flex h-full gap-6`}>
           <div className="z-10 flex h-full w-1/2 flex-col gap-4 rounded-2xl p-6">
             <h2
               className="font-bold text-heading"
-              style={{ fontSize: `${fontSizes["3xl"]}px` }}
+              style={{
+                fontSize: `${fontSizes["3xl"]}px`,
+                color: highContrastMode ? "#fff" : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                borderRadius: removeRoundEdges ? "0" : "",
+                transition: reduceAnimations ? "none" : "",
+              }}
             >
               Settings
             </h2>
+
             <SettingsTab
               to="/settings/tasks"
               icon={<CalendarCog size={fontSizes["2xl"]} />}
@@ -102,12 +122,25 @@ function SettingsTab({
   to: ValidUrlPaths;
 }) {
   const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    reduceAnimations,
+    removeRoundEdges,
+  } = accessibility;
 
   return (
     <Link
       to={to}
-      className="flex items-center gap-2 rounded-xl bg-secondary-200 px-4 py-3 hover:bg-secondary-300"
+      className="flex items-center gap-2 rounded-xl bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300"
       ariaLabel={`Settings tab for ${title}.`}
+      style={{
+        color: highContrastMode ? "#fff" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+      }}
     >
       {icon}
       <h3
