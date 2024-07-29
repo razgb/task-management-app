@@ -42,33 +42,21 @@ export default function TimerPage() {
   return (
     <div className="h-full rounded-2xl bg-primaryBg p-3">
       <div className="relative flex h-full flex-col items-center gap-8 pt-[5%]">
-        <div className="flex flex-col gap-4">
-          {/* ^ this px-3 works but since the h and w of the rounded display is constant. Design breaks. */}
-          <div className="h-48 w-48 rounded-full bg-secondary-300 md:h-72 md:w-72">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-48 w-48 rounded-full bg-secondary-300 md:h-80 md:w-80">
             <div className="flex h-full items-center justify-center">
               <h2
                 style={{ fontSize: `${fontSizes["6xl"]}px` }}
                 className="font-semibold text-headingSub"
               >
-                {formatSecondsToDigitalFormat(state.timerValue)}
+                {formatSecondsToDigitalFormat(
+                  state.timerValue,
+                  state.timerValue >= 3600
+                    ? "hour-minute-second"
+                    : "minute-second",
+                )}
               </h2>
             </div>
-          </div>
-
-          <div
-            className={`flex items-center justify-center gap-2 ${
-              timerState == "active" ? "opacity-0" : ""
-            }`}
-          >
-            <Button variant="icon-text">
-              <Plus size={fontSizes["xl"]} />
-              <span
-                className="text-medium"
-                style={{ fontSize: fontSizes["base"] }}
-              >
-                5 mins
-              </span>
-            </Button>
           </div>
 
           <div className="flex items-center justify-center gap-2">
@@ -78,6 +66,60 @@ export default function TimerPage() {
             </Button>
 
             {buttonState}
+          </div>
+
+          <div className={`flex justify-center gap-2`}>
+            <Button
+              onClick={() => dispatch({ payload: -5 * 60, type: "addTime" })}
+              variant="icon-text"
+            >
+              <Minus size={fontSizes["xl"]} />
+              <span
+                className="text-medium"
+                style={{ fontSize: fontSizes["base"] }}
+              >
+                5 mins
+              </span>
+            </Button>
+
+            <Button
+              onClick={() => dispatch({ payload: -1 * 60, type: "addTime" })}
+              variant="icon-text"
+            >
+              <Minus size={fontSizes["xl"]} />
+              <span
+                className="text-medium"
+                style={{ fontSize: fontSizes["base"] }}
+              >
+                1 min
+              </span>
+            </Button>
+
+            <Button
+              onClick={() => dispatch({ payload: 1 * 60, type: "addTime" })}
+              variant="icon-text"
+            >
+              <Plus size={fontSizes["xl"]} />
+              <span
+                className="text-medium"
+                style={{ fontSize: fontSizes["base"] }}
+              >
+                1 min
+              </span>
+            </Button>
+
+            <Button
+              onClick={() => dispatch({ payload: 5 * 60, type: "addTime" })}
+              variant="icon-text"
+            >
+              <Plus size={fontSizes["xl"]} />
+              <span
+                className="text-medium"
+                style={{ fontSize: fontSizes["base"] }}
+              >
+                5 mins
+              </span>
+            </Button>
           </div>
 
           <Button

@@ -22,7 +22,7 @@ export default function NavTimerWidget() {
           renderingCondition ? "opacity-100" : "opacity-0"
         }`}
       >
-        {formatSecondsToDigitalFormat(timerValue)}
+        {formatSecondsToDigitalFormat(timerValue, "minute-second")}
       </Link>
 
       <p

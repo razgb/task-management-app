@@ -37,7 +37,7 @@ export default function reducer(
           "Invalid payload for updateTimer action - not a number",
           `Payload: ${payload}`,
         );
-        return state;
+        return defaultTimerState;
       }
 
       if (state.timerValue > 0) {
@@ -125,9 +125,23 @@ export default function reducer(
       return newState;
     }
 
-    // case "addTime": {
-    //   break;
-    // }
+    case "addTime": {
+      if (typeof payload !== "number" || state.timerValue <= Math.abs(payload))
+        return defaultTimerState;
+
+      // Timer limiter to prevent overflow and abuse.
+      if (state.timerValue + payload >= 3600) {
+        return {
+          ...state,
+          timerValue: 3600,
+        };
+      }
+
+      return {
+        ...state,
+        timerValue: state.timerValue + payload, // payload sign set in dispatching function in TimerPage buttons.
+      };
+    }
 
     default:
       console.warn(

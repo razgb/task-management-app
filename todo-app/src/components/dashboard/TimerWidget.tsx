@@ -79,7 +79,7 @@ export default function TimerWidget() {
         style={{ fontSize: `${fontSizes["5xl"]}px` }}
         className="font-semibold text-text"
       >
-        {formatSecondsToDigitalFormat(timerValue)}
+        {formatSecondsToDigitalFormat(timerValue, "minute-second")}
       </h2>
 
       <div className="flex items-center justify-center gap-2">{content}</div>
