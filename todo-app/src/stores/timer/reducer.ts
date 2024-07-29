@@ -126,8 +126,12 @@ export default function reducer(
     }
 
     case "addTime": {
-      if (typeof payload !== "number" || state.timerValue <= Math.abs(payload))
+      if (
+        typeof payload !== "number" ||
+        (payload <= 0 && state.timerValue <= Math.abs(payload))
+      ) {
         return defaultTimerState;
+      }
 
       // Timer limiter to prevent overflow and abuse.
       if (state.timerValue + payload >= 3600) {

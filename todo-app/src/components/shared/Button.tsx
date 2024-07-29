@@ -44,7 +44,7 @@ export default function Button({
     }
 
     case "icon-text": {
-      classes += `rounded-full bg-secondaryBgWeak hover:secondaryBg active:bg-secondary-bg-secondaryWeak px-6 py-2 text-text flex items-center gap-2`;
+      classes += `rounded-full bg-secondaryBgWeak hover:bg-secondaryBg active:bg-secondaryBgStrong px-6 py-2 text-text flex items-center gap-2`;
       break;
     }
 
