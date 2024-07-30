@@ -46,7 +46,13 @@ export default function MenuButton({
   return (
     <a
       className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 font-medium ${buttonBgStyles}`}
-      onClick={() => validPath && updatePath(to)}
+      onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        if (validPath) {
+          updatePath(to);
+        }
+      }}
+      href={validPath ? to : undefined}
       style={{
         fontSize: `${fontSizes.lg}px`,
         borderRadius: removeRoundEdges ? "0" : "",
