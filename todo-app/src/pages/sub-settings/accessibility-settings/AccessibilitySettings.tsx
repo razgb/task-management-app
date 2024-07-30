@@ -83,7 +83,10 @@ export default function AccessibilitySettings() {
               className={`w-full rounded-xl bg-secondary-200 p-3`}
               aria-label="Select text size multiplier"
               aria-describedby="font-size-description"
-              style={{ fontSize: `${fontSizes.base}px` }}
+              style={{
+                fontSize: `${fontSizes.base}px`,
+                borderRadius: removeRoundEdges ? "0" : "",
+              }}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                 updateAccessibility({
                   fontSizeMultiplier: Number(

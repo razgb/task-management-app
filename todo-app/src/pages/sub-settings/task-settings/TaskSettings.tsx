@@ -63,7 +63,10 @@ export default function TaskSettings() {
             className={`${inputStyles} cursor-pointer`}
             value={defaultPriority}
             onChange={(e: InputEventType) => setDefaultPriority(e.target.value)}
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -86,7 +89,10 @@ export default function TaskSettings() {
             value={defaultDueDate}
             onChange={(e: InputEventType) => setDefaultDueDate(e.target.value)}
             min="0"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{
+              fontSize: fontSizes["base"],
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
           />
         </div>
 

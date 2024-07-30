@@ -114,7 +114,12 @@ export default function TaskDetails() {
           </Button>
         </form>
 
-        <div className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4">
+        <div
+          style={{
+            borderRadius: removeRoundEdges ? "0" : "",
+          }}
+          className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4"
+        >
           <ul className="flex h-full flex-col gap-2 overflow-y-scroll pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
             {subTasksData.map((item, index) => (
               <ToDoItem

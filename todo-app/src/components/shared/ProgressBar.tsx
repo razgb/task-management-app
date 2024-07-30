@@ -1,3 +1,6 @@
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
+
 const heightClasses = {
   1: "h-1",
   2: "h-2",
@@ -16,13 +19,26 @@ export default function ProgressBar({
   completion: number;
   width?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }) {
+  const { accessibilityTextColor, reverseAccessibilityTextColor } =
+    useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const { reduceAnimations, highContrastMode } = accessibility;
+
   return (
     <div
       className={`${heightClasses[width]} w-full overflow-hidden rounded-full bg-secondary-200`}
+      style={{
+        backgroundColor: highContrastMode ? reverseAccessibilityTextColor : "",
+        borderRadius: reduceAnimations ? "0" : "",
+      }}
     >
       <div
         className={`h-full rounded-full bg-secondary-700`}
-        style={{ width: completion + "%" }}
+        style={{
+          width: completion + "%",
+          backgroundColor: highContrastMode ? accessibilityTextColor : "",
+          borderRadius: reduceAnimations ? "0" : "",
+        }}
       ></div>
     </div>
   );

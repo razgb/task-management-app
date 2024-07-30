@@ -59,7 +59,10 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
         role="checkbox"
         aria-checked={checked ? "true" : "false"}
         aria-label={ariaLabel}
-        style={{ fontSize: `${fontSizes.base}px` }}
+        style={{
+          fontSize: `${fontSizes.base}px`,
+          borderRadius: removeRoundEdges ? "0" : "",
+        }}
       >
         {checked ? (
           <SquareCheck size={fontSizes["3xl"]} className="stroke-checkbox" />

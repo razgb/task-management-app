@@ -81,10 +81,19 @@ export default function TaskCreator() {
   }
 
   return (
-    <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
+    <div
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+      className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6"
+    >
       <h2
         className="mb-8 font-bold"
-        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        style={{
+          fontSize: `${fontSizes["3xl"]}px`,
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
       >
         Create new task
       </h2>
@@ -109,6 +118,7 @@ export default function TaskCreator() {
                 style={{
                   fontSize: `${fontSizes.sm}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
               >
                 {`${getWordCount(state.taskName)}/10 words`}
@@ -146,7 +156,11 @@ export default function TaskCreator() {
               Due Date{" "}
               <span
                 className="text-textWeak"
-                style={{ fontSize: `${fontSizes.sm}px` }}
+                style={{
+                  fontSize: `${fontSizes.sm}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                }}
               >
                 (optional)
               </span>
@@ -181,7 +195,11 @@ export default function TaskCreator() {
               Priority Level{" "}
               <span
                 className="text-textWeak"
-                style={{ fontSize: `${fontSizes.sm}px` }}
+                style={{
+                  fontSize: `${fontSizes.sm}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                }}
               >
                 (optional)
               </span>
@@ -225,7 +243,11 @@ export default function TaskCreator() {
               </label>
               <span
                 className="text-textWeak"
-                style={{ fontSize: `${fontSizes.sm}px` }}
+                style={{
+                  fontSize: `${fontSizes.sm}px`,
+                  color: highContrastMode ? accessibilityTextColor : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+                }}
               >
                 {`(optional) ${getWordCount(state.description)}/30 words`}
               </span>

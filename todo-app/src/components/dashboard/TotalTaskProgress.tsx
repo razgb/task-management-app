@@ -4,7 +4,8 @@ import useFontSize from "../../stores/accessibility/useFontSize";
 
 export default function TotalTaskProgress() {
   const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibilityTextColor, reverseAccessibilityTextColor } =
+    useAccessibilityTextColor();
   const completion = Math.floor(Math.random() * 100);
   const { accessibility } = useAccessibility();
   const {
@@ -32,10 +33,22 @@ export default function TotalTaskProgress() {
       </h2>
 
       <div className="flex items-center gap-2">
-        <div className="h-6 w-full overflow-hidden rounded-2xl bg-secondary-200">
+        <div
+          style={{
+            backgroundColor: highContrastMode
+              ? reverseAccessibilityTextColor
+              : "",
+            borderRadius: reduceAnimations ? "0" : "",
+          }}
+          className="h-6 w-full overflow-hidden rounded-2xl bg-secondary-200"
+        >
           <div
             className="h-full rounded-2xl bg-secondary-700"
-            style={{ width: completion + "%" }}
+            style={{
+              width: completion + "%",
+              backgroundColor: highContrastMode ? accessibilityTextColor : "",
+              borderRadius: reduceAnimations ? "0" : "",
+            }}
           ></div>
         </div>
 

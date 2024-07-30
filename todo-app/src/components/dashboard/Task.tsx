@@ -33,7 +33,8 @@ export default function Task({
     removeRoundEdges,
     reduceAnimations,
   } = accessibility;
-  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibilityTextColor, reverseAccessibilityTextColor } =
+    useAccessibilityTextColor();
   const updatePath = useRouter().updatePath;
   const [isDraggable, setIsDraggable] = useState(false);
   const [taskData] = useState({
@@ -89,10 +90,11 @@ export default function Task({
             }}
           >
             <span
-              className="absolute -left-1/2 -top-5 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute -left-1/2 -top-7 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
               style={{
                 fontSize: `${fontSizes.xs}px`,
-                color: highContrastMode ? accessibilityTextColor : "",
+                color: highContrastMode ? reverseAccessibilityTextColor : "",
+                transition: reduceAnimations ? "none" : "",
               }}
             >
               Drag task
