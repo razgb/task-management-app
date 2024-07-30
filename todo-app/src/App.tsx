@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className={`${theme} flex h-screen flex-col bg-primaryBg`}>
-      <LoadingWave loading={false} />
+      <LoadingWave />
 
       <div
         className={`mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg p-6 text-text 2xl:max-w-[85dvw]`}

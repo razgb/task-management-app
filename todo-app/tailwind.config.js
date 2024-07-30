@@ -74,6 +74,8 @@ export default {
         progressBtn: "var(--progress-btn)",
         progressIcon: "var(--progress-icon)",
 
+        loadingBar: "var(--loadingbar)",
+
         success: "var(--success)",
         successText: "var(--success-text)",
         successBtn: "var(--success-btn)",

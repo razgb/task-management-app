@@ -58,6 +58,8 @@
   --checkbox: var(--text-weak);
   --focus-outline: var(--secondary-400);
 
+  --loadingbar: #2c4f44;
+
   --progress: ;
   --progress-text: ;
   --progress-btn: ;
@@ -136,6 +138,7 @@
   --scrollbar: #6d6d6d;
   --checkbox: #bababa;
   --focus-outline: var(--secondary-400);
+  --loadingbar: #909090;
 
   --progress: ;
   --progress-text: ;
