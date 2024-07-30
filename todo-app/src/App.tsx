@@ -8,7 +8,9 @@ function App() {
   const { theme } = useTheme();
 
   return (
-    <div className={`${theme} flex h-screen flex-col bg-primaryBg`}>
+    <div
+      className={`${theme} flex h-screen flex-col overflow-hidden bg-primaryBg`}
+    >
       <LoadingWave />
 
       <div
@@ -19,7 +21,7 @@ function App() {
         <div className="flex flex-1 flex-col overflow-hidden">
           <MainNavigation />
 
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-hidden">
             <Outlet />
           </div>
         </div>

@@ -2,6 +2,10 @@ import Task, { TaskType } from "../dashboard/Task.tsx";
 import useFontSize from "../../stores/accessibility/useFontSize.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useState } from "react";
+import {
+  TaskSkeletonLoad,
+  TaskSkeletonLoadMultiple,
+} from "./TaskSkeletonLoad.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
@@ -61,6 +65,9 @@ export default function TaskColumn({
     />
   ));
 
+  // if (variant === "draft")
+  //   output.push(<TaskSkeletonLoadMultiple key="draft-skeleton-1" />);
+
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
     setIsDraggingOver(true);
@@ -93,7 +100,7 @@ export default function TaskColumn({
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
-      className={`flex h-full flex-col overflow-hidden p-4 ${isDraggingOver ? "bg-secondary-100" : ""} `}
+      className={`flex h-full flex-col gap-4 overflow-hidden p-4 ${isDraggingOver ? "bg-secondary-100" : ""} `}
       style={{
         borderRadius: removeRoundEdges ? 0 : "",
         transition: reduceAnimations ? "none" : "",
@@ -105,12 +112,14 @@ export default function TaskColumn({
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           color: highContrastMode ? "#fff" : "",
         }}
-        className="mb-4 font-bold capitalize"
+        className="font-bold capitalize"
       >
         {variant}
       </h2>
 
-      <div className="grid flex-1 grid-cols-1 content-start gap-3 overflow-y-auto p-2 pr-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
+      {/* prettier-ignore */}
+      <div className="flex pr-2 flex-1 flex-col overflow-y-scroll gap-4
+        scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
         {output}
       </div>
     </div>
