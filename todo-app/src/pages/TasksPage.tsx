@@ -1,17 +1,42 @@
-import { useState } from "react";
-
-import Task, { TaskType } from "../components/dashboard/Task.tsx";
 import {
   draftTasksData,
   inProgressTasksData,
   completeTasksData,
 } from "../components/tasks-page/taskData.ts";
-import useFontSize from "../stores/accessibility/useFontSize.tsx";
+
+import { TaskType } from "../components/dashboard/Task.tsx";
+
+import { useState } from "react";
 import useAccessibility from "../stores/accessibility/useAccessibility.tsx";
+import TaskColumn, {
+  TaskGroupColumnType,
+} from "../components/tasks-page/TaskColumn.tsx";
+
+const defaultColumnDragStyles = {
+  draft: false,
+  ["in-progress"]: false,
+  complete: false,
+};
 
 export default function TasksPage() {
   const { accessibility } = useAccessibility();
   const { removeRoundEdges } = accessibility;
+
+  const [columnDragStyles, setColumnDragStyles] = useState(
+    defaultColumnDragStyles,
+  );
+
+  function updateColumnDragStyles(
+    newTaskColumn: TaskGroupColumnType["variant"],
+  ) {
+    setColumnDragStyles((prev) => ({
+      ...prev,
+      [newTaskColumn]: true,
+    }));
+  }
+  function resetColumnDragStyles() {
+    setColumnDragStyles(defaultColumnDragStyles);
+  }
 
   const [draftTasks, setDraftTasks] = useState<TaskType[]>(
     draftTasksData.map((task) => ({ ...task, hideGrabIcon: false })),
@@ -55,108 +80,26 @@ export default function TasksPage() {
           taskColumnMap={taskColumnMap}
           variant="draft"
           tasks={draftTasks}
+          columnDragStyles={columnDragStyles}
+          updateColumnDragStyles={updateColumnDragStyles}
+          resetColumnDragStyles={resetColumnDragStyles}
         />
         <TaskColumn
           taskColumnMap={taskColumnMap}
           variant="in-progress"
           tasks={inProgressTasks}
+          columnDragStyles={columnDragStyles}
+          updateColumnDragStyles={updateColumnDragStyles}
+          resetColumnDragStyles={resetColumnDragStyles}
         />
         <TaskColumn
           taskColumnMap={taskColumnMap}
           variant="complete"
           tasks={completeTasks}
+          columnDragStyles={columnDragStyles}
+          updateColumnDragStyles={updateColumnDragStyles}
+          resetColumnDragStyles={resetColumnDragStyles}
         />
-      </div>
-    </div>
-  );
-}
-
-type TaskGroupColumnType = {
-  variant: "draft" | "in-progress" | "complete";
-  tasks: TaskType[];
-  taskColumnMap: {
-    draft: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-    ["in-progress"]: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-    complete: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-  };
-};
-
-function TaskColumn({ variant, tasks, taskColumnMap }: TaskGroupColumnType) {
-  const fontSizes = useFontSize();
-  const { accessibility } = useAccessibility();
-  const {
-    removeRoundEdges,
-    highContrastMode,
-    reduceAnimations,
-    increaseLetterSpacing,
-  } = accessibility;
-
-  const output = tasks.map((item) => (
-    <Task
-      key={Math.random()}
-      title={item.title}
-      description={item.description}
-      hideGrabIcon={false}
-      hasSubtasks={item.hasSubtasks}
-      subtaskCompletion={item.subtaskCompletion}
-      status={item.status}
-    />
-  ));
-
-  function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault(); // we'll set tailwind styles for this later.
-  }
-
-  function handleDrop(event: React.DragEvent<HTMLDivElement>) {
-    event.preventDefault();
-    const droppedTask = event.dataTransfer?.getData("application/json"); // get from api
-
-    if (droppedTask) {
-      const parsedTask: TaskType = JSON.parse(droppedTask);
-      console.log(parsedTask); // data used for the task
-
-      taskColumnMap[parsedTask.status].remove(parsedTask.title);
-      taskColumnMap[variant].update({
-        ...parsedTask,
-        status: variant,
-      });
-    } else {
-      // we will handle this case with a global error object later.
-      console.log("Some error occured with the task drop.");
-    }
-  }
-
-  return (
-    <div
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      className="flex h-full flex-col overflow-hidden p-4"
-      style={{
-        borderRadius: removeRoundEdges ? 0 : "",
-        transition: reduceAnimations ? "none" : "",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: `${fontSizes["2xl"]}px`,
-          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-          color: highContrastMode ? "#fff" : "",
-        }}
-        className="mb-4 font-bold capitalize"
-      >
-        {variant}
-      </h2>
-      <div className="flex-1 overflow-y-auto p-2 pr-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-        <div className="grid grid-cols-1 content-start gap-3">{output}</div>
       </div>
     </div>
   );

@@ -13,8 +13,8 @@ export default function AccessibilityContextProvider({
     AccessibilityContextType["accessibility"]
   >({
     fontSizeMultiplier: 1,
-    reduceAnimations: true,
-    removeRoundEdges: true,
+    reduceAnimations: false,
+    removeRoundEdges: false,
     increaseLetterSpacing: false,
     highContrastMode: false,
   });

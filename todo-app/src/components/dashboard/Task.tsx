@@ -1,18 +1,16 @@
-import { MoveIcon, SquareArrowOutUpRight } from "lucide-react";
-import ProgressBar from "../shared/ProgressBar";
-import useRouter from "../../stores/useRouter";
-import Link from "../shared/Link";
+import { MoveIcon } from "lucide-react";
 import { useState } from "react";
 import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
+import SubTaskContainer from "./SubTaskContainer";
 
 export type TaskType = {
   title: string;
   description?: string;
   hasSubtasks: boolean;
   subtaskCompletion: number;
-  hideGrabIcon?: boolean;
+  hideGrabIcon?: boolean; // Manually set due to different parent containers.
   status: "draft" | "in-progress" | "complete";
 };
 
@@ -27,15 +25,11 @@ export default function Task({
 }: TaskType) {
   const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
-  const {
-    highContrastMode,
-    increaseLetterSpacing,
-    removeRoundEdges,
-    reduceAnimations,
-  } = accessibility;
+  // prettier-ignore
+  const { highContrastMode, increaseLetterSpacing, removeRoundEdges, reduceAnimations, } = accessibility;
   const { accessibilityTextColor, reverseAccessibilityTextColor } =
     useAccessibilityTextColor();
-  const updatePath = useRouter().updatePath;
+
   const [isDraggable, setIsDraggable] = useState(false);
   const [taskData] = useState({
     title,
@@ -77,6 +71,8 @@ export default function Task({
           >
             {title}
           </h2>
+
+          {/* Grab icon */}
           <button
             onMouseLeave={() => setIsDraggable(false)}
             onMouseDown={() => setIsDraggable(true)}
@@ -90,7 +86,7 @@ export default function Task({
             }}
           >
             <span
-              className="absolute -left-1/2 -top-7 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute -right-1.5 -top-4 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
               style={{
                 fontSize: `${fontSizes.xs}px`,
                 color: highContrastMode ? reverseAccessibilityTextColor : "",
@@ -115,65 +111,12 @@ export default function Task({
       </div>
 
       <div className="mt-1 items-start">
-        {hasSubtasks ? (
-          <div className={`${hasSubtasks ? "" : "hidden"} max-w-[60%]`}>
-            <div
-              className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-400 p-2 transition-colors hover:bg-secondary-500"
-              role="link"
-              aria-label={`Navigate to subtasks for task named ${title}.`}
-              tabIndex={0}
-              onClick={() => updatePath("/tasks/details")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ")
-                  updatePath("/tasks/details");
-              }}
-              style={{
-                borderRadius: removeRoundEdges ? "0" : "",
-                transition: reduceAnimations ? "none" : "",
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <h3
-                  className="font-semibold"
-                  style={{
-                    fontSize: `${fontSizes.base}px`,
-                    color: highContrastMode ? accessibilityTextColor : "",
-                  }}
-                >
-                  Sub Tasks
-                </h3>
-                <SquareArrowOutUpRight size={16} aria-hidden={true} />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <ProgressBar
-                  completion={taskData.subtaskCompletion}
-                  width={2}
-                />
-                <span
-                  className="font-semibold"
-                  style={{
-                    fontSize: `${fontSizes.sm}px`,
-                    color: highContrastMode ? accessibilityTextColor : "",
-                    letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-                  }}
-                >
-                  {taskData.subtaskCompletion}%
-                </span>
-              </div>
-            </div>
-          </div>
-        ) : (
-          !hideGrabIcon && (
-            <Link
-              to="/tasks"
-              className="rounded-lg bg-secondary-400 px-3 py-2 font-semibold text-text hover:bg-secondary-500"
-              aria-label={`Navigate to add subtasks for task named ${title}.`}
-            >
-              Add Subtasks
-            </Link>
-          )
-        )}
+        <SubTaskContainer
+          hasSubtasks={hasSubtasks}
+          hideGrabIcon={hideGrabIcon}
+          taskData={taskData}
+          title={title}
+        />
       </div>
     </div>
   );
