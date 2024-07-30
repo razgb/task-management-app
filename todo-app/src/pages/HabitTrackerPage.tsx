@@ -1,0 +1,175 @@
+import { useState } from "react";
+import useFontSize from "../stores/accessibility/useFontSize";
+import useAccessibility from "../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
+import { Plus } from "lucide-react";
+import Button from "../components/shared/Button";
+import HabitItem, { Habit } from "../components/habit-tracker/HabitItem";
+
+const unitOptions = [
+  "days",
+  "hours",
+  "minutes",
+  "months",
+  "years",
+  "tasks",
+  "pages",
+  "words",
+  "chapters",
+  "sessions",
+  "meters",
+  "miles",
+  "kilometers",
+  "steps",
+  "glasses of water",
+];
+
+export default function HabitTrackerPage() {
+  const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
+    accessibility;
+
+  const [habits, setHabits] = useState<Habit[]>([
+    { id: "1", title: "Days Sober", value: 0, unit: "days" },
+    { id: "2", title: "Meditation", value: 0, unit: "minutes" },
+    { id: "3", title: "Exercise", value: 0, unit: "minutes" },
+    { id: "4", title: "Reading", value: 0, unit: "pages" },
+  ]);
+
+  const [newHabit, setNewHabit] = useState({ title: "", unit: "days" });
+  const [customUnit, setCustomUnit] = useState("");
+  const [isCustomUnit, setIsCustomUnit] = useState(false);
+
+  const handleAddHabit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newHabit.title) {
+      const habitUnit = isCustomUnit ? customUnit : newHabit.unit;
+      setHabits([
+        ...habits,
+        { ...newHabit, id: Date.now().toString(), value: 0, unit: habitUnit },
+      ]);
+      setNewHabit({ title: "", unit: "days" });
+      setCustomUnit("");
+      setIsCustomUnit(false);
+    }
+  };
+
+  const handleDeleteHabit = (id: string) => {
+    setHabits(habits.filter((habit) => habit.id !== id));
+  };
+
+  const handleDecrementHabit = (id: string) => {
+    setHabits(
+      habits.map((habit) => {
+        if (habit.id !== id || habit.value <= 0) return habit;
+        return { ...habit, value: habit.value - 1 };
+      }),
+    );
+  };
+
+  const handleIncrementHabit = (id: string) => {
+    setHabits(
+      habits.map((habit) =>
+        habit.id === id ? { ...habit, value: habit.value + 1 } : habit,
+      ),
+    );
+  };
+
+  const handleResetHabit = (id: string) => {
+    setHabits(
+      habits.map((habit) => (habit.id === id ? { ...habit, value: 0 } : habit)),
+    );
+  };
+
+  const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedUnit = e.target.value;
+    if (selectedUnit === "custom") {
+      setIsCustomUnit(true);
+    } else {
+      setIsCustomUnit(false);
+      setNewHabit({ ...newHabit, unit: selectedUnit });
+    }
+  };
+
+  return (
+    <div
+      className="h-full rounded-2xl bg-primaryBg p-6"
+      style={{
+        borderRadius: removeRoundEdges ? "0" : "",
+      }}
+    >
+      <h2
+        className="mb-6 font-bold"
+        style={{
+          fontSize: `${fontSizes["3xl"]}px`,
+          color: highContrastMode ? accessibilityTextColor : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        }}
+      >
+        Habit Tracker
+      </h2>
+
+      <form onSubmit={handleAddHabit} className="mb-6 flex gap-4">
+        <input
+          type="text"
+          value={newHabit.title}
+          onChange={(e) => setNewHabit({ ...newHabit, title: e.target.value })}
+          placeholder="New habit"
+          className="flex-grow rounded-lg bg-secondaryBgWeak p-2 placeholder-textPlaceholder outline-none focus:ring-2 focus:ring-secondary-600"
+          style={{
+            fontSize: `${fontSizes.base}px`,
+            color: highContrastMode ? accessibilityTextColor : "",
+          }}
+        />
+        <select
+          value={isCustomUnit ? "custom" : newHabit.unit}
+          onChange={handleUnitChange}
+          className="rounded-lg bg-secondaryBgWeak p-2"
+          style={{
+            fontSize: `${fontSizes.base}px`,
+            color: highContrastMode ? accessibilityTextColor : "",
+          }}
+        >
+          {unitOptions.map((unit) => (
+            <option key={unit} value={unit}>
+              {unit}
+            </option>
+          ))}
+          <option value="custom">Custom unit</option>
+        </select>
+        {isCustomUnit && (
+          <input
+            type="text"
+            value={customUnit}
+            onChange={(e) => setCustomUnit(e.target.value)}
+            placeholder="Enter custom unit"
+            className="rounded-lg bg-secondaryBgWeak p-2 placeholder-textPlaceholder outline-none focus:ring-2 focus:ring-secondary-600"
+            style={{
+              fontSize: `${fontSizes.base}px`,
+              color: highContrastMode ? accessibilityTextColor : "",
+            }}
+          />
+        )}
+        <Button variant="contrast-icon-text" type="submit">
+          <Plus size={fontSizes.xl} />
+          Add Habit
+        </Button>
+      </form>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+        {habits.map((habit) => (
+          <HabitItem
+            key={habit.id}
+            habit={habit}
+            onDelete={handleDeleteHabit}
+            onDecrement={handleDecrementHabit}
+            onIncrement={handleIncrementHabit}
+            onReset={handleResetHabit}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

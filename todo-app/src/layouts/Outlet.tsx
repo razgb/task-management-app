@@ -7,6 +7,7 @@ import TaskCreator from "../pages/TaskCreator.tsx";
 import ErrorPage from "../pages/ErrorPage.tsx";
 import TimerPage from "../pages/TimerPage.tsx";
 import useAccessibility from "../stores/accessibility/useAccessibility";
+import HabitTracker from "../pages/HabitTrackerPage.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
@@ -67,7 +68,7 @@ export default function Outlet() {
     }
 
     case "/habit-tracker": {
-      content = <ErrorPage />;
+      content = <HabitTracker />;
       break;
     }
 

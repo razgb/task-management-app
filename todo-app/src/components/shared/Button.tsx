@@ -50,7 +50,7 @@ export default function Button({
     }
 
     case "ghost-icon": {
-      classes += `w-8 h-8 rounded-full flex items-center justify-center bg-primaryBg`;
+      classes += `w-8 h-8 rounded-full flex items-center justify-center bg-transparent hover:bg-primaryBg`;
       break;
     }
 
