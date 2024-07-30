@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "text"
     | "icon"
     | "ghost-icon"
-    | "constrast-default"
+    | "contrast-default"
     | "icon-text"
     | "contrast-icon-text";
   transitionDuration?: number;
@@ -54,7 +54,7 @@ export default function Button({
       break;
     }
 
-    case "constrast-default": {
+    case "contrast-default": {
       classes += `rounded-full bg-secondary-700 hover:bg-secondary-900 active:bg-secondary-700 px-4 py-2 text-textContrast`;
       break;
     }

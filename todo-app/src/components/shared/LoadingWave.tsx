@@ -4,7 +4,6 @@ export default function LoadingWave({ loading }: { loading: boolean }) {
   const { theme } = useTheme();
   let containerStyles = "";
 
-  // might add more themes in the future.
   switch (theme) {
     case "light":
       containerStyles += " h-3";
