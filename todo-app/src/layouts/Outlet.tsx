@@ -1,6 +1,6 @@
 import DashboardPage from "../pages/DashboardPage.tsx";
 import SettingsPage from "../pages/SettingsPage.tsx";
-import useRouter from "../stores/useRouter.tsx";
+import useRouter from "../stores/router/useRouter.tsx";
 import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
 import TasksPage from "../pages/TasksPage.tsx";
 import TaskCreator from "../pages/TaskCreator.tsx";

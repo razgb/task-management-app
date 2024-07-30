@@ -1,6 +1,6 @@
 import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
-import useRouter from "../../stores/useRouter";
+import useRouter from "../../stores/router/useRouter";
 import Link from "../shared/Link";
 import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";

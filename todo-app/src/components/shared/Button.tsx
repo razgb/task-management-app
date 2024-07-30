@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, CSSProperties } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useTheme from "../../stores/useTheme";
+import useTheme from "../../stores/timer/useTheme";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:

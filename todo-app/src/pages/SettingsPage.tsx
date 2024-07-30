@@ -12,8 +12,8 @@ import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
 import TaskSettings from "./sub-settings/task-settings/TaskSettings";
 
 import Link from "../components/shared/Link";
-import { ValidUrlPaths } from "../stores/RouterContext";
-import useRouter from "../stores/useRouter";
+import { ValidUrlPaths } from "../stores/router/RouterContext";
+import useRouter from "../stores/router/useRouter";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";

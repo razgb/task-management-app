@@ -1,4 +1,4 @@
-import useTheme from "../../stores/useTheme";
+import useTheme from "../../stores/timer/useTheme";
 
 export default function LoadingWave({ loading }: { loading: boolean }) {
   const { theme } = useTheme();

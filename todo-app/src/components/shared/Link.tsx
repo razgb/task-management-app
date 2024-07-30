@@ -1,7 +1,7 @@
-import useRouter from "../../stores/useRouter";
-import { ValidUrlPaths } from "../../stores/RouterContext";
+import useRouter from "../../stores/router/useRouter";
+import { ValidUrlPaths } from "../../stores/router/RouterContext";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useTheme from "../../stores/useTheme";
+import useTheme from "../../stores/timer/useTheme";
 
 type LinkProps = {
   to: ValidUrlPaths;

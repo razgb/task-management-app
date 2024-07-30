@@ -8,7 +8,7 @@ import {
   CheckCircle2Icon,
 } from "lucide-react";
 import { useState } from "react";
-import useTheme from "../../stores/useTheme";
+import useTheme from "../../stores/timer/useTheme";
 import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";

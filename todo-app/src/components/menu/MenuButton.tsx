@@ -1,9 +1,8 @@
-import { ValidUrlPaths } from "../../stores/RouterContext";
+import { ValidUrlPaths } from "../../stores/router/RouterContext";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useFontSize from "../../stores/accessibility/useFontSize";
-import useRouter from "../../stores/useRouter";
-import useTheme from "../../stores/useTheme";
+import useRouter from "../../stores/router/useRouter";
 
 type MenuButtonProps = {
   to: ValidUrlPaths;

@@ -1,6 +1,6 @@
 import useFontSize from "../../stores/accessibility/useFontSize";
 import useTimer from "../../stores/timer/useTimer";
-import useRouter from "../../stores/useRouter";
+import useRouter from "../../stores/router/useRouter";
 import formatSecondsToDigitalFormat from "../../util/formatSecondsToDigitalFormat";
 import Link from "../shared/Link";
 

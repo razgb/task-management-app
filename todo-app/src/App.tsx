@@ -1,7 +1,7 @@
 import Menu from "./layouts/Menu";
 import MainNavigation from "./layouts/MainNavigation";
 import Outlet from "./layouts/Outlet";
-import useTheme from "./stores/useTheme";
+import useTheme from "./stores/timer/useTheme";
 import LoadingWave from "./components/shared/LoadingWave";
 
 function App() {
