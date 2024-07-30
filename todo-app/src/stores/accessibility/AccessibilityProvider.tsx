@@ -15,8 +15,8 @@ export default function AccessibilityContextProvider({
     fontSizeMultiplier: 1,
     reduceAnimations: true,
     removeRoundEdges: true,
-    increaseLetterSpacing: true,
-    highContrastMode: true,
+    increaseLetterSpacing: false,
+    highContrastMode: false,
   });
 
   function updateAccessibility(

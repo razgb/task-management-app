@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Button from "../../../components/shared/Button";
 import useFontSize from "../../../stores/accessibility/useFontSize";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 export default function AccountSettings() {
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -54,7 +56,7 @@ export default function AccountSettings() {
       <h2
         style={{
           fontSize: fontSizes["3xl"],
-          color: highContrastMode ? "#fff" : "",
+          color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           borderRadius: removeRoundEdges ? "0" : "",
           transition: reduceAnimations ? "none" : "",

@@ -17,10 +17,12 @@ import useRouter from "../stores/useRouter";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
+import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 
 function SettingsPage() {
   const { path } = useRouter();
   const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -63,7 +65,7 @@ function SettingsPage() {
               className="font-bold text-heading"
               style={{
                 fontSize: `${fontSizes["3xl"]}px`,
-                color: highContrastMode ? "#fff" : "",
+                color: highContrastMode ? accessibilityTextColor : "",
                 letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",
