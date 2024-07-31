@@ -7,20 +7,17 @@ import Button from "../components/shared/Button";
 import HabitItem, { Habit } from "../components/habit-tracker/HabitItem";
 
 const unitOptions = [
-  "days",
-  "hours",
   "minutes",
+  "hours",
+  "days",
   "months",
   "years",
   "tasks",
   "pages",
-  "words",
-  "chapters",
   "sessions",
   "meters",
   "miles",
   "kilometers",
-  "steps",
   "glasses of water",
 ];
 
@@ -35,7 +32,31 @@ export default function HabitTrackerPage() {
     { id: "1", title: "Days Sober", value: 0, unit: "days" },
     { id: "2", title: "Meditation", value: 0, unit: "minutes" },
     { id: "3", title: "Exercise", value: 0, unit: "minutes" },
-    { id: "4", title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
+    { id: Math.random().toString(), title: "Reading", value: 0, unit: "pages" },
   ]);
 
   const [newHabit, setNewHabit] = useState({ title: "", unit: "days" });
@@ -95,7 +116,7 @@ export default function HabitTrackerPage() {
 
   return (
     <div
-      className="h-full rounded-2xl bg-primaryBg p-6"
+      className="flex h-full flex-col rounded-2xl bg-primaryBg p-6"
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
       }}
@@ -132,13 +153,15 @@ export default function HabitTrackerPage() {
             color: highContrastMode ? accessibilityTextColor : "",
           }}
         >
+          <option value="custom">Custom unit</option>
           {unitOptions.map((unit) => (
             <option key={unit} value={unit}>
               {unit}
             </option>
           ))}
-          <option value="custom">Custom unit</option>
         </select>
+
+        {/* new input shows here upon clicking custom unit. */}
         {isCustomUnit && (
           <input
             type="text"
@@ -152,13 +175,16 @@ export default function HabitTrackerPage() {
             }}
           />
         )}
+
         <Button variant="contrast-icon-text" type="submit">
           <Plus size={fontSizes.xl} />
-          Add Habit
+          Add
         </Button>
       </form>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      {/* prettier-ignore */}
+      <div className="grid grid-cols-1 gap-4 overflow-y-scroll pr-2 scrollbar-thin scrollbar-track-transparent
+       scrollbar-thumb-scrollbar  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {habits.map((habit) => (
           <HabitItem
             key={habit.id}

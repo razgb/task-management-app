@@ -44,14 +44,16 @@ export default function HabitItem({
     >
       <div className="group absolute left-1 top-1">
         <div className="relative">
-          <Button
-            variant="ghost-icon"
-            onClick={() => onDelete(habit.id)}
-            aria-label={`Delete ${habit.title} habit`}
-          >
-            <X size={fontSizes.xl} />
-          </Button>
-          <span className="absolute -left-7 -top-5 min-w-24 rounded bg-textContrast px-1 py-0.5 text-center text-sm opacity-0 transition-all group-hover:opacity-100">
+          <HabitIconButton
+            icon={<X />}
+            variant="delete"
+            id={habit.id}
+            onDelete={onDelete}
+            onIncrement={onIncrement}
+            onDecrement={onDecrement}
+            ariaLabel={`Delete ${habit.title} habit permanently.`}
+          />
+          <span className="absolute -left-7 -top-5 min-w-24 rounded bg-secondary-900 px-1 py-0.5 text-center text-sm text-textContrast opacity-0 transition-all group-hover:opacity-100">
             Delete habit
           </span>
         </div>
@@ -69,18 +71,18 @@ export default function HabitItem({
       </h3>
 
       <div className="flex items-center justify-center gap-4">
-        <Button
-          variant="ghost-icon"
-          style={{
-            fontSize: fontSizes["sm"],
-          }}
-          onClick={() => onDecrement(habit.id)}
-        >
-          <Minus />
-        </Button>
+        <HabitIconButton
+          icon={<Minus />}
+          variant="minus"
+          id={habit.id}
+          onDecrement={onDecrement}
+          onIncrement={onIncrement}
+          onDelete={onDelete}
+          ariaLabel={`Decrease ${habit.title} habit count by 1.`}
+        />
 
         <p
-          className={`flex ${habit.title.trim().split(" ").length > 1 ? "items-center gap-1" : "items-baseline"}`}
+          className={`flex ${habit.unit.trim().split(" ").length > 1 ? "items-center gap-1" : "items-baseline"}`}
           style={{
             color: highContrastMode ? accessibilityTextColor : "",
           }}
@@ -96,12 +98,82 @@ export default function HabitItem({
           </span>
         </p>
 
-        <Button variant="ghost-icon" onClick={() => onIncrement(habit.id)}>
-          <Plus />
-        </Button>
+        <HabitIconButton
+          icon={<Plus />}
+          variant="plus"
+          id={habit.id}
+          onDecrement={onDecrement}
+          onIncrement={onIncrement}
+          onDelete={onDelete}
+          ariaLabel={`Increase ${habit.title} habit count by 1.`}
+        />
       </div>
 
       <Button onClick={() => onReset(habit.id)}>Reset habit</Button>
     </div>
+  );
+}
+
+type HabitIconButtonType = {
+  variant: "minus" | "plus" | "delete";
+  ariaLabel: string;
+  id: string;
+  icon: React.ReactNode;
+  onDecrement: (id: string) => void;
+  onIncrement: (id: string) => void;
+  onDelete: (id: string) => void;
+};
+
+function HabitIconButton({
+  variant,
+  id,
+  icon,
+  onDecrement,
+  onIncrement,
+  onDelete,
+  ariaLabel,
+}: HabitIconButtonType) {
+  const fontSizes = useFontSize();
+  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const { accessibility } = useAccessibility();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    reduceAnimations,
+  } = accessibility;
+
+  let handleClick = () => {};
+
+  switch (variant) {
+    case "minus": {
+      handleClick = () => onDecrement(id);
+      break;
+    }
+    case "plus": {
+      handleClick = () => onIncrement(id);
+      break;
+    }
+    case "delete": {
+      handleClick = () => onDelete(id);
+      break;
+    }
+  }
+
+  return (
+    <button
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-transparent transition-colors hover:bg-secondary-400"
+      style={{
+        fontSize: fontSizes["sm"],
+        borderRadius: removeRoundEdges ? "0" : "",
+        transition: reduceAnimations ? "none" : "",
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        color: highContrastMode ? accessibilityTextColor : "",
+      }}
+      onClick={handleClick}
+      aria-label={ariaLabel}
+    >
+      {icon}
+    </button>
   );
 }
