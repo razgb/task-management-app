@@ -9,6 +9,7 @@ type MenuButtonProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
   variant?: "default" | "contrast";
+  menuState: boolean;
 };
 
 export default function MenuButton({
@@ -16,6 +17,7 @@ export default function MenuButton({
   children,
   icon,
   variant = "default",
+  menuState,
 }: MenuButtonProps) {
   const { accessibilityTextColor, reverseAccessibilityTextColor } =
     useAccessibilityTextColor();
@@ -45,7 +47,6 @@ export default function MenuButton({
 
   return (
     <a
-      className={`flex w-full cursor-pointer select-none items-center gap-2 rounded-3xl px-4 py-2 font-medium ${buttonBgStyles}`}
       onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         if (validPath) {
@@ -72,9 +73,16 @@ export default function MenuButton({
       }}
       tabIndex={0}
       aria-label={`Navigate to ${children} page inside app.`}
+      className={`flex cursor-pointer select-none justify-start ${menuState ? "gap-2 self-stretch rounded-full px-4 py-3" : "rounded-full p-4"} font-medium ${buttonBgStyles} transition-all duration-150`}
     >
       {icon && <span aria-hidden="true">{icon}</span>}
-      <span style={{ fontSize: `${fontSizes.base}px` }}>{children}</span>
+
+      <span
+        className={`${menuState ? "visible opacity-100" : "hidden"} transition-all duration-150`}
+        style={{ fontSize: `${fontSizes.base}px` }}
+      >
+        {children}
+      </span>
     </a>
   );
 }

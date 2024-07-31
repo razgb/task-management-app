@@ -13,7 +13,7 @@ import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
-export default function ThemeAccordion() {
+export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
   const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
@@ -34,7 +34,9 @@ export default function ThemeAccordion() {
   }
 
   return (
-    <div>
+    <div
+      className={`${menuState ? "opacity-100" : "hidden opacity-0"} transition`}
+    >
       <div
         role="button"
         aria-label="Show theme options."

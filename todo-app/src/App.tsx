@@ -6,7 +6,6 @@ import LoadingWave from "./components/shared/LoadingWave";
 
 function App() {
   const { theme } = useTheme();
-
   return (
     <div
       className={`${theme} flex h-screen flex-col overflow-hidden bg-primaryBg`}
@@ -14,7 +13,7 @@ function App() {
       <LoadingWave />
 
       <div
-        className={`mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg p-6 text-text 2xl:max-w-[85dvw]`}
+        className={`3xl:max-w-[85dvw] mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg p-6 text-text`}
       >
         <Menu />
 
