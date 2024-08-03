@@ -4,6 +4,14 @@ import {
   AccessibilityContext,
 } from "./AccessibilityContext";
 
+const savedSettingsJSON = localStorage.getItem("accessibility");
+let savedSettings: AccessibilityContextType["accessibility"];
+if (savedSettingsJSON) {
+  savedSettings = JSON.parse(
+    savedSettingsJSON,
+  ) as AccessibilityContextType["accessibility"];
+}
+
 export default function AccessibilityContextProvider({
   children,
 }: {
@@ -11,18 +19,24 @@ export default function AccessibilityContextProvider({
 }) {
   const [accessibility, setAccessability] = useState<
     AccessibilityContextType["accessibility"]
-  >({
-    fontSizeMultiplier: 1,
-    reduceAnimations: false,
-    removeRoundEdges: false,
-    increaseLetterSpacing: false,
-    highContrastMode: false,
-  });
+  >(
+    savedSettings || {
+      fontSizeMultiplier: 1,
+      reduceAnimations: true,
+      removeRoundEdges: true,
+      increaseLetterSpacing: false,
+      highContrastMode: false,
+    },
+  );
 
   function updateAccessibility(
     newAccessibility: Partial<AccessibilityContextType["accessibility"]>,
   ) {
-    setAccessability((prev) => ({ ...prev, ...newAccessibility }));
+    setAccessability((prev) => {
+      const newSettings = { ...prev, ...newAccessibility };
+      localStorage.setItem("accessibility", JSON.stringify(newSettings));
+      return newSettings;
+    });
   }
 
   return (
