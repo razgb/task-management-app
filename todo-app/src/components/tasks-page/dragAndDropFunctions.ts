@@ -7,7 +7,7 @@ export function handleDragStart(
 ): void {
   if (!isSubTaskType(taskData)) return;
 
-  console.log(`Incoming task: ${taskData}`);
+  // console.log(`Incoming task: ${taskData.title}`);
 
   // Serialize in JSON format.
   const jsonTask = JSON.stringify(taskData);

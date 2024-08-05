@@ -23,37 +23,40 @@ export default function TaskDetails() {
   const [subTasks, setSubTasks] = useState<SubTaskType[]>(subTasksData || []);
 
   function swapSubTaskPositions(incomingTaskId: string, outgoingTaskId: string) {
-    let incomingTask: SubTaskType | undefined = undefined;
-    let outgoingTask: SubTaskType | undefined = undefined;
 
     setSubTasks((prev) => {
-      prev.forEach((task) => {
-        const id = task.id;
-        if (id === incomingTaskId) incomingTask = task;
-        if (id === outgoingTaskId) outgoingTask = task;
-      });
+      let incomingTaskPosition: number | undefined= undefined;
+      let outgoingTaskPosition: number | undefined= undefined;
 
-      if (!isSubTaskType(incomingTask) || !isSubTaskType(outgoingTask)) return prev;
+      prev.forEach((subTask) => {
+        const id = subTask.id;
+        if (incomingTaskPosition && outgoingTaskPosition) return;
 
-      const tempPosition = incomingTask.position;
-      incomingTask.position = outgoingTask.position;
-      outgoingTask.position = tempPosition;
-
-      // Array ordered inside component.
-      const newSubTasksArray = prev.filter((task) => {
-        return task.id !== incomingTaskId && task.id !== outgoingTaskId;
+        if (id === incomingTaskId) {
+          incomingTaskPosition = subTask.position;
+        } else if (id === outgoingTaskId) {
+          outgoingTaskPosition = subTask.position;
+        }
       })
 
-      return [
-        ...newSubTasksArray,
-        incomingTask,
-        outgoingTask
-      ]
+      const newSubTasksArray = prev.map((task) => {
+        const id = task.id;
+        if (id !== incomingTaskId && id !== outgoingTaskId) return task;
+
+        return {
+          ...task,
+          position: id === incomingTaskId ? outgoingTaskPosition : incomingTaskPosition,
+        } as SubTaskType
+      })
+
+      return newSubTasksArray;
     });
   }
 
   // Has not been optimized yet.
   const reorderedTaskList: JSX.Element[] = [];
+  const testing: SubTaskType[] = [];
+
   for (let i = 0; i < subTasks.length; i++) {
     for (let j = 0; j < subTasks.length; j++) {
       const task = subTasks[j];
@@ -62,8 +65,12 @@ export default function TaskDetails() {
       reorderedTaskList.push(
         <ToDoItem key={task.id} task={task} swapSubTaskPositions={swapSubTaskPositions} />
       );
+
+      testing.push(task);
     }
   }
+
+  console.log(testing);
 
 
   return (
