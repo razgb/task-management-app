@@ -1,5 +1,4 @@
-import logo from "../assets/logo.jpg";
-
+// import logo from "../assets/logo.jpg";
 import { LogOut } from "lucide-react";
 import MenuButton from "../components/menu/MenuButton";
 import ThemeAccordion from "../components/menu/ThemeAccordion";
@@ -55,7 +54,7 @@ export default function Menu() {
               <img className="h-16 w-16 rounded-md" src={logo} alt="logo" />
               <h1
                 style={{ fontSize: `${fontSizes["2xl"]}px` }}
-                className="text-2xl font-bold text-heading"
+              className="text-2xl font-bold text-heading"
               >
                 TaskBuddy
               </h1>
@@ -67,11 +66,11 @@ export default function Menu() {
           <ThemeAccordion menuState={menuState} />
         </div>
 
-        {/* <div>
+        <div>
           <MenuButton to="/dashboard" icon={<LogOut />} menuState={menuState}>
             Logout
           </MenuButton>
-        </div> */}
+        </div>
       </div>
     </div>
   );

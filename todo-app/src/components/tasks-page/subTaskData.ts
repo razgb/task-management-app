@@ -1,33 +1,40 @@
-const subTasksData = [
+export type SubTaskType = {
+  title: string;
+  completed: boolean;
+  position: number;
+  id: string;
+};
+
+const subTasksData: SubTaskType[] = [
   {
     title: "Set up project structure",
-    description:
-      "Create folders for components, styles, and utilities. Initialize package.json and install necessary dependencies.",
     completed: false,
+    position: 0,
+    id: "firebaseId-1",
   },
   {
     title: "Design component hierarchy",
-    description:
-      "Plan out the component structure for the application, identifying reusable components and their relationships.",
     completed: true,
+    position: 1,
+    id: "firebaseId-2",
   },
   {
     title: "Implement state management",
-    description:
-      "Choose and set up a state management solution (e.g., Redux, Context API) to handle application-wide data flow.",
     completed: false,
+    position: 2,
+    id: "firebaseId-3",
   },
   {
     title: "Create responsive layout",
-    description:
-      "Develop a flexible and responsive layout using CSS Grid or Flexbox to ensure the application looks good on various screen sizes.",
     completed: true,
+    position: 3,
+    id: "firebaseId-4",
   },
   {
     title: "Set up API integration",
-    description:
-      "Configure API calls using Axios or Fetch API to communicate with the backend and retrieve/send data.",
     completed: false,
+    position: 4,
+    id: "firebaseId-5",
   },
 ];
 

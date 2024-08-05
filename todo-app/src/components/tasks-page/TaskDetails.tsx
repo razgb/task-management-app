@@ -1,11 +1,13 @@
+import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useFontSize from "../../stores/accessibility/useFontSize";
 import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
+import { subTasksData, SubTaskType } from "./subTaskData";
 
-import { subTasksData } from "./subTaskData";
+import { isSubTaskType } from "./isSubTaskType";
 
 export default function TaskDetails() {
   const fontSizes = useFontSize();
@@ -17,6 +19,52 @@ export default function TaskDetails() {
     increaseLetterSpacing,
     highContrastMode,
   } = accessibility;
+
+  const [subTasks, setSubTasks] = useState<SubTaskType[]>(subTasksData || []);
+
+  function swapSubTaskPositions(incomingTaskId: string, outgoingTaskId: string) {
+    let incomingTask: SubTaskType | undefined = undefined;
+    let outgoingTask: SubTaskType | undefined = undefined;
+
+    setSubTasks((prev) => {
+      prev.forEach((task) => {
+        const id = task.id;
+        if (id === incomingTaskId) incomingTask = task;
+        if (id === outgoingTaskId) outgoingTask = task;
+      });
+
+      if (!isSubTaskType(incomingTask) || !isSubTaskType(outgoingTask)) return prev;
+
+      const tempPosition = incomingTask.position;
+      incomingTask.position = outgoingTask.position;
+      outgoingTask.position = tempPosition;
+
+      // Array ordered inside component.
+      const newSubTasksArray = prev.filter((task) => {
+        return task.id !== incomingTaskId && task.id !== outgoingTaskId;
+      })
+
+      return [
+        ...newSubTasksArray,
+        incomingTask,
+        outgoingTask
+      ]
+    });
+  }
+
+  // Has not been optimized yet.
+  const reorderedTaskList: JSX.Element[] = [];
+  for (let i = 0; i < subTasks.length; i++) {
+    for (let j = 0; j < subTasks.length; j++) {
+      const task = subTasks[j];
+      if (task?.position !== i) continue;
+
+      reorderedTaskList.push(
+        <ToDoItem key={task.id} task={task} swapSubTaskPositions={swapSubTaskPositions} />
+      );
+    }
+  }
+
 
   return (
     <div
@@ -121,13 +169,7 @@ export default function TaskDetails() {
           className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4"
         >
           <ul className="flex h-full flex-col gap-2 overflow-y-scroll pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-            {subTasksData.map((item, index) => (
-              <ToDoItem
-                key={index}
-                title={item.title}
-                completed={item.completed}
-              />
-            ))}
+            {reorderedTaskList}
           </ul>
         </div>
       </div>

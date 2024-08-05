@@ -4,12 +4,15 @@ import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 
-type ToDoItemType = {
-  title: string;
-  completed: boolean;
+import { handleDrop, handleDragStart } from "./dragAndDropFunctions";
+import { SubTaskType } from "./subTaskData";
+
+type ToDoItemProps = {
+  task: SubTaskType;
+  swapSubTaskPositions: (incomingTaskId: string, outgoingTaskId: string) => void;
 };
 
-export default function ToDoItem({ title, completed }: ToDoItemType) {
+export default function ToDoItem({ task, swapSubTaskPositions }: ToDoItemProps) {
   const fontSizes = useFontSize();
   const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
@@ -20,7 +23,8 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
     highContrastMode,
   } = accessibility;
 
-  const [checked, setChecked] = useState(completed || false);
+  const [checked, setChecked] = useState(task.completed || false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const ariaLabel = checked
     ? "Toggle action to mark as incomplete."
@@ -32,10 +36,16 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
       }}
-      className="flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300"
+      className={`flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300`}
+      draggable={isDragging}
+      onDragStart={(event) => handleDragStart(event, task)}
+      onDragOver={(event) => event.preventDefault()}
+      onDrop={(event) => handleDrop(event, task.id, swapSubTaskPositions)}
     >
       <div className="flex gap-4">
         <button
+          onMouseDown={() => setIsDragging(true)}
+          onMouseUp={() => setIsDragging(false)}
           style={{ fontSize: `${fontSizes.base}px` }}
           className="flex-1 cursor-grab p-1"
         >
@@ -50,12 +60,12 @@ export default function ToDoItem({ title, completed }: ToDoItemType) {
           }}
           className="text-lg font-medium"
         >
-          {title}
+          {task.title}
         </h3>
       </div>
 
       <button
-        onClick={() => setChecked((prev) => !prev)}
+        onClick={() => setChecked((prev: boolean): boolean => !prev)}
         role="checkbox"
         aria-checked={checked ? "true" : "false"}
         aria-label={ariaLabel}
