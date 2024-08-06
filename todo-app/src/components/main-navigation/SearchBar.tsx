@@ -17,7 +17,7 @@ export default function SearchBar() {
 
   return (
     <div
-      className="flex h-12 w-full max-w-[600px] items-center gap-2 overflow-hidden rounded-full bg-secondaryBg pl-4 transition-colors hover:bg-secondaryBg"
+      className="flex self-end h-12 w-full max-w-[600px] items-center gap-2 overflow-hidden rounded-full bg-secondaryBg pl-4 transition-colors hover:bg-secondaryBg"
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",

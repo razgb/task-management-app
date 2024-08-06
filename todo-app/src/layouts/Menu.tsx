@@ -1,9 +1,7 @@
-// import logo from "../assets/logo.jpg";
 import { LogOut } from "lucide-react";
 import MenuButton from "../components/menu/MenuButton";
 import ThemeAccordion from "../components/menu/ThemeAccordion";
 import MenuLinksToPages from "../components/menu/MenuLinksToPages";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 import { MenuIcon } from "lucide-react";
 import { useState } from "react";
@@ -11,8 +9,6 @@ import { useState } from "react";
 export default function Menu() {
   const [menuState, setMenuState] = useState<boolean>(false);
   const toggleMenuState = () => setMenuState((prev) => !prev);
-
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
@@ -49,16 +45,6 @@ export default function Menu() {
             >
               <MenuIcon />
             </button>
-
-            {/* <div className="flex flex-shrink-0 items-center justify-center gap-2 self-start">
-              <img className="h-16 w-16 rounded-md" src={logo} alt="logo" />
-              <h1
-                style={{ fontSize: `${fontSizes["2xl"]}px` }}
-              className="text-2xl font-bold text-heading"
-              >
-                TaskBuddy
-              </h1>
-            </div> */}
           </div>
 
           <MenuLinksToPages menuState={menuState} />

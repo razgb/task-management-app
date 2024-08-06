@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useFontSize from "../../stores/accessibility/useFontSize";
@@ -6,8 +6,7 @@ import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
 import { subTasksData, SubTaskType } from "./subTaskData";
-
-import { isSubTaskType } from "./isSubTaskType";
+import { checkInputTextValidity } from "../../util/checkInputTextValidity";
 
 export default function TaskDetails() {
   const fontSizes = useFontSize();
@@ -21,9 +20,26 @@ export default function TaskDetails() {
   } = accessibility;
 
   const [subTasks, setSubTasks] = useState<SubTaskType[]>(subTasksData || []);
+  const buttonRef = useRef<HTMLInputElement | null>(null);
+
+  function addSubTask(title: string) {
+    // title formatting...
+    if (!checkInputTextValidity(title)) return; // Proper error messages in later update.
+
+    setSubTasks(prev => {
+      return [
+        ...prev,
+        {
+          id: Math.random().toString(),
+          position: prev.length,
+          title: title,
+          completed: false,
+        }
+      ]
+    })
+  }
 
   function swapSubTaskPositions(incomingTaskId: string, outgoingTaskId: string) {
-
     setSubTasks((prev) => {
       let incomingTaskPosition: number | undefined= undefined;
       let outgoingTaskPosition: number | undefined= undefined;
@@ -55,7 +71,7 @@ export default function TaskDetails() {
 
   // Has not been optimized yet.
   const reorderedTaskList: JSX.Element[] = [];
-  const testing: SubTaskType[] = [];
+  // const testing: SubTaskType[] = [];
 
   for (let i = 0; i < subTasks.length; i++) {
     for (let j = 0; j < subTasks.length; j++) {
@@ -66,11 +82,9 @@ export default function TaskDetails() {
         <ToDoItem key={task.id} task={task} swapSubTaskPositions={swapSubTaskPositions} />
       );
 
-      testing.push(task);
+      // testing.push(task);
     }
   }
-
-  console.log(testing);
 
 
   return (
@@ -145,6 +159,11 @@ export default function TaskDetails() {
         </p>
 
         <form
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevent default form submission
+            if (!buttonRef.current) return;
+            addSubTask(buttonRef.current.value); // Use the input's value
+          }}
           style={{
             borderRadius: removeRoundEdges ? "0" : "",
             transition: reduceAnimations ? "none" : "",
@@ -155,15 +174,17 @@ export default function TaskDetails() {
             className="h-full w-full rounded-xl bg-transparent px-3 py-1 outline-none placeholder:text-textPlaceholder"
             type="text"
             placeholder="Add a sub task"
+            ref={buttonRef}
             style={{
               fontSize: `${fontSizes.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           />
+
           <Button
             style={{ fontSize: `${fontSizes.sm}px` }}
-            variant="contrast-default"
             type="submit"
+            variant="contrast-default"
           >
             Add
           </Button>
