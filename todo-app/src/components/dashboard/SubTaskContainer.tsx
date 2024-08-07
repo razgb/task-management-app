@@ -2,9 +2,7 @@ import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/router/useRouter";
 import Link from "../shared/Link";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 export default function SubTaskContainer({
   hasSubtasks,
@@ -19,15 +17,15 @@ export default function SubTaskContainer({
   };
   title: string;
 }) {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const updatePath = useRouter().updatePath;
 
   if (hasSubtasks) {
@@ -52,7 +50,7 @@ export default function SubTaskContainer({
             <h3
               className="font-semibold"
               style={{
-                fontSize: `${fontSizes.base}px`,
+                fontSize: `${fontSizeMap.base}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
               }}
             >
@@ -66,7 +64,7 @@ export default function SubTaskContainer({
             <span
               className="font-semibold"
               style={{
-                fontSize: `${fontSizes.sm}px`,
+                fontSize: `${fontSizeMap.sm}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
               }}

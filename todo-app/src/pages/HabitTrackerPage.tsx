@@ -1,7 +1,5 @@
 import { useState } from "react";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 import { Plus } from "lucide-react";
 import Button from "../components/shared/Button";
 import HabitItem, { Habit } from "../components/habit-tracker/HabitItem";
@@ -22,11 +20,14 @@ const unitOptions = [
 ];
 
 export default function HabitTrackerPage() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
-  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
-    accessibility;
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   const [habits, setHabits] = useState<Habit[]>([
     { id: "1", title: "Days Sober", value: 5, unit: "days" },
@@ -106,7 +107,7 @@ export default function HabitTrackerPage() {
       <h2
         className="mb-6 font-bold"
         style={{
-          fontSize: `${fontSizes["3xl"]}px`,
+          fontSize: `${fontSizeMap["3xl"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}
@@ -122,7 +123,7 @@ export default function HabitTrackerPage() {
           placeholder="New habit"
           className="flex-grow rounded-lg bg-secondaryBgWeak p-2 placeholder-textPlaceholder outline-none focus:ring-2 focus:ring-secondary-600"
           style={{
-            fontSize: `${fontSizes.base}px`,
+            fontSize: `${fontSizeMap.base}px`,
             color: highContrastMode ? accessibilityTextColor : "",
           }}
         />
@@ -131,7 +132,7 @@ export default function HabitTrackerPage() {
           onChange={handleUnitChange}
           className="rounded-lg bg-secondaryBgWeak p-2"
           style={{
-            fontSize: `${fontSizes.base}px`,
+            fontSize: `${fontSizeMap.base}px`,
             color: highContrastMode ? accessibilityTextColor : "",
           }}
         >
@@ -152,14 +153,14 @@ export default function HabitTrackerPage() {
             placeholder="Enter custom unit"
             className="rounded-lg bg-secondaryBgWeak p-2 placeholder-textPlaceholder outline-none focus:ring-2 focus:ring-secondary-600"
             style={{
-              fontSize: `${fontSizes.base}px`,
+              fontSize: `${fontSizeMap.base}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           />
         )}
 
         <Button variant="contrast-icon-text" type="submit">
-          <Plus size={fontSizes.xl} />
+          <Plus size={fontSizeMap.xl} />
           Add
         </Button>
       </form>

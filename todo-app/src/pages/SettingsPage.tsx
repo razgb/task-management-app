@@ -15,20 +15,18 @@ import Link from "../components/shared/Link";
 import { ValidUrlPaths } from "../stores/router/RouterContext";
 import useRouter from "../stores/router/useRouter";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 
 function SettingsPage() {
   const { path } = useRouter();
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   let pageToRender: React.ReactNode | null = null;
@@ -64,7 +62,7 @@ function SettingsPage() {
             <h2
               className="font-bold text-heading"
               style={{
-                fontSize: `${fontSizes["3xl"]}px`,
+                fontSize: `${fontSizeMap["3xl"]}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 borderRadius: removeRoundEdges ? "0" : "",
@@ -76,27 +74,27 @@ function SettingsPage() {
 
             <SettingsTab
               to="/settings/tasks"
-              icon={<CalendarCog size={fontSizes["2xl"]} />}
+              icon={<CalendarCog size={fontSizeMap["2xl"]} />}
               title="Task settings"
             />
             <SettingsTab
               to="/settings/account-management"
-              icon={<UserRound size={fontSizes["2xl"]} />}
+              icon={<UserRound size={fontSizeMap["2xl"]} />}
               title="Account management"
             />
             <SettingsTab
               to="/settings/accessibility"
-              icon={<AccessibilityIcon size={fontSizes["2xl"]} />}
+              icon={<AccessibilityIcon size={fontSizeMap["2xl"]} />}
               title="Accessibility"
             />
             <SettingsTab
               to="/settings/activity-log"
-              icon={<Activity size={fontSizes["2xl"]} />}
+              icon={<Activity size={fontSizeMap["2xl"]} />}
               title="Activity log"
             />
             <SettingsTab
               to="/settings/frequently-asked-questions"
-              icon={<Info size={fontSizes["2xl"]} />}
+              icon={<Info size={fontSizeMap["2xl"]} />}
               title="FAQ"
             />
           </div>
@@ -123,13 +121,14 @@ function SettingsTab({
   title: string;
   to: ValidUrlPaths;
 }) {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     reduceAnimations,
     removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   return (
@@ -147,7 +146,10 @@ function SettingsTab({
       {icon}
       <h3
         className="font-medium capitalize"
-        style={{ fontSize: `${fontSizes.lg}px` }}
+        style={{
+          fontSize: `${fontSizeMap.lg}px`,
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
       >
         {title}
       </h3>

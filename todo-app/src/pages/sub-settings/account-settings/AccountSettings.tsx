@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import Button from "../../../components/shared/Button";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 export default function AccountSettings() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [email, setEmail] = useState("");
@@ -55,7 +53,7 @@ export default function AccountSettings() {
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
       <h2
         style={{
-          fontSize: fontSizes["3xl"],
+          fontSize: fontSizeMap["3xl"],
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           borderRadius: removeRoundEdges ? "0" : "",
@@ -74,7 +72,7 @@ export default function AccountSettings() {
           <label
             className={labelStyles}
             htmlFor="profilePicture"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Profile Picture
           </label>
@@ -84,7 +82,7 @@ export default function AccountSettings() {
             className={`${inputStyles} file:mr-4 file:rounded-full file:border-0 file:bg-mainButtonBg file:px-4 file:py-2 file:text-sm file:font-semibold file:text-textContrast hover:file:bg-mainButtonBgHover`}
             accept="image/*"
             onChange={handleProfilePictureChange}
-            style={{ fontSize: fontSizes["base"] }}
+            style={{ fontSize: fontSizeMap["base"] }}
           />
         </div>
 
@@ -92,7 +90,7 @@ export default function AccountSettings() {
           <label
             className={labelStyles}
             htmlFor="email"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Email
           </label>
@@ -103,7 +101,7 @@ export default function AccountSettings() {
             value={email}
             onChange={handleEmailChange}
             placeholder="Enter your email"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{ fontSize: fontSizeMap["base"] }}
           />
         </div>
 
@@ -111,7 +109,7 @@ export default function AccountSettings() {
           <label
             className={labelStyles}
             htmlFor="username"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Username
           </label>
@@ -122,12 +120,12 @@ export default function AccountSettings() {
             value={username}
             onChange={handleUsernameChange}
             placeholder="Enter your username"
-            style={{ fontSize: fontSizes["base"] }}
+            style={{ fontSize: fontSizeMap["base"] }}
           />
         </div>
 
         <div className="mt-4">
-          <Button type="submit" style={{ fontSize: `${fontSizes.base}px` }}>
+          <Button type="submit" style={{ fontSize: `${fontSizeMap.base}px` }}>
             Save Changes
           </Button>
         </div>

@@ -1,6 +1,4 @@
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 
 interface TextInputProps {
   type: "email" | "password" | "name";
@@ -22,18 +20,21 @@ export default function TextInput({
   label,
   placeholder,
 }: TextInputProps) {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
-  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
-    accessibility;
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   return (
     <div className={`${containerClasses}`}>
       <label
         className={`${labelClasses}`}
         style={{
-          fontSize: fontSizes["lg"],
+          fontSize: fontSizeMap["lg"],
         }}
         htmlFor={type}
       >
@@ -52,7 +53,7 @@ export default function TextInput({
         aria-required
         className={inputClasses}
         style={{
-          fontSize: fontSizes["lg"],
+          fontSize: fontSizeMap["lg"],
           color: highContrastMode ? accessibilityTextColor : "",
           borderRadius: removeRoundEdges ? 0 : "",
           letterSpacing: increaseLetterSpacing ? "0.25rem" : "",

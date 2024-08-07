@@ -1,7 +1,5 @@
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import { appConfigVariables } from "../../../appConfigVariables";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 const labelStyles = "text-lg font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
@@ -22,14 +20,14 @@ export default function ToggleField({
   label,
   ...props
 }: ToggleFieldType) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     reduceAnimations,
     removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   return (
@@ -43,7 +41,7 @@ export default function ToggleField({
     >
       <label
         style={{
-          fontSize: fontSizes.base,
+          fontSize: fontSizeMap.base,
           color: highContrastMode ? accessibilityTextColor : "",
         }}
         className={labelStyles}
@@ -61,7 +59,7 @@ export default function ToggleField({
           {icon}
           <span
             style={{
-              fontSize: fontSizes.base,
+              fontSize: fontSizeMap.base,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           >
@@ -77,7 +75,7 @@ export default function ToggleField({
             after:border after:border-gray-300 after:bg-white after:transition-all
             after:content-[''] peer-checked:bg-secondary-700 peer-checked:after:translate-x-full
           peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-2
-            peer-focus:ring-secondary-100  
+            peer-focus:ring-secondary-100
             dark:peer-focus:ring-secondary-900"
             style={{
               borderRadius: removeRoundEdges ? "0" : "",

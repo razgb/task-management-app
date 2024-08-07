@@ -1,19 +1,20 @@
 import { useState } from "react";
 import useTimer from "../../../stores/timer/useTimer";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import Button from "../../shared/Button";
 import { SettingsIcon } from "lucide-react";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
 export default function TimerSettingsForm() {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
-  const { highContrastMode, removeRoundEdges, increaseLetterSpacing } =
-    accessibility;
+  const {
+    highContrastMode,
+    removeRoundEdges,
+    increaseLetterSpacing,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
-  const fontSizes = useFontSize();
   const { state, dispatch } = useTimer();
 
   function handleSettingsChange(
@@ -70,7 +71,7 @@ export default function TimerSettingsForm() {
             htmlFor="workDuration"
             className="mb-1 block"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
             }}
@@ -84,7 +85,7 @@ export default function TimerSettingsForm() {
             max="60"
             className="w-full rounded bg-secondary-300 p-2"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
               borderRadius: removeRoundEdges ? "0" : "",
             }}
@@ -98,7 +99,7 @@ export default function TimerSettingsForm() {
             htmlFor="breakDuration"
             className="mb-1 block"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
             }}
@@ -113,7 +114,7 @@ export default function TimerSettingsForm() {
             value={state.timerSettings.breakDuration / 60}
             className="w-full rounded bg-secondary-300 p-2"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
               borderRadius: removeRoundEdges ? "0" : "",
             }}
@@ -131,7 +132,7 @@ export default function TimerSettingsForm() {
           />
           <label
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.05rem" : "",
             }}

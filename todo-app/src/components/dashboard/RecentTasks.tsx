@@ -1,25 +1,25 @@
 import { MoveDiagonal } from "lucide-react";
 import Task from "./Task";
 import Link from "../shared/Link";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 /*
-Choice one: add a check to see if total number of tasks 
-a user has is larger than 3/4 to then render this recent task container.  
+Choice one: add a check to see if total number of tasks
+a user has is larger than 3/4 to then render this recent task container.
 ----------
-Choice two: we can just show a cute svg icon of a person saying your 
-tasks will show up here. 
+Choice two: we can just show a cute svg icon of a person saying your
+tasks will show up here.
 */
 
 export default function RecentTasks() {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
-  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
-    accessibility;
-
-  const { accessibilityTextColor } = useAccessibilityTextColor();
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   return (
     <div
@@ -32,7 +32,7 @@ export default function RecentTasks() {
         <h2
           className="font-bold"
           style={{
-            fontSize: `${fontSizes["3xl"]}px`,
+            fontSize: `${fontSizeMap["3xl"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
             letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           }}
@@ -43,7 +43,7 @@ export default function RecentTasks() {
           to="/tasks"
           className="rounded-full bg-primaryBg p-2 transition-colors hover:bg-secondaryBgWeak"
         >
-          <MoveDiagonal size={fontSizes["3xl"]} />
+          <MoveDiagonal size={fontSizeMap["3xl"]} />
         </Link>
       </div>
 

@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 export default function CurrentDateWidget() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     increaseLetterSpacing,
     highContrastMode,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -55,7 +53,7 @@ export default function CurrentDateWidget() {
         <p
           className="font-semibold"
           style={{
-            fontSize: `${fontSizes["4xl"]}px`,
+            fontSize: `${fontSizeMap["4xl"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
           }}
         >
@@ -65,7 +63,7 @@ export default function CurrentDateWidget() {
       <p
         className=""
         style={{
-          fontSize: `${fontSizes["lg"]}px`,
+          fontSize: `${fontSizeMap["lg"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
         }}
       >

@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import useTheme from "../stores/timer/useTheme";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 import Button from "../components/shared/Button";
 import Link from "../components/shared/Link";
 import TextInput from "../components/flow/custom-input-elements/TextInput";
 
 export default function SignupPage() {
   const { theme } = useTheme();
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
-  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
-    accessibility;
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,7 +53,7 @@ export default function SignupPage() {
         <div className="rounded-2xl bg-primaryBg p-8">
           <h2
             style={{
-              fontSize: fontSizes["3xl"],
+              fontSize: fontSizeMap["3xl"],
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
             }}
@@ -64,7 +65,7 @@ export default function SignupPage() {
           <p
             className="mb-6 max-w-[25ch] text-textWeak"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
             }}
           >
             Please enter your email and create a secure password to get started.
@@ -97,7 +98,7 @@ export default function SignupPage() {
             <Button
               type="submit"
               style={{
-                fontSize: fontSizes["lg"],
+                fontSize: fontSizeMap["lg"],
               }}
             >
               Signup

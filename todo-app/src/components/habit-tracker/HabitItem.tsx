@@ -1,7 +1,5 @@
 import { Minus, Plus, X } from "lucide-react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import Button from "../shared/Button";
 
 export type Habit = {
@@ -24,14 +22,14 @@ export default function HabitItem({
   onIncrement: (id: string) => void;
   onReset: (id: string) => void;
 }) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   return (
@@ -62,7 +60,7 @@ export default function HabitItem({
       <h3
         className="text-wrap font-semibold capitalize"
         style={{
-          fontSize: `${fontSizes.xl}px`,
+          fontSize: `${fontSizeMap.xl}px`,
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}
@@ -88,12 +86,12 @@ export default function HabitItem({
           }}
         >
           <span
-            style={{ fontSize: `${fontSizes["5xl"]}px` }}
+            style={{ fontSize: `${fontSizeMap["5xl"]}px` }}
             className="font-bold"
           >
             {habit.value}
           </span>
-          <span style={{ fontSize: `${fontSizes.xl}px` }} className="ml-1">
+          <span style={{ fontSize: `${fontSizeMap.xl}px` }} className="ml-1">
             {habit.unit}
           </span>
         </p>
@@ -133,14 +131,14 @@ function HabitIconButton({
   onDelete,
   ariaLabel,
 }: HabitIconButtonType) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   let handleClick = () => {};
@@ -164,7 +162,7 @@ function HabitIconButton({
     <button
       className="flex h-10 w-10 items-center justify-center rounded-full bg-transparent transition-colors hover:bg-secondary-400"
       style={{
-        fontSize: fontSizes["sm"],
+        fontSize: fontSizeMap["sm"],
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",

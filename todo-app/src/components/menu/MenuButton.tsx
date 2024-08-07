@@ -1,7 +1,5 @@
 import { ValidUrlPaths } from "../../stores/router/RouterContext";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import useRouter from "../../stores/router/useRouter";
 
 type MenuButtonProps = {
@@ -19,15 +17,15 @@ export default function MenuButton({
   variant = "default",
   menuState,
 }: MenuButtonProps) {
-  const { accessibilityTextColor, reverseAccessibilityTextColor } =
-    useAccessibilityTextColor();
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
     reduceAnimations,
     highContrastMode,
     increaseLetterSpacing,
+    fontSizeMap,
+    accessibilityTextColor,
+    reverseAccessibilityTextColor,
   } = accessibility;
 
   const { updatePath } = useRouter();
@@ -55,7 +53,7 @@ export default function MenuButton({
       }}
       href={validPath ? to : undefined}
       style={{
-        fontSize: `${fontSizes.lg}px`,
+        fontSize: `${fontSizeMap.lg}px`,
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
@@ -79,7 +77,7 @@ export default function MenuButton({
 
       <span
         className={`${menuState ? "visible opacity-100" : "hidden"} transition-all duration-150`}
-        style={{ fontSize: `${fontSizes.base}px` }}
+        style={{ fontSize: `${fontSizeMap.base}px` }}
       >
         {children}
       </span>

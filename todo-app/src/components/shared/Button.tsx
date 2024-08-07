@@ -30,13 +30,13 @@ export default function Button({
     reduceAnimations,
     increaseLetterSpacing,
     highContrastMode,
+    accessibilityTextColor,
   } = accessibility;
 
-  const textColorStyle = theme === "light" ? "#000" : "#fff";
   const reverseTextColorStyle = theme === "light" ? "#fff" : "#000";
   const textColor = variant?.toLowerCase().includes("contrast")
     ? reverseTextColorStyle
-    : textColorStyle;
+    : accessibilityTextColor;
 
   switch (variant) {
     case "text": {

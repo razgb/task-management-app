@@ -1,5 +1,4 @@
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 const heightClasses = {
   1: "h-1",
@@ -19,10 +18,13 @@ export default function ProgressBar({
   completion: number;
   width?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }) {
-  const { accessibilityTextColor, reverseAccessibilityTextColor } =
-    useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
-  const { reduceAnimations, highContrastMode } = accessibility;
+  const {
+    reduceAnimations,
+    highContrastMode,
+    accessibilityTextColor,
+    reverseAccessibilityTextColor,
+  } = accessibility;
 
   return (
     <div

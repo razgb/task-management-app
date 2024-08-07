@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 type FaqItem = {
   question: string;
@@ -46,14 +44,14 @@ function Accordion({
   isOpen: boolean;
   toggleAccordion: () => void;
 }) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   return (
@@ -72,11 +70,13 @@ function Accordion({
           color: highContrastMode ? accessibilityTextColor : "",
         }}
       >
-        <span style={{ fontSize: `${fontSizes.base}px` }}>{item.question}</span>
+        <span style={{ fontSize: `${fontSizeMap.base}px` }}>
+          {item.question}
+        </span>
         {isOpen ? (
-          <ChevronUp size={fontSizes.xl} />
+          <ChevronUp size={fontSizeMap.xl} />
         ) : (
-          <ChevronDown size={fontSizes.xl} />
+          <ChevronDown size={fontSizeMap.xl} />
         )}
       </button>
 
@@ -84,7 +84,7 @@ function Accordion({
         <div className="p-4 pt-0 text-textWeak">
           <p
             style={{
-              fontSize: `${fontSizes.base}px`,
+              fontSize: `${fontSizeMap.base}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           >
@@ -97,7 +97,8 @@ function Accordion({
 }
 
 export default function FaqSettings() {
-  const fontSizes = useFontSize();
+  const { accessibility } = useAccessibility();
+  const { fontSizeMap } = accessibility;
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -108,13 +109,13 @@ export default function FaqSettings() {
   return (
     <div className="h-full overflow-y-auto rounded-2xl bg-primaryBg p-6">
       <h2
-        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        style={{ fontSize: `${fontSizeMap["3xl"]}px` }}
         className="mb-4 font-bold text-heading"
       >
         Frequently Asked Questions
       </h2>
       <p
-        style={{ fontSize: `${fontSizes.base}px` }}
+        style={{ fontSize: `${fontSizeMap.base}px` }}
         className="mb-8 text-lg text-textWeak"
       >
         If you can't find the answer to your question here, please contact us at{" "}

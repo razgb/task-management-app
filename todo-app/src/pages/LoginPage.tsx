@@ -1,19 +1,20 @@
 import { useState } from "react";
 import useTheme from "../stores/timer/useTheme";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 import Button from "../components/shared/Button";
 import Link from "../components/shared/Link.tsx";
 import TextInput from "../components/flow/custom-input-elements/TextInput.tsx";
 
 export default function LoginPage() {
   const { theme } = useTheme();
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
-  const { highContrastMode, increaseLetterSpacing, removeRoundEdges } =
-    accessibility;
+  const {
+    highContrastMode,
+    increaseLetterSpacing,
+    removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,7 @@ export default function LoginPage() {
         >
           <h2
             style={{
-              fontSize: fontSizes["3xl"],
+              fontSize: fontSizeMap["3xl"],
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
             }}
@@ -62,7 +63,7 @@ export default function LoginPage() {
           <p
             className="mb-6 max-w-[25ch] text-textWeak"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
             }}
           >
             Please enter your details to access your account.
@@ -86,7 +87,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               style={{
-                fontSize: fontSizes["lg"],
+                fontSize: fontSizeMap["lg"],
               }}
             >
               Login

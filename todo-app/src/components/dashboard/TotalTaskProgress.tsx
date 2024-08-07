@@ -1,11 +1,6 @@
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
-import useFontSize from "../../stores/accessibility/useFontSize";
 
 export default function TotalTaskProgress() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor, reverseAccessibilityTextColor } =
-    useAccessibilityTextColor();
   const completion = Math.floor(Math.random() * 100);
   const { accessibility } = useAccessibility();
   const {
@@ -13,6 +8,9 @@ export default function TotalTaskProgress() {
     highContrastMode,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
+    reverseAccessibilityTextColor,
   } = accessibility;
 
   return (
@@ -27,7 +25,7 @@ export default function TotalTaskProgress() {
     >
       <h2
         className="font-semibold capitalize"
-        style={{ fontSize: `${fontSizes["2xl"]}px` }}
+        style={{ fontSize: `${fontSizeMap["2xl"]}px` }}
       >
         total progress
       </h2>
@@ -54,7 +52,7 @@ export default function TotalTaskProgress() {
 
         <p
           className="font-semibold"
-          style={{ fontSize: `${fontSizes["2xl"]}px` }}
+          style={{ fontSize: `${fontSizeMap["2xl"]}px` }}
         >
           {completion}%
         </p>

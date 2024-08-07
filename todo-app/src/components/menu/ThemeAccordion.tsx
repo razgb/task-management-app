@@ -9,23 +9,21 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import useTheme from "../../stores/timer/useTheme";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 
 export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
     reduceAnimations,
     highContrastMode,
     increaseLetterSpacing,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [open, setOpen] = useState(false);
   const { changeAppTheme, theme, themeController } = useTheme();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   let borderStyles = "";
   if (open) {
     borderStyles = "rounded-t-3xl";
@@ -42,7 +40,7 @@ export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
         aria-label="Show theme options."
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 ${fontSizes["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
+        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 ${fontSizeMap["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
         style={{
           borderRadius: removeRoundEdges ? "0" : "",
           transition: reduceAnimations ? "none" : "",
@@ -54,7 +52,7 @@ export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
           <div aria-hidden="true">
             <Palette />
           </div>
-          <span style={{ fontSize: `${fontSizes.base}px` }}>Theme</span>
+          <span style={{ fontSize: `${fontSizeMap.base}px` }}>Theme</span>
         </div>
 
         <div aria-hidden="true">
@@ -121,14 +119,14 @@ function ThemeAccordionButton({
   onClick,
   selected,
 }: ThemeAccordionButtonProps) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
     reduceAnimations,
     highContrastMode,
     increaseLetterSpacing,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   return (
@@ -136,7 +134,7 @@ function ThemeAccordionButton({
       onClick={onClick}
       className={`flex w-full items-center justify-between bg-secondary-200 px-4 py-3 text-text hover:bg-btnHover`}
       style={{
-        fontSize: `${fontSizes.base}px`,
+        fontSize: `${fontSizeMap.base}px`,
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
@@ -144,14 +142,14 @@ function ThemeAccordionButton({
       }}
     >
       <span
-        style={{ fontSize: `${fontSizes.base}px` }}
+        style={{ fontSize: `${fontSizeMap.base}px` }}
         className="flex items-center gap-2"
       >
         {icon}
         {children}
       </span>
 
-      {selected && <CheckCircle2Icon size={fontSizes["xl"]} />}
+      {selected && <CheckCircle2Icon size={fontSizeMap["xl"]} />}
     </button>
   );
 }

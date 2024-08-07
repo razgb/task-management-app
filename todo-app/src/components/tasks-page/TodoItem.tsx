@@ -1,7 +1,5 @@
 import { Move, Square, SquareCheck } from "lucide-react";
 import { useState } from "react";
-import useFontSize from "../../stores/accessibility/useFontSize";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 import { handleDrop, handleDragStart } from "./dragAndDropFunctions";
@@ -9,18 +7,24 @@ import { SubTaskType } from "./subTaskData";
 
 type ToDoItemProps = {
   task: SubTaskType;
-  swapSubTaskPositions: (incomingTaskId: string, outgoingTaskId: string) => void;
+  swapSubTaskPositions: (
+    incomingTaskId: string,
+    outgoingTaskId: string,
+  ) => void;
 };
 
-export default function ToDoItem({ task, swapSubTaskPositions }: ToDoItemProps) {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
+export default function ToDoItem({
+  task,
+  swapSubTaskPositions,
+}: ToDoItemProps) {
   const { accessibility } = useAccessibility();
   const {
     reduceAnimations,
     removeRoundEdges,
     increaseLetterSpacing,
     highContrastMode,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [checked, setChecked] = useState(task.completed || false);
@@ -46,15 +50,15 @@ export default function ToDoItem({ task, swapSubTaskPositions }: ToDoItemProps) 
         <button
           onMouseDown={() => setIsDragging(true)}
           onMouseUp={() => setIsDragging(false)}
-          style={{ fontSize: `${fontSizes.base}px` }}
+          style={{ fontSize: `${fontSizeMap.base}px` }}
           className="flex-1 cursor-grab p-1"
         >
-          <Move size={fontSizes.xl} className="stroke-iconStroke" />
+          <Move size={fontSizeMap.xl} className="stroke-iconStroke" />
         </button>
 
         <h3
           style={{
-            fontSize: `${fontSizes.lg}px`,
+            fontSize: `${fontSizeMap.lg}px`,
             color: highContrastMode ? accessibilityTextColor : "",
             letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           }}
@@ -70,14 +74,14 @@ export default function ToDoItem({ task, swapSubTaskPositions }: ToDoItemProps) 
         aria-checked={checked ? "true" : "false"}
         aria-label={ariaLabel}
         style={{
-          fontSize: `${fontSizes.base}px`,
+          fontSize: `${fontSizeMap.base}px`,
           borderRadius: removeRoundEdges ? "0" : "",
         }}
       >
         {checked ? (
-          <SquareCheck size={fontSizes["3xl"]} className="stroke-checkbox" />
+          <SquareCheck size={fontSizeMap["3xl"]} className="stroke-checkbox" />
         ) : (
-          <Square size={fontSizes["3xl"]} className="stroke-checkbox" />
+          <Square size={fontSizeMap["3xl"]} className="stroke-checkbox" />
         )}
       </button>
     </li>

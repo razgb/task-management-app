@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import Button from "../../../components/shared/Button";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../../stores/accessibility/useAccessibilityTextColor";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 export default function TaskSettings() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     reduceAnimations,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [defaultPriority, setDefaultPriority] = useState("medium");
@@ -35,7 +33,7 @@ export default function TaskSettings() {
     <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
       <h2
         style={{
-          fontSize: fontSizes["3xl"],
+          fontSize: fontSizeMap["3xl"],
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           borderRadius: removeRoundEdges ? "0" : "",
@@ -54,7 +52,7 @@ export default function TaskSettings() {
           <label
             className={labelStyles}
             htmlFor="defaultPriority"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Default Priority
           </label>
@@ -64,7 +62,7 @@ export default function TaskSettings() {
             value={defaultPriority}
             onChange={(e: InputEventType) => setDefaultPriority(e.target.value)}
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               borderRadius: removeRoundEdges ? "0" : "",
             }}
           >
@@ -78,7 +76,7 @@ export default function TaskSettings() {
           <label
             className={labelStyles}
             htmlFor="defaultDueDate"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Default Due Date (days from creation)
           </label>
@@ -90,7 +88,7 @@ export default function TaskSettings() {
             onChange={(e: InputEventType) => setDefaultDueDate(e.target.value)}
             min="0"
             style={{
-              fontSize: fontSizes["base"],
+              fontSize: fontSizeMap["base"],
               borderRadius: removeRoundEdges ? "0" : "",
             }}
           />
@@ -100,7 +98,7 @@ export default function TaskSettings() {
           <label
             className={labelStyles}
             htmlFor="allowSubtasks"
-            style={{ fontSize: fontSizes["lg"] }}
+            style={{ fontSize: fontSizeMap["lg"] }}
           >
             Allow Subtasks by Default
           </label>
@@ -112,14 +110,14 @@ export default function TaskSettings() {
               checked={allowSubtasks}
               onChange={() => setAllowSubtasks(!allowSubtasks)}
             />
-            <span style={{ fontSize: fontSizes["base"] }}>
+            <span style={{ fontSize: fontSizeMap["base"] }}>
               Enable subtasks for new tasks
             </span>
           </div>
         </div>
 
         <div className="mt-4">
-          <Button type="submit" style={{ fontSize: `${fontSizes.xl}px` }}>
+          <Button type="submit" style={{ fontSize: `${fontSizeMap.xl}px` }}>
             Save Changes
           </Button>
         </div>

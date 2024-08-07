@@ -8,19 +8,20 @@ import {
   TimerResetIcon,
 } from "lucide-react";
 
-import useFontSize from "../stores/accessibility/useFontSize";
 import useTimer from "../stores/timer/useTimer";
 import formatSecondsToDigitalFormat from "../util/formatSecondsToDigitalFormat";
 import TimerSettingsForm from "../components/settings/timer-page/TimerSettingsForm";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 
 export default function TimerPage() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
-  const { removeRoundEdges, highContrastMode, increaseLetterSpacing } =
-    accessibility;
+  const {
+    removeRoundEdges,
+    highContrastMode,
+    increaseLetterSpacing,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   const { state, dispatch } = useTimer();
   const { timerState } = state;
@@ -34,7 +35,7 @@ export default function TimerPage() {
     buttonState = (
       <Button variant="contrast-icon-text" onClick={pauseCountDown}>
         <PauseIcon />
-        <span style={{ fontSize: fontSizes["base"] }}>Pause</span>
+        <span style={{ fontSize: fontSizeMap["base"] }}>Pause</span>
       </Button>
     );
   } else if (timerState === "paused" || timerState === "off") {
@@ -64,7 +65,7 @@ export default function TimerPage() {
             <div className="flex h-full items-center justify-center">
               <h2
                 style={{
-                  fontSize: `${fontSizes["6xl"]}px`,
+                  fontSize: `${fontSizeMap["6xl"]}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
                 }}
@@ -94,10 +95,10 @@ export default function TimerPage() {
               onClick={() => dispatch({ payload: -5 * 60, type: "addTime" })}
               variant="icon-text"
             >
-              <Minus size={fontSizes["xl"]} />
+              <Minus size={fontSizeMap["xl"]} />
               <span
                 className="text-medium"
-                style={{ fontSize: fontSizes["base"] }}
+                style={{ fontSize: fontSizeMap["base"] }}
               >
                 5 mins
               </span>
@@ -107,10 +108,10 @@ export default function TimerPage() {
               onClick={() => dispatch({ payload: -1 * 60, type: "addTime" })}
               variant="icon-text"
             >
-              <Minus size={fontSizes["xl"]} />
+              <Minus size={fontSizeMap["xl"]} />
               <span
                 className="text-medium"
-                style={{ fontSize: fontSizes["base"] }}
+                style={{ fontSize: fontSizeMap["base"] }}
               >
                 1 min
               </span>
@@ -120,10 +121,10 @@ export default function TimerPage() {
               onClick={() => dispatch({ payload: 1 * 60, type: "addTime" })}
               variant="icon-text"
             >
-              <Plus size={fontSizes["xl"]} />
+              <Plus size={fontSizeMap["xl"]} />
               <span
                 className="text-medium"
-                style={{ fontSize: fontSizes["base"] }}
+                style={{ fontSize: fontSizeMap["base"] }}
               >
                 1 min
               </span>
@@ -133,10 +134,10 @@ export default function TimerPage() {
               onClick={() => dispatch({ payload: 5 * 60, type: "addTime" })}
               variant="icon-text"
             >
-              <Plus size={fontSizes["xl"]} />
+              <Plus size={fontSizeMap["xl"]} />
               <span
                 className="text-medium"
-                style={{ fontSize: fontSizes["base"] }}
+                style={{ fontSize: fontSizeMap["base"] }}
               >
                 5 mins
               </span>
@@ -145,7 +146,7 @@ export default function TimerPage() {
 
           <Button
             onClick={() => dispatch({ payload: null, type: "toggleMode" })}
-            style={{ fontSize: fontSizes["base"] }}
+            style={{ fontSize: fontSizeMap["base"] }}
           >
             Change mode to: {state.timerMode === "work" ? "break" : "work"}
           </Button>

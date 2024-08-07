@@ -1,8 +1,6 @@
 import { useReducer } from "react";
 import Button from "../components/shared/Button";
 import Link from "../components/shared/Link";
-import useFontSize from "../stores/accessibility/useFontSize";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 
 const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
@@ -58,15 +56,15 @@ function reducer(state: TaskFormState, action: TaskFormAction) {
 }
 
 export default function TaskCreator() {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
     increaseLetterSpacing,
     reduceAnimations,
     removeRoundEdges,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
-  const { accessibilityTextColor } = useAccessibilityTextColor();
 
   const [state, dispatch] = useReducer(reducer, {
     taskName: "",
@@ -90,7 +88,7 @@ export default function TaskCreator() {
       <h2
         className="mb-8 font-bold"
         style={{
-          fontSize: `${fontSizes["3xl"]}px`,
+          fontSize: `${fontSizeMap["3xl"]}px`,
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           color: highContrastMode ? accessibilityTextColor : "",
         }}
@@ -106,7 +104,7 @@ export default function TaskCreator() {
                 className={`${labelStyles} inline`}
                 htmlFor="taskName"
                 style={{
-                  fontSize: `${fontSizes.xl}px`,
+                  fontSize: `${fontSizeMap.xl}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -116,7 +114,7 @@ export default function TaskCreator() {
               <span
                 className="text-textWeak"
                 style={{
-                  fontSize: `${fontSizes.sm}px`,
+                  fontSize: `${fontSizeMap.sm}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -130,7 +128,7 @@ export default function TaskCreator() {
               id="taskName"
               className={inputStyles}
               style={{
-                fontSize: `${fontSizes.lg}px`,
+                fontSize: `${fontSizeMap.lg}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",
@@ -148,7 +146,7 @@ export default function TaskCreator() {
               className={labelStyles}
               htmlFor="dueDate"
               style={{
-                fontSize: `${fontSizes.xl}px`,
+                fontSize: `${fontSizeMap.xl}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
               }}
@@ -157,7 +155,7 @@ export default function TaskCreator() {
               <span
                 className="text-textWeak"
                 style={{
-                  fontSize: `${fontSizes.sm}px`,
+                  fontSize: `${fontSizeMap.sm}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -170,7 +168,7 @@ export default function TaskCreator() {
               id="dueDate"
               className={`${inputStyles} cursor-pointer`}
               style={{
-                fontSize: `${fontSizes.lg}px`,
+                fontSize: `${fontSizeMap.lg}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",
@@ -187,7 +185,7 @@ export default function TaskCreator() {
               className={labelStyles}
               htmlFor="priority"
               style={{
-                fontSize: `${fontSizes.xl}px`,
+                fontSize: `${fontSizeMap.xl}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
               }}
@@ -196,7 +194,7 @@ export default function TaskCreator() {
               <span
                 className="text-textWeak"
                 style={{
-                  fontSize: `${fontSizes.sm}px`,
+                  fontSize: `${fontSizeMap.sm}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -209,7 +207,7 @@ export default function TaskCreator() {
               id="priority"
               className={`${inputStyles} cursor-pointer`}
               style={{
-                fontSize: `${fontSizes.lg}px`,
+                fontSize: `${fontSizeMap.lg}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",
@@ -234,7 +232,7 @@ export default function TaskCreator() {
                 className={labelStyles}
                 htmlFor="description"
                 style={{
-                  fontSize: `${fontSizes.xl}px`,
+                  fontSize: `${fontSizeMap.xl}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -244,7 +242,7 @@ export default function TaskCreator() {
               <span
                 className="text-textWeak"
                 style={{
-                  fontSize: `${fontSizes.sm}px`,
+                  fontSize: `${fontSizeMap.sm}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
@@ -258,7 +256,7 @@ export default function TaskCreator() {
               id="description"
               className={`${inputStyles} h-32 resize-none overflow-y-hidden`}
               style={{
-                fontSize: `${fontSizes.lg}px`,
+                fontSize: `${fontSizeMap.lg}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",

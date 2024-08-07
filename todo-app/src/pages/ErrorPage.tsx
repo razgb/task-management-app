@@ -1,14 +1,15 @@
 import { AlertTriangle } from "lucide-react";
 import Link from "../components/shared/Link";
-import useFontSize from "../stores/accessibility/useFontSize";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../stores/accessibility/useAccessibilityTextColor";
 
 export default function ErrorPage() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
-  const { removeRoundEdges, highContrastMode } = accessibility;
+  const {
+    removeRoundEdges,
+    highContrastMode,
+    fontSizeMap,
+    accessibilityTextColor,
+  } = accessibility;
 
   return (
     <div
@@ -19,14 +20,14 @@ export default function ErrorPage() {
       }}
     >
       <AlertTriangle
-        size={2 * fontSizes["3xl"]}
+        size={2 * fontSizeMap["3xl"]}
         className="mb-4 text-textWeak"
         style={{ color: highContrastMode ? accessibilityTextColor : "" }}
       />
 
       <h1
         style={{
-          fontSize: `${fontSizes["3xl"]}px`,
+          fontSize: `${fontSizeMap["3xl"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
         }}
         className="mb-2 font-bold text-heading"
@@ -36,7 +37,7 @@ export default function ErrorPage() {
 
       <p
         style={{
-          fontSize: `${fontSizes.xl}px`,
+          fontSize: `${fontSizeMap.xl}px`,
           color: highContrastMode ? accessibilityTextColor : "",
         }}
         className="mb-6 text-textWeak"

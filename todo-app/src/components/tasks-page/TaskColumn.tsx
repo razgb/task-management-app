@@ -1,5 +1,4 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
-import useFontSize from "../../stores/accessibility/useFontSize.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useState } from "react";
 import {
@@ -42,13 +41,13 @@ export default function TaskColumn({
   tasks,
   taskColumnMap,
 }: TaskGroupColumnType) {
-  const fontSizes = useFontSize();
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
     highContrastMode,
     reduceAnimations,
     increaseLetterSpacing,
+    fontSizeMap,
   } = accessibility;
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
@@ -108,7 +107,7 @@ export default function TaskColumn({
     >
       <h2
         style={{
-          fontSize: `${fontSizes["2xl"]}px`,
+          fontSize: `${fontSizeMap["2xl"]}px`,
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           color: highContrastMode ? "#fff" : "",
         }}

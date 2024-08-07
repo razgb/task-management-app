@@ -1,7 +1,6 @@
 import { Moon, Type, Scan, Space } from "lucide-react";
 import ToggleField from "./ToggleField";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import useFontSize from "../../../stores/accessibility/useFontSize";
 import { useState } from "react";
 import { AccessibilityContextType } from "../../../stores/accessibility/AccessibilityContext";
 import { appConfigVariables } from "../../../appConfigVariables";
@@ -15,13 +14,14 @@ export default function AccessibilitySettings() {
   >("idle");
 
   const { accessibility, updateAccessibility } = useAccessibility();
-  const fontSizes = useFontSize();
   const {
     highContrastMode,
     reduceAnimations,
     removeRoundEdges,
     increaseLetterSpacing,
     fontSizeMultiplier,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -45,7 +45,10 @@ export default function AccessibilitySettings() {
         id="accessibility-heading"
         className="mb-8 font-bold text-heading"
         aria-label="Accessibility Settings"
-        style={{ fontSize: `${fontSizes["3xl"]}px` }}
+        style={{
+          fontSize: `${fontSizeMap["3xl"]}px`,
+          color: highContrastMode ? accessibilityTextColor : "",
+        }}
       >
         Accessibility
       </h2>
@@ -68,7 +71,7 @@ export default function AccessibilitySettings() {
         <div className={inputContainerStyle}>
           <label
             style={{
-              fontSize: `${fontSizes.lg}px`,
+              fontSize: `${fontSizeMap.lg}px`,
             }}
             className={`${labelStyles}`}
             htmlFor="fontSize"
@@ -84,7 +87,7 @@ export default function AccessibilitySettings() {
               aria-label="Select text size multiplier"
               aria-describedby="font-size-description"
               style={{
-                fontSize: `${fontSizes.base}px`,
+                fontSize: `${fontSizeMap.base}px`,
                 borderRadius: removeRoundEdges ? "0" : "",
               }}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>

@@ -1,7 +1,5 @@
 import { useRef, useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useAccessibilityTextColor from "../../stores/accessibility/useAccessibilityTextColor";
-import useFontSize from "../../stores/accessibility/useFontSize";
 import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
@@ -9,14 +7,14 @@ import { subTasksData, SubTaskType } from "./subTaskData";
 import { checkInputTextValidity } from "../../util/checkInputTextValidity";
 
 export default function TaskDetails() {
-  const fontSizes = useFontSize();
-  const { accessibilityTextColor } = useAccessibilityTextColor();
   const { accessibility } = useAccessibility();
   const {
     reduceAnimations,
     removeRoundEdges,
     increaseLetterSpacing,
     highContrastMode,
+    fontSizeMap,
+    accessibilityTextColor,
   } = accessibility;
 
   const [subTasks, setSubTasks] = useState<SubTaskType[]>(subTasksData || []);
@@ -26,7 +24,7 @@ export default function TaskDetails() {
     // title formatting...
     if (!checkInputTextValidity(title)) return; // Proper error messages in later update.
 
-    setSubTasks(prev => {
+    setSubTasks((prev) => {
       return [
         ...prev,
         {
@@ -34,15 +32,18 @@ export default function TaskDetails() {
           position: prev.length,
           title: title,
           completed: false,
-        }
-      ]
-    })
+        },
+      ];
+    });
   }
 
-  function swapSubTaskPositions(incomingTaskId: string, outgoingTaskId: string) {
+  function swapSubTaskPositions(
+    incomingTaskId: string,
+    outgoingTaskId: string,
+  ) {
     setSubTasks((prev) => {
-      let incomingTaskPosition: number | undefined= undefined;
-      let outgoingTaskPosition: number | undefined= undefined;
+      let incomingTaskPosition: number | undefined = undefined;
+      let outgoingTaskPosition: number | undefined = undefined;
 
       prev.forEach((subTask) => {
         const id = subTask.id;
@@ -53,7 +54,7 @@ export default function TaskDetails() {
         } else if (id === outgoingTaskId) {
           outgoingTaskPosition = subTask.position;
         }
-      })
+      });
 
       const newSubTasksArray = prev.map((task) => {
         const id = task.id;
@@ -61,9 +62,10 @@ export default function TaskDetails() {
 
         return {
           ...task,
-          position: id === incomingTaskId ? outgoingTaskPosition : incomingTaskPosition,
-        } as SubTaskType
-      })
+          position:
+            id === incomingTaskId ? outgoingTaskPosition : incomingTaskPosition,
+        } as SubTaskType;
+      });
 
       return newSubTasksArray;
     });
@@ -79,13 +81,16 @@ export default function TaskDetails() {
       if (task?.position !== i) continue;
 
       reorderedTaskList.push(
-        <ToDoItem key={task.id} task={task} swapSubTaskPositions={swapSubTaskPositions} />
+        <ToDoItem
+          key={task.id}
+          task={task}
+          swapSubTaskPositions={swapSubTaskPositions}
+        />,
       );
 
       // testing.push(task);
     }
   }
-
 
   return (
     <div
@@ -107,7 +112,7 @@ export default function TaskDetails() {
             <ProgressBar completion={50} width={1} />
             <p
               style={{
-                fontSize: `${fontSizes.sm}px`,
+                fontSize: `${fontSizeMap.sm}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
               }}
               className="flex-shrink-0 font-light"
@@ -124,7 +129,7 @@ export default function TaskDetails() {
           >
             <p
               style={{
-                fontSize: `${fontSizes.sm}px`,
+                fontSize: `${fontSizeMap.sm}px`,
                 color: highContrastMode ? accessibilityTextColor : "",
               }}
               className="text-sm font-light"
@@ -136,7 +141,7 @@ export default function TaskDetails() {
 
         <h1
           style={{
-            fontSize: `${fontSizes["3xl"]}px`,
+            fontSize: `${fontSizeMap["3xl"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
             letterSpacing: increaseLetterSpacing ? "0.2rem" : "",
           }}
@@ -147,7 +152,7 @@ export default function TaskDetails() {
 
         <p
           style={{
-            fontSize: `${fontSizes["lg"]}px`,
+            fontSize: `${fontSizeMap["lg"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
           }}
           className="mb-12 max-w-[75ch] text-lg text-textWeak"
@@ -176,13 +181,13 @@ export default function TaskDetails() {
             placeholder="Add a sub task"
             ref={buttonRef}
             style={{
-              fontSize: `${fontSizes.sm}px`,
+              fontSize: `${fontSizeMap.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           />
 
           <Button
-            style={{ fontSize: `${fontSizes.sm}px` }}
+            style={{ fontSize: `${fontSizeMap.sm}px` }}
             type="submit"
             variant="contrast-default"
           >
