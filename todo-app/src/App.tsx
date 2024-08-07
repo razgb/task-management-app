@@ -1,32 +1,18 @@
-import Menu from "./layouts/Menu";
-import MainNavigation from "./layouts/MainNavigation";
-import Outlet from "./layouts/Outlet";
-import useTheme from "./stores/timer/useTheme";
-import LoadingWave from "./components/shared/LoadingWave";
+import MainContent from "./MainContent";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import useRouter from "./stores/router/useRouter";
 
-function App() {
-  const { theme } = useTheme();
-  return (
-    <div
-      className={`${theme} flex h-screen flex-col overflow-hidden bg-primaryBg`}
-    >
-      <LoadingWave />
+export default function App() {
+  const { path } = useRouter();
 
-      <div
-        className={`3xl:max-w-[85dvw] mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg p-6 text-text`}
-      >
-        <Menu />
+  let content: JSX.Element | undefined = undefined;
 
-        <div className="flex flex-1 flex-col overflow-hidden">
-          <MainNavigation />
+  if (path === "/login") {
+    content = <LoginPage />;
+  } else if (path === "/signup") {
+    content = <SignupPage />;
+  } else content = <MainContent />;
 
-          <div className="flex-1 overflow-hidden">
-            <Outlet />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return content;
 }
-
-export default App;

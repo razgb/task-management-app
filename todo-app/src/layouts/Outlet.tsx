@@ -36,42 +36,34 @@ export default function Outlet() {
       content = <DashboardPage />; // in the future this should be the dashboard
       break;
     }
-
     case "/dashboard": {
       content = <DashboardPage />;
       break;
     }
-
     case "/task-creator": {
       content = <TaskCreator />;
       break;
     }
-
     case "/tasks": {
       content = <TasksPage />;
       break;
     }
-
     case "/tasks/details": {
       content = <TaskDetails />;
       break;
     }
-
     case "/settings": {
       content = <SettingsPage />;
       break;
     }
-
     case "/timer": {
       content = <TimerPage />;
       break;
     }
-
     case "/habit-tracker": {
       content = <HabitTracker />;
       break;
     }
-
     default: {
       content = <ErrorPage />;
       break;

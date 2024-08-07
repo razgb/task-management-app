@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export const Routes = {
+  login: "/login",
+  signup: "/signup",
   dashboard: "/dashboard",
   tasks: {
     index: "/tasks",
@@ -30,10 +32,10 @@ interface RouterContextType {
 }
 
 /*
- If there is no provider around the subscribing component then 
- the value of the useContext hook will result in undefined. 
+ If there is no provider around the subscribing component then
+ the value of the useContext hook will result in undefined.
 
- So this value here is the representation of the value of the provider. 
+ So this value here is the representation of the value of the provider.
  */
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
 

@@ -6,9 +6,6 @@ Things to do: deadline 14th Aug.
   -> If the user happens to not use due dates, remove the widget entirely.
 </WidgetIdeas>
 
-
-- react router instead of custom router.
-
 <CurrentPlan>
 - Optimize UI. useMemo & useCallback.
   -> Find redundencies in the number of <div> elements used.
