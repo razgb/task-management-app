@@ -1,4 +1,4 @@
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../../../stores/accessibility/useAccessibility";
 import { activityItems } from "./dummyData";
 
 import { AlertTriangle, Mail, Clock } from "lucide-react";

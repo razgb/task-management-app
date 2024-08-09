@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
-import Link from "../components/shared/Link";
-import useAccessibility from "../stores/accessibility/useAccessibility";
+import Link from "../../components/shared/Link";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 export default function ErrorPage() {
   const { accessibility } = useAccessibility();

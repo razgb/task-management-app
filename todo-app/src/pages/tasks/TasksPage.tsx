@@ -2,15 +2,15 @@ import {
   draftTasksData,
   inProgressTasksData,
   completeTasksData,
-} from "../components/tasks-page/taskData.ts";
+} from "../../components/tasks-page/taskData.ts";
 
-import { TaskType } from "../components/dashboard/Task.tsx";
+import { TaskType } from "../../components/dashboard/Task.tsx";
 
 import { useState } from "react";
-import useAccessibility from "../stores/accessibility/useAccessibility.tsx";
+import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import TaskColumn, {
   TaskGroupColumnType,
-} from "../components/tasks-page/TaskColumn.tsx";
+} from "../../components/tasks-page/TaskColumn.tsx";
 
 const defaultColumnDragStyles = {
   draft: false,

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import useTheme from "../stores/timer/useTheme";
-import useAccessibility from "../stores/accessibility/useAccessibility";
-import Button from "../components/shared/Button";
-import Link from "../components/shared/Link.tsx";
-import TextInput from "../components/flow/custom-input-elements/TextInput.tsx";
+import useTheme from "../../stores/timer/useTheme";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import Button from "../../components/shared/Button";
+import Link from "../../components/shared/Link.tsx";
+import TextInput from "../../components/flow/custom-input-elements/TextInput.tsx";
 
 export default function LoginPage() {
   const { theme } = useTheme();

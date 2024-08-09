@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../../../components/shared/Button";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import Button from "../../../../components/shared/Button";
+import useAccessibility from "../../../../stores/accessibility/useAccessibility";
 
 type InputEventType = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 

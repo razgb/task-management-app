@@ -7,12 +7,11 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- firebase installed.
--
--
--
--
--
+- Add user login and signup.
+- Correct UserContextType.user structure.
+- Create verification component.
+- Create a verification function that refreshes the
+  page and checks verification status again. (only solution to think of currently)
 </CurrentPlan>
 
 <AppWideIdeas>

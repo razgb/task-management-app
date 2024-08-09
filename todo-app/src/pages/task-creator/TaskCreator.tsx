@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import Button from "../components/shared/Button";
-import Link from "../components/shared/Link";
-import useAccessibility from "../stores/accessibility/useAccessibility";
+import Button from "../../components/shared/Button";
+import Link from "../../components/shared/Link";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
 const labelStyles = "font-medium";

@@ -10,12 +10,12 @@ import AccountSettings from "./sub-settings/account-settings/AccountSettings";
 import ActivitySettings from "./sub-settings/activity-settings/ActivitySettings";
 import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
 import TaskSettings from "./sub-settings/task-settings/TaskSettings";
-
-import Link from "../components/shared/Link";
-import { ValidUrlPaths } from "../stores/router/RouterContext";
-import useRouter from "../stores/router/useRouter";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
-import useAccessibility from "../stores/accessibility/useAccessibility";
+
+import Link from "../../components/shared/Link";
+import { ValidUrlPaths } from "../../stores/router/RouterContext";
+import useRouter from "../../stores/router/useRouter";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 function SettingsPage() {
   const { path } = useRouter();

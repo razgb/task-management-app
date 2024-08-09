@@ -1,9 +1,9 @@
 import { Moon, Type, Scan, Space } from "lucide-react";
 import ToggleField from "./ToggleField";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../../../stores/accessibility/useAccessibility";
 import { useState } from "react";
-import { AccessibilityContextType } from "../../../stores/accessibility/AccessibilityContext";
-import { appConfigVariables } from "../../../appConfigVariables";
+import { AccessibilityContextType } from "../../../../stores/accessibility/AccessibilityContext";
+import { appConfigVariables } from "../../../../appConfigVariables";
 
 const labelStyles = "font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";

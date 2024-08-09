@@ -1,6 +1,6 @@
 import MainContent from "./MainContent";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/login/LoginPage";
+import SignupPage from "./pages/signup/SignupPage";
 import useRouter from "./stores/router/useRouter";
 
 import { auth } from "./main";

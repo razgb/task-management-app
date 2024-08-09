@@ -1,8 +1,8 @@
 import { useState } from "react";
-import useAccessibility from "../stores/accessibility/useAccessibility";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { Plus } from "lucide-react";
-import Button from "../components/shared/Button";
-import HabitItem, { Habit } from "../components/habit-tracker/HabitItem";
+import Button from "../../components/shared/Button";
+import HabitItem, { Habit } from "../../components/habit-tracker/HabitItem";
 
 const unitOptions = [
   "minutes",

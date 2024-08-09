@@ -1,5 +1,5 @@
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import { appConfigVariables } from "../../../appConfigVariables";
+import useAccessibility from "../../../../stores/accessibility/useAccessibility";
+import { appConfigVariables } from "../../../../appConfigVariables";
 
 const labelStyles = "text-lg font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../../../stores/accessibility/useAccessibility";
 
 type FaqItem = {
   question: string;

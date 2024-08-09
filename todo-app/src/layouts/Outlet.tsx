@@ -1,13 +1,13 @@
-import DashboardPage from "../pages/DashboardPage.tsx";
-import SettingsPage from "../pages/SettingsPage.tsx";
+import DashboardPage from "../pages/dashboard/DashboardPage.tsx";
+import SettingsPage from "../pages/settings/SettingsPage.tsx";
 import useRouter from "../stores/router/useRouter.tsx";
 import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
-import TasksPage from "../pages/TasksPage.tsx";
-import TaskCreator from "../pages/TaskCreator.tsx";
-import ErrorPage from "../pages/ErrorPage.tsx";
-import TimerPage from "../pages/TimerPage.tsx";
+import TasksPage from "../pages/tasks/TasksPage.tsx";
+import TaskCreator from "../pages/task-creator/TaskCreator.tsx";
+import ErrorPage from "../pages/error/ErrorPage.tsx";
+import TimerPage from "../pages/timer/TimerPage.tsx";
 import useAccessibility from "../stores/accessibility/useAccessibility";
-import HabitTracker from "../pages/HabitTrackerPage.tsx";
+import HabitTracker from "../pages/habit-tracker/HabitTrackerPage.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
