@@ -3,6 +3,10 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import useRouter from "./stores/router/useRouter";
 
+import { auth } from "./main";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth/web-extension";
+
 export default function App() {
   const { path } = useRouter();
 
@@ -13,6 +17,22 @@ export default function App() {
   } else if (path === "/signup") {
     content = <SignupPage />;
   } else content = <MainContent />;
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+
+        // 1. Update user context.
+      } else {
+        console.warn("User signed out. ");
+      }
+    });
+
+    return () => {
+      unsub();
+    };
+  });
 
   return content;
 }
