@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useTheme from "../../stores/timer/useTheme";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import Button from "../../components/shared/Button";
@@ -6,22 +6,7 @@ import Link from "../../components/shared/Link";
 import TextInput from "../../components/flow/custom-input-elements/TextInput";
 
 import { useMutation } from "react-query";
-
-const handleSubmit = (
-  e: React.FormEvent,
-  details: {
-    name: string;
-    email: string;
-    password: string;
-  },
-) => {
-  e.preventDefault();
-  const { name, email, password } = details;
-
-  // validateDetails(); // placeholder
-
-  console.log(`${name} \n${email} \n${password}`);
-};
+import { signup } from "./features/signup";
 
 export default function SignupPage() {
   // const mutation = useMutation()
@@ -49,6 +34,17 @@ export default function SignupPage() {
   const handlePasswordChange = (newPasswordValue: string) => {
     // will create my own custom password format checking functions.
     setPassword(newPasswordValue);
+  };
+
+  const handleFormSubmit = async () => {
+    // loading true
+    try {
+      await signup({ name, email, password });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      // loading false
+    }
   };
 
   return (
@@ -85,7 +81,10 @@ export default function SignupPage() {
             Please enter your email and create a secure password to get started.
           </p>
 
-          <form className="flex flex-col gap-6">
+          <form
+            onSubmit={() => handleFormSubmit}
+            className="flex flex-col gap-6"
+          >
             <div className="flex flex-col gap-6">
               <TextInput
                 type="name"
