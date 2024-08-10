@@ -7,7 +7,20 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- Add user login and signup.
+- validation functions - done.
+- create error message displaying component for signup.
+-
+- <Tangent>
+- add loading bar to button.
+- make unstyled button component.
+- add button styles to config file for reusablility.
+- </Tangent>
+-
+- complete submit function.
+-
+-
+- error boundary component for important parts of application.
+-
 - Correct UserContextType.user structure.
 - Create verification component.
 - Create a verification function that refreshes the

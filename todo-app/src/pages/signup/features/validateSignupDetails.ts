@@ -2,7 +2,7 @@ import { isEmail, isAlpha, isLength, escape, normalizeEmail } from "validator";
 
 type ValidatorType = {
   passed: boolean;
-  message: string | null;
+  message: string;
 };
 
 function validateName(name: string): ValidatorType {
@@ -31,7 +31,7 @@ function validateName(name: string): ValidatorType {
 
   return {
     passed: true,
-    message: null,
+    message: "Success",
   };
 }
 
@@ -56,7 +56,7 @@ function validateEmail(email: string): ValidatorType {
 
   return {
     passed: true,
-    message: null,
+    message: "Success",
   };
 }
 
@@ -82,7 +82,7 @@ function validatePassword(password: string): ValidatorType {
 
   return {
     passed: true,
-    message: null,
+    message: "Success",
   };
 }
 
@@ -92,24 +92,33 @@ export function validateSignupDetails(details: {
   password: string;
 }) {
   const { name, email, password } = details;
+
   const nameValidation = validateName(name);
+  if (!nameValidation.passed) {
+    return {
+      passed: false,
+      message: nameValidation.message,
+    };
+  }
+
   const emailValidation = validateEmail(email);
+  if (!emailValidation.passed) {
+    return {
+      passed: false,
+      message: emailValidation.message,
+    };
+  }
+
   const passwordValidation = validatePassword(password);
-
-  const namePassed = nameValidation.passed;
-  const emailPassed = emailValidation.passed;
-  const passwordPassed = passwordValidation.passed;
-
-  const isValid = namePassed && emailPassed && passwordPassed;
+  if (!passwordValidation.passed) {
+    return {
+      passed: false,
+      message: passwordValidation.message,
+    };
+  }
 
   return {
-    passed: isValid,
-    errorMessages: isValid
-      ? null
-      : {
-          name: namePassed ? null : nameValidation.message,
-          email: emailPassed ? null : emailValidation.message,
-          password: passwordPassed ? null : passwordValidation.message,
-        },
+    passed: true,
+    message: "Success",
   };
 }

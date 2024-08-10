@@ -4,8 +4,9 @@ import useAccessibility from "../../stores/accessibility/useAccessibility";
 import Button from "../../components/shared/Button";
 import Link from "../../components/shared/Link";
 import TextInput from "../../components/flow/custom-input-elements/TextInput";
+import ErrorModal from "./ErrorModal";
 
-import { useMutation } from "react-query";
+import { isError, useMutation } from "react-query";
 import { signup } from "./features/signup";
 
 export default function SignupPage() {
@@ -25,23 +26,53 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const defaultErrorState = {
+    isError: false,
+    message: "",
+  };
+
+  const [formatError, setFormatError] = useState(defaultErrorState);
+
   const handleNameChange = (newEmailValue: string) => {
+    setFormatError(defaultErrorState);
     setName(newEmailValue);
   };
   const handleEmailChange = (newEmailValue: string) => {
+    setFormatError(defaultErrorState);
     setEmail(newEmailValue);
   };
   const handlePasswordChange = (newPasswordValue: string) => {
+    setFormatError(defaultErrorState);
+
     // will create my own custom password format checking functions.
     setPassword(newPasswordValue);
   };
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     // loading true
+
     try {
       await signup({ name, email, password });
     } catch (err) {
       console.log(err);
+
+      if (
+        err &&
+        typeof err === "object" &&
+        "message" in err &&
+        typeof err.message === "string"
+      ) {
+        setFormatError({
+          isError: true,
+          message: err.message,
+        });
+      } else {
+        setFormatError({
+          isError: true,
+          message: "An unexpected error occurred. Please try again.",
+        });
+      }
     } finally {
       // loading false
     }
@@ -58,8 +89,15 @@ export default function SignupPage() {
         style={{
           borderRadius: removeRoundEdges ? 0 : "",
         }}
-        className="w-full max-w-[500px] rounded-3xl bg-secondary-200 p-3"
+        className="relative w-full max-w-[500px] rounded-3xl bg-secondary-200 p-3"
       >
+        {formatError.isError && (
+          <ErrorModal
+            isError={formatError.isError}
+            message={formatError.message}
+          />
+        )}
+
         <div className="rounded-2xl bg-primaryBg p-8">
           <h2
             style={{
@@ -82,7 +120,7 @@ export default function SignupPage() {
           </p>
 
           <form
-            onSubmit={() => handleFormSubmit}
+            onSubmit={(e) => handleFormSubmit(e)}
             className="flex flex-col gap-6"
           >
             <div className="flex flex-col gap-6">

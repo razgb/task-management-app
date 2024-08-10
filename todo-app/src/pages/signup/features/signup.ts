@@ -8,7 +8,7 @@ export async function signup(details: {
   password: string;
 }) {
   const { name, email, password } = details;
-  const { passed, errorMessages } = validateSignupDetails({
+  const { passed, message } = validateSignupDetails({
     name,
     email,
     password,
@@ -19,14 +19,13 @@ export async function signup(details: {
 
     // 2. use error messages as the message.
 
-    console.error(errorMessages); // temp
-
-    return;
+    console.error(message);
+    throw new Error(message);
   }
 
-  await createFirebaseUser(email, password);
+  // await createFirebaseUser(email, password);
 
-  await updateFirebaseProfile(name);
+  // await updateFirebaseProfile(name);
 
   console.log(`${name} \n${email} \n${password}`);
 }
