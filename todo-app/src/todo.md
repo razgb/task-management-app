@@ -8,20 +8,15 @@ Things to do: deadline 14th Aug.
 
 <CurrentPlan>
 - <Tangent>
-- add loading bar to button.
-- make unstyled button component.
-- add button styles to config file for reusablility.
+- add loading bar to shared <Button> component.
 - </Tangent>
--
-- complete submit function.
--
 -
 - error boundary component for important parts of application.
 -
 - Correct UserContextType.user structure.
 - Create verification component.
 - Create a verification function that refreshes the
-  page and checks verification status again. (only solution to think of currently)
+  page and checks verification status again. (only solution to think of currently).
 </CurrentPlan>
 
 <AppWideIdeas>

@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, CSSProperties } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useTheme from "../../stores/timer/useTheme";
+import Spinner from "./Spinner";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
@@ -13,6 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   transitionDuration?: number;
   "aria-label"?: string;
   style?: CSSProperties;
+  loading?: boolean;
 }
 
 export default function Button({
@@ -20,6 +22,7 @@ export default function Button({
   transitionDuration = 200,
   "aria-label": ariaLabel,
   style,
+  loading,
   ...props
 }: ButtonProps) {
   let classes = `transition-colors duration-${transitionDuration} `;
@@ -75,6 +78,17 @@ export default function Button({
     }
   }
 
+  const invisibleStyles = "pointer-events-none invisible select-none";
+
+  let loadingContent: React.ReactNode | string | undefined;
+  if (loading) {
+    loadingContent = (
+      <Spinner loading={loading} color={theme === "light" ? "#000" : "#fff"} />
+    );
+  } else if (reduceAnimations) {
+    loadingContent = "Loading...";
+  }
+
   return (
     <button
       style={{
@@ -84,11 +98,18 @@ export default function Button({
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         color: highContrastMode ? textColor : "",
       }}
-      className={classes}
+      className={`${classes} relative flex items-center justify-center`}
       aria-label={ariaLabel}
+      disabled={loading}
       {...props}
     >
-      {props.children}
+      <span className={`absolute ${loading ? "" : invisibleStyles}`}>
+        {loadingContent}
+      </span>
+
+      <span className={`${loading ? invisibleStyles : ""}`}>
+        {props.children}
+      </span>
     </button>
   );
 }
