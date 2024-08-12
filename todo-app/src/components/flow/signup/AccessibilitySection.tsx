@@ -1,8 +1,10 @@
 import { Moon, Scan, Space, Type } from "lucide-react";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import ToggleField from "../../../pages/settings/sub-settings/accessibility-settings/ToggleField";
+import useTheme from "../../../stores/timer/useTheme";
 
 export default function AccessibilitySection() {
+  const { theme } = useTheme();
   const { accessibility, updateAccessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -35,7 +37,7 @@ export default function AccessibilitySection() {
         <ToggleField
           title="Improve text readability"
           label="Increase letter spacing"
-          icon={<Space size={20} />}
+          icon={<Space color={theme === "light" ? "#000" : "#fff"} size={20} />}
           checked={increaseLetterSpacing}
           onChange={() =>
             updateAccessibility({
@@ -46,7 +48,7 @@ export default function AccessibilitySection() {
         <ToggleField
           title="Enhance visual contrast"
           label="High Contrast Mode"
-          icon={<Moon size={20} />}
+          icon={<Moon color={theme === "light" ? "#000" : "#fff"} size={20} />}
           checked={highContrastMode}
           onChange={() =>
             updateAccessibility({ highContrastMode: !highContrastMode })
@@ -55,7 +57,7 @@ export default function AccessibilitySection() {
         <ToggleField
           title="Minimize motion effects"
           label="Reduce animations"
-          icon={<Type size={20} />}
+          icon={<Type color={theme === "light" ? "#000" : "#fff"} size={20} />}
           checked={reduceAnimations}
           onChange={() =>
             updateAccessibility({ reduceAnimations: !reduceAnimations })
@@ -64,7 +66,7 @@ export default function AccessibilitySection() {
         <ToggleField
           title="Simplify UI shapes"
           label="Remove round edges"
-          icon={<Scan size={20} />}
+          icon={<Scan color={theme === "light" ? "#000" : "#fff"} size={20} />}
           checked={removeRoundEdges}
           onChange={() =>
             updateAccessibility({ removeRoundEdges: !removeRoundEdges })

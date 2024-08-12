@@ -15,17 +15,24 @@ export async function signup(details: {
   });
 
   if (!passed) {
-    // 1. activate app error state once created.
-
-    // 2. use error messages as the message.
-
     console.error(message);
     throw new Error(message);
   }
 
-  // await createFirebaseUser(email, password);
+  try {
+    await createFirebaseUser(email, password);
 
-  // await updateFirebaseProfile(name);
+    await updateFirebaseProfile(name);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err); // temp
+      throw err;
+    } else {
+      throw new Error(
+        "Connection error, check internet connection and try again.",
+      );
+    }
+  }
 
-  console.log(`${name} \n${email} \n${password}`);
+  console.log("Signup complete."); // temp
 }

@@ -12,7 +12,8 @@ export default function SignupForm({
     message: string;
   }) => void;
 }) {
-  //
+  // const mutation = useMutation();
+
   const { accessibility } = useAccessibility();
   const { fontSizeMap } = accessibility;
 
@@ -49,21 +50,16 @@ export default function SignupForm({
     } catch (err) {
       console.log(err);
 
-      if (
-        err &&
-        typeof err === "object" &&
-        "message" in err &&
-        typeof err.message === "string"
-      ) {
+      if (err instanceof Error) {
         updateFormatError({
           isError: true,
           message: err.message,
         });
       } else {
-        // fallback error message
         updateFormatError({
           isError: true,
-          message: "An unexpected error occurred. Please try again.",
+          message:
+            "An unexpected error occurred. Check connection and try again.",
         });
       }
     } finally {

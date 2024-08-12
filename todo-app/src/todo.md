@@ -7,9 +7,6 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- validation functions - done.
-- create error message displaying component for signup.
--
 - <Tangent>
 - add loading bar to button.
 - make unstyled button component.

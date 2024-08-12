@@ -10,8 +10,6 @@ import AccessibilitySection from "../../components/flow/signup/AccessibilitySect
 import SignupForm from "../../components/flow/signup/SignupForm";
 
 export default function SignupPage() {
-  // const mutation = useMutation()
-
   const { theme } = useTheme();
   const { accessibility } = useAccessibility();
   const {
@@ -22,13 +20,9 @@ export default function SignupPage() {
     accessibilityTextColor,
   } = accessibility;
 
-  const defaultErrorState = {
-    isError: false,
-    message: "",
-  };
-
+  // prettier-ignore
+  const defaultErrorState = { isError: false, message: "", };
   const [formatError, setFormatError] = useState(defaultErrorState);
-
   const updateFormatError = (formatError: {
     isError: boolean;
     message: string;
@@ -113,24 +107,24 @@ export default function SignupPage() {
             </Link>
           </div>
 
-          <div className="mt-auto flex items-center">
+          <div className="mt-auto flex flex-col items-start gap-1">
             <span
               style={{
                 color: highContrastMode ? accessibilityTextColor : "",
               }}
               className="mr-1 text-textWeak"
             >
-              Quick employer login:
+              Demo account (for recruiters):
             </span>
 
             <Button
+              onClick={() => {}}
               style={{
                 fontSize: fontSizeMap["sm"],
                 fontWeight: "500",
               }}
-              // className="ml-1 text-textWeak underline hover:text-text active:text-textWeak"
             >
-              use demo account
+              Open
             </Button>
           </div>
         </div>
