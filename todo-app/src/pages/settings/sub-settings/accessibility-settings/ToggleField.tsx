@@ -4,7 +4,7 @@ import { appConfigVariables } from "../../../../appConfigVariables";
 const labelStyles = "text-lg font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
 const toggleContainerStyle =
-  "flex items-center justify-between bg-secondary-200 rounded-xl p-4";
+  "flex items-center  justify-between bg-secondary-200 rounded-xl p-4";
 
 type ToggleFieldType = {
   title: string;
@@ -48,6 +48,7 @@ export default function ToggleField({
       >
         {title}
       </label>
+
       <div
         className={toggleContainerStyle}
         style={{
@@ -55,9 +56,10 @@ export default function ToggleField({
           transition: reduceAnimations ? "none" : "",
         }}
       >
-        <span className="flex items-center gap-2">
+        <p className="flex items-center gap-2">
           {icon}
           <span
+            className="text-text"
             style={{
               fontSize: fontSizeMap.base,
               color: highContrastMode ? accessibilityTextColor : "",
@@ -65,7 +67,8 @@ export default function ToggleField({
           >
             {label}
           </span>
-        </span>
+        </p>
+
         <label className="relative inline-flex cursor-pointer items-center">
           <input type="checkbox" className="peer sr-only" {...props} />
 

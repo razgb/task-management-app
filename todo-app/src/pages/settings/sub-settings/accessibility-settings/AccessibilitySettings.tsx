@@ -1,7 +1,6 @@
 import { Moon, Type, Scan, Space } from "lucide-react";
 import ToggleField from "./ToggleField";
 import useAccessibility from "../../../../stores/accessibility/useAccessibility";
-import { useState } from "react";
 import { AccessibilityContextType } from "../../../../stores/accessibility/AccessibilityContext";
 import { appConfigVariables } from "../../../../appConfigVariables";
 
@@ -9,10 +8,6 @@ const labelStyles = "font-medium text-text";
 const inputContainerStyle = "flex flex-col gap-2";
 
 export default function AccessibilitySettings() {
-  const [formStatus, setFormStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-
   const { accessibility, updateAccessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -61,12 +56,6 @@ export default function AccessibilitySettings() {
         <p id="form-description" className="sr-only">
           Customize accessibility settings for the application.
         </p>
-
-        <div aria-live="polite" className="sr-only">
-          {formStatus === "success" && "Accessibility settings updated"}
-          {formStatus === "error" &&
-            "Error updating accessibility settings, please try again."}
-        </div>
 
         <div className={inputContainerStyle}>
           <label

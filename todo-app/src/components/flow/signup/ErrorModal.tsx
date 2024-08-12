@@ -1,5 +1,5 @@
 import { TriangleAlertIcon } from "lucide-react";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
 export default function ErrorModal({
   isError,

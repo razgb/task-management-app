@@ -35,6 +35,9 @@ export default function TextInput({
         className={`${labelClasses}`}
         style={{
           fontSize: fontSizeMap["lg"],
+          color: highContrastMode ? accessibilityTextColor : "",
+          borderRadius: removeRoundEdges ? 0 : "",
+          letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
         }}
         htmlFor={type}
       >
