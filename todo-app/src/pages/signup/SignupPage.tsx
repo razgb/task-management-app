@@ -22,14 +22,14 @@ export default function SignupPage() {
 
   // prettier-ignore
   const defaultErrorState = { isError: false, message: "", };
-  const [formatError, setFormatError] = useState(defaultErrorState);
-  const updateFormatError = (formatError: {
+  const [signupError, setSignupError] = useState(defaultErrorState);
+  const updateSignupError = (signupError: {
     isError: boolean;
     message: string;
   }) => {
-    setFormatError((prev) => ({
+    setSignupError((prev) => ({
       ...prev,
-      ...formatError,
+      ...signupError,
     }));
   };
 
@@ -48,10 +48,10 @@ export default function SignupPage() {
         className="relative grid max-h-[70dvh] w-[65dvw] max-w-[1000px] grid-cols-1
         grid-rows-4 gap-3 rounded-3xl bg-secondary-200 p-3 lg:grid-cols-2"
       >
-        {formatError.isError && (
+        {signupError.isError && (
           <ErrorModal
-            isError={formatError.isError}
-            message={formatError.message}
+            isError={signupError.isError}
+            message={signupError.message}
           />
         )}
 
@@ -81,17 +81,19 @@ export default function SignupPage() {
             style={{
               fontSize: fontSizeMap["base"],
               color: highContrastMode ? accessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
             }}
           >
             Please enter your email and create a secure password to get started.
           </p>
 
-          <SignupForm updateFormatError={updateFormatError} />
+          <SignupForm updateSignupError={updateSignupError} />
 
           <div className="mt-1 flex items-center">
             <span
               style={{
                 color: highContrastMode ? accessibilityTextColor : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
               }}
               className="text-textWeak"
             >
@@ -111,6 +113,7 @@ export default function SignupPage() {
             <span
               style={{
                 color: highContrastMode ? accessibilityTextColor : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
               }}
               className="mr-1 text-textWeak"
             >

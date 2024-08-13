@@ -53,7 +53,7 @@ export default function LoginPage() {
             style={{
               fontSize: fontSizeMap["3xl"],
               color: highContrastMode ? accessibilityTextColor : "",
-              letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+              letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
             }}
             className="font-medium text-text"
           >

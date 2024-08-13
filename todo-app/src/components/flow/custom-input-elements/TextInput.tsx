@@ -10,7 +10,7 @@ interface TextInputProps {
 
 const containerClasses = " flex gap-1 justify-center flex-col ";
 const labelClasses = " text-text ";
-const inputClasses = ` p-2 rounded-xl bg-secondary-100 outline outline-1 focus:outline-2 outline-secondary-500 focus:outline
+const inputClasses = ` py-1 px-2 rounded-xl bg-secondary-100 outline outline-1 focus:outline-2 outline-secondary-500 focus:outline
   placeholder:text-textPlaceholder text-text `;
 
 export default function TextInput({
@@ -37,7 +37,7 @@ export default function TextInput({
           fontSize: fontSizeMap["lg"],
           color: highContrastMode ? accessibilityTextColor : "",
           borderRadius: removeRoundEdges ? 0 : "",
-          letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}
         htmlFor={type}
       >
@@ -59,7 +59,7 @@ export default function TextInput({
           fontSize: fontSizeMap["lg"],
           color: highContrastMode ? accessibilityTextColor : "",
           borderRadius: removeRoundEdges ? 0 : "",
-          letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}
       />
     </div>

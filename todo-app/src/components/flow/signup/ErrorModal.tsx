@@ -35,7 +35,7 @@ export default function ErrorModal({
         style={{
           fontSize: fontSizeMap["lg"],
           color: highContrastMode ? accessibilityTextColor : "",
-          letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}
       >
         {message}

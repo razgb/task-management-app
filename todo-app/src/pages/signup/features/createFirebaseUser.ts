@@ -8,7 +8,6 @@ export async function createFirebaseUser(email: string, password: string) {
     await createUserWithEmailAndPassword(auth, email, password);
   } catch (err) {
     if (!isFirebaseError(err)) {
-      console.error(err);
       throw new Error(
         "Connection error, check internet connection and try again.",
       );
@@ -22,8 +21,6 @@ export async function createFirebaseUser(email: string, password: string) {
         );
       case "auth/invalid-email":
         throw new Error("The email address format is not valid.");
-      case "auth/weak-password":
-        throw new Error("Password must be longer than 6 characters");
       default:
         throw new Error(
           "Connection error, check internet connection and try again.",

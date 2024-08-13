@@ -67,7 +67,7 @@ export default function TimerPage() {
                 style={{
                   fontSize: `${fontSizeMap["6xl"]}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
-                  letterSpacing: increaseLetterSpacing ? "0.25rem" : "",
+                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
                 className="font-semibold text-headingSub"
               >

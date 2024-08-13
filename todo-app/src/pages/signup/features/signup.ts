@@ -15,7 +15,6 @@ export async function signup(details: {
   });
 
   if (!passed) {
-    console.error(message);
     throw new Error(message);
   }
 
@@ -25,14 +24,9 @@ export async function signup(details: {
     await updateFirebaseProfile(name);
   } catch (err) {
     if (err instanceof Error) {
-      console.error(err); // temp
       throw err;
     } else {
-      throw new Error(
-        "Connection error, check internet connection and try again.",
-      );
+      throw new Error("Connection error, check connection and try again.");
     }
   }
-
-  console.log("Signup complete."); // temp
 }

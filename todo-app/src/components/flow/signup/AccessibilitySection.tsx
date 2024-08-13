@@ -27,7 +27,7 @@ export default function AccessibilitySection() {
         style={{
           fontSize: fontSizeMap["2xl"],
           color: highContrastMode ? accessibilityTextColor : "",
-          letterSpacing: increaseLetterSpacing ? "0.25em" : "",
+          letterSpacing: increaseLetterSpacing ? "0.1em" : "",
         }}
       >
         Accessibility

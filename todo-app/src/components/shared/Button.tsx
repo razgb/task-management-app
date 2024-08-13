@@ -103,11 +103,15 @@ export default function Button({
       disabled={loading}
       {...props}
     >
-      <span className={`absolute ${loading ? "" : invisibleStyles}`}>
-        {loadingContent}
-      </span>
+      {loading && (
+        <span className={`absolute ${loading ? "" : invisibleStyles}`}>
+          {loadingContent}
+        </span>
+      )}
 
-      <span className={`${loading ? invisibleStyles : ""}`}>
+      <span
+        className={`${loading ? invisibleStyles : ""} flex items-center justify-center gap-1`}
+      >
         {props.children}
       </span>
     </button>

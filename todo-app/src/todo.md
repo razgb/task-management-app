@@ -7,13 +7,14 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- <Tangent>
-- add loading bar to shared <Button> component.
-- </Tangent>
+- Create a global error & success components that can be used in the entire application.
+-
+-
+-
 -
 - error boundary component for important parts of application.
 -
-- Correct UserContextType.user structure.
+- Correct UserContextType.user structure for type safety.
 - Create verification component.
 - Create a verification function that refreshes the
   page and checks verification status again. (only solution to think of currently).

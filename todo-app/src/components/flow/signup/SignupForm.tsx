@@ -1,21 +1,26 @@
-import { useState } from "react";
+import {
+  // useEffect,
+  useState,
+} from "react";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import { signup } from "../../../pages/signup/features/signup";
 import TextInput from "../custom-input-elements/TextInput";
 import Button from "../../shared/Button";
 
+import { useMutation } from "react-query";
+import useRouter from "../../../stores/router/useRouter";
+
 export default function SignupForm({
-  updateFormatError,
+  updateSignupError,
 }: {
-  updateFormatError: (formatError: {
+  updateSignupError: (formatError: {
     isError: boolean;
     message: string;
   }) => void;
 }) {
-  // const mutation = useMutation();
-
   const { accessibility } = useAccessibility();
   const { fontSizeMap } = accessibility;
+  const { updatePath } = useRouter();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,49 +31,54 @@ export default function SignupForm({
     message: "",
   };
 
-  const handleNameChange = (newEmailValue: string) => {
-    updateFormatError(defaultErrorState);
-    setName(newEmailValue);
-  };
-  const handleEmailChange = (newEmailValue: string) => {
-    updateFormatError(defaultErrorState);
-    setEmail(newEmailValue);
-  };
-  const handlePasswordChange = (newPasswordValue: string) => {
-    updateFormatError(defaultErrorState);
-
-    // will create my own custom password format checking functions.
-    setPassword(newPasswordValue);
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // loading true
-
-    try {
-      await signup({ name, email, password });
-    } catch (err) {
+  const mutation = useMutation({
+    mutationFn: signup,
+    mutationKey: "signup",
+    onError: (err) => {
       console.log(err);
-
       if (err instanceof Error) {
-        updateFormatError({
+        updateSignupError({
           isError: true,
           message: err.message,
         });
       } else {
-        updateFormatError({
+        updateSignupError({
           isError: true,
           message:
-            "An unexpected error occurred. Check connection and try again.",
+            "An unexpected error occurred. Check your connection and try again.",
         });
       }
-    } finally {
-      // loading false
-    }
+    },
+    onSuccess: () => {
+      updatePath("/dashboard");
+    },
+  });
+
+  const { status } = mutation;
+
+  const handleNameChange = (newEmailValue: string) => {
+    updateSignupError(defaultErrorState);
+    setName(newEmailValue);
   };
+  const handleEmailChange = (newEmailValue: string) => {
+    updateSignupError(defaultErrorState);
+    setEmail(newEmailValue);
+  };
+  const handlePasswordChange = (newPasswordValue: string) => {
+    updateSignupError(defaultErrorState);
+    setPassword(newPasswordValue);
+  };
+
+  // useEffect(() => {
+  //   // this is a place holder to redirect the user to the dashboard if they are already logged in.
+  // });
+
   return (
     <form
-      onSubmit={(e) => handleFormSubmit(e)}
+      onSubmit={(e) => {
+        e.preventDefault();
+        mutation.mutate({ name, email, password });
+      }}
       className="flex max-w-[400px] flex-col gap-6"
     >
       <div className="flex flex-col gap-3">
@@ -99,6 +109,8 @@ export default function SignupForm({
           fontSize: fontSizeMap.lg,
         }}
         type="submit"
+        disabled={status === "loading"}
+        loading={status === "loading"}
       >
         Signup
       </Button>
