@@ -2,10 +2,12 @@ import logo from "../assets/logo.jpg";
 import NavTimerWidget from "../components/main-navigation/NavTimerWidget";
 import SearchBar from "../components/main-navigation/SearchBar";
 import useAccessibility from "../stores/accessibility/useAccessibility";
+// import useModal from "../stores/modal/useModal";
 
 export default function MainNavigation() {
   const { accessibility } = useAccessibility();
   const { fontSizeMap } = accessibility;
+  // const { openModal } = useModal();
 
   return (
     <div className="flex items-center gap-4 py-6">
@@ -21,6 +23,29 @@ export default function MainNavigation() {
       </div>
       <SearchBar />
       <NavTimerWidget />
+
+      {/*
+        <button
+          onClick={() =>
+            openModal(
+              "success",
+              "Welcome to Task Buddy! Account creation successful.",
+            )
+          }
+        >
+          open success modal
+        </button>
+        <button
+          onClick={() =>
+            openModal(
+              "error",
+              "There seems to be a connection error, please try again.",
+            )
+          }
+        >
+          open error modal
+        </button>
+        */}
     </div>
   );
 }

@@ -1,66 +1,53 @@
-import DashboardPage from "../pages/dashboard/DashboardPage.tsx";
-import SettingsPage from "../pages/settings/SettingsPage.tsx";
-import useRouter from "../stores/router/useRouter.tsx";
 import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
-import TasksPage from "../pages/tasks/TasksPage.tsx";
-import TaskCreator from "../pages/task-creator/TaskCreator.tsx";
+import DashboardPage from "../pages/dashboard/DashboardPage.tsx";
 import ErrorPage from "../pages/error/ErrorPage.tsx";
-import TimerPage from "../pages/timer/TimerPage.tsx";
-import useAccessibility from "../stores/accessibility/useAccessibility";
 import HabitTracker from "../pages/habit-tracker/HabitTrackerPage.tsx";
+import SettingsPage from "../pages/settings/SettingsPage.tsx";
+import TaskCreator from "../pages/task-creator/TaskCreator.tsx";
+import TasksPage from "../pages/tasks/TasksPage.tsx";
+import TimerPage from "../pages/timer/TimerPage.tsx";
+
+import useAccessibility from "../stores/accessibility/useAccessibility";
+import useRouter from "../stores/router/useRouter.tsx";
+import styles from "../tailwindStyles.ts";
 
 export default function Outlet() {
   const { path } = useRouter();
   const { accessibility } = useAccessibility();
-  const { removeRoundEdges } = accessibility;
+  const { removeRoundEdges, highContrastMode } = accessibility;
 
   let content: React.ReactNode | null = null;
 
-  // Checks for sub settings routes in the path. SettingsPage handles the rest.
-  if (new RegExp("/settings(/.*)?$").test(path)) {
-    content = <SettingsPage />;
-    return (
-      <div
-        style={{
-          borderRadius: removeRoundEdges ? "0" : "",
-        }}
-        className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3"
-      >
-        {content}
-      </div>
-    );
-  }
-
-  switch (path) {
-    case "/": {
+  switch (true) {
+    case path === "/": {
       content = <DashboardPage />; // in the future this should be the dashboard
       break;
     }
-    case "/dashboard": {
+    case path === "/dashboard": {
       content = <DashboardPage />;
       break;
     }
-    case "/task-creator": {
+    case path === "/task-creator": {
       content = <TaskCreator />;
       break;
     }
-    case "/tasks": {
+    case path === "/tasks": {
       content = <TasksPage />;
       break;
     }
-    case "/tasks/details": {
+    case path === "/tasks/details": {
       content = <TaskDetails />;
       break;
     }
-    case "/settings": {
+    case new RegExp("/settings(/.*)?$").test(path): {
       content = <SettingsPage />;
       break;
     }
-    case "/timer": {
+    case path === "/timer": {
       content = <TimerPage />;
       break;
     }
-    case "/habit-tracker": {
+    case path === "/habit-tracker": {
       content = <HabitTracker />;
       break;
     }
@@ -75,7 +62,9 @@ export default function Outlet() {
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
       }}
-      className="h-full overflow-hidden rounded-3xl bg-secondaryBg p-3"
+      // prettier-ignore
+      className={`h-full overflow-hidden rounded-3xl
+      ${highContrastMode ? styles.reducedAnimatonPageBackgroundColor : styles.pageBackgroundColor} p-3`}
     >
       {content}
     </div>

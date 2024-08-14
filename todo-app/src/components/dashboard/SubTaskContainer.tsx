@@ -1,7 +1,6 @@
 import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/router/useRouter";
-import Link from "../shared/Link";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { SubTaskType } from "../tasks-page/TaskDetails";
 
@@ -24,15 +23,7 @@ export default function SubTaskContainer({
   const updatePath = useRouter().updatePath;
 
   if (subtasks.length === 0) {
-    return (
-      <Link
-        to="/tasks"
-        className="rounded-lg bg-secondary-400 px-3 py-2 font-semibold text-text hover:bg-secondary-500"
-        aria-label={`Navigate to add subtasks for task named ${title}.`}
-      >
-        Add Subtasks
-      </Link>
-    );
+    return null;
   }
 
   let completedSubtasks = 0;

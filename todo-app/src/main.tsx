@@ -10,6 +10,7 @@ import AccessibilityContextProvider from "./stores/accessibility/AccessibilityPr
 import TimerContextProvider from "./stores/timer/TimerContextProvider.tsx";
 import { LoadingContextProvider } from "./stores/loading/LoadingContext.tsx";
 import UserContextProvider from "./stores/user/UserContextProvider.tsx";
+import { ModalContextProvider } from "./stores/modal/ModalContextProvider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <LoadingContextProvider>
               <UserContextProvider>
                 <QueryClientProvider client={queryClient}>
-                  <App />
+                  <ModalContextProvider>
+                    <App />
+                  </ModalContextProvider>
                 </QueryClientProvider>
               </UserContextProvider>
             </LoadingContextProvider>
