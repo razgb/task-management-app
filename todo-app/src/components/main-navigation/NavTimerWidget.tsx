@@ -15,13 +15,17 @@ export default function NavTimerWidget() {
     timerState === "active" && path !== "/timer" && path !== "/dashboard";
 
   return (
-    <div className="group relative">
+    <div
+      className={`group relative ${
+        renderingCondition
+          ? "opacity-100"
+          : "pointer-events-none invisible select-none opacity-0"
+      } `}
+    >
       <Link
         style={{ fontSize: fontSizeMap["2xl"] }}
         to="/timer"
-        className={`rounded-lg p-2 font-medium text-textWeak transition-opacity hover:text-text ${
-          renderingCondition ? "opacity-100" : "opacity-0"
-        }`}
+        className={`rounded-lg p-2 font-medium text-textWeak transition-opacity hover:text-text`}
       >
         {formatSecondsToDigitalFormat(timerValue, "minute-second")}
       </Link>

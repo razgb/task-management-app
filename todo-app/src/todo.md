@@ -7,7 +7,6 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- Create a global error & success components that can be used in the entire application.
 - Task detail react context.
 - fix open timer button even when timer is not running.
 - Add dummy user data to firebase.
