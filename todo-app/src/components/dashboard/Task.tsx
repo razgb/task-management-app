@@ -2,25 +2,18 @@ import { MoveIcon } from "lucide-react";
 import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import SubTaskContainer from "./SubTaskContainer";
+import { SubTaskType } from "../tasks-page/TaskDetails";
 
 export type TaskType = {
+  id: string;
   title: string;
   description?: string;
-  hasSubtasks: boolean;
-  subtaskCompletion: number;
-  hideGrabIcon?: boolean; // Manually set due to different parent containers.
+  subtasks: SubTaskType[]; // empty by default
+  hideGrabIcon?: boolean; // Manually set in mapping functions depending on parent container.
   status: "draft" | "in-progress" | "complete";
 };
 
-export default function Task({
-  title,
-  description,
-  hasSubtasks,
-  // temporary default value until firebase is setup.
-  subtaskCompletion,
-  hideGrabIcon,
-  status,
-}: TaskType) {
+export default function Task(taskData: TaskType) {
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -32,15 +25,9 @@ export default function Task({
     reverseAccessibilityTextColor,
   } = accessibility;
 
+  const { title, description, subtasks, hideGrabIcon } = taskData;
+
   const [isDraggable, setIsDraggable] = useState(false);
-  const [taskData] = useState({
-    title,
-    description: formatDescription(description, 30),
-    hasSubtasks,
-    subtaskCompletion,
-    hideGrabIcon,
-    status,
-  });
 
   function handleStartDrag(event: React.DragEvent<HTMLDivElement>) {
     if (!event.dataTransfer) return;
@@ -108,17 +95,12 @@ export default function Task({
             color: highContrastMode ? accessibilityTextColor : "",
           }}
         >
-          {description}
+          {formatDescription(description, 30)}
         </p>
       </div>
 
       <div className="mt-1 items-start">
-        <SubTaskContainer
-          hasSubtasks={hasSubtasks}
-          hideGrabIcon={hideGrabIcon}
-          taskData={taskData}
-          title={title}
-        />
+        <SubTaskContainer subtasks={subtasks} title={title} />
       </div>
     </div>
   );

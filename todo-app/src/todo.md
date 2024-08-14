@@ -8,12 +8,15 @@ Things to do: deadline 14th Aug.
 
 <CurrentPlan>
 - Create a global error & success components that can be used in the entire application.
+- Task detail react context.
 -
--
--
+- Add dummy user data to firebase.
+  -> User tasks for all 3 columns (no subtasks).
+  -> Subtask uploading for the user.
 -
 - error boundary component for important parts of application.
--
+- An input element must have an autocomplete attribute. (later)
+- gradient for the backgrounds of all pages.
 - Correct UserContextType.user structure for type safety.
 - Create verification component.
 - Create a verification function that refreshes the
@@ -25,3 +28,22 @@ Things to do: deadline 14th Aug.
 - set up firebase for the application.
 - flatten the architecture as much as possible with the collections.
 </AppWideIdeas>
+
+
+task structure
+
+task: {
+  id: string,
+  title: string,
+  description: string, (optional)
+  dueDate: string, (unix timestamp)
+  status: string, (draft, inProgress, completed)
+  subtasks: [
+    {
+      id: string,
+      title: string,
+      position: number,
+      completed: boolean,
+    }
+  ],
+}

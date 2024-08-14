@@ -1,10 +1,10 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useState } from "react";
-import {
-  TaskSkeletonLoad,
-  TaskSkeletonLoadMultiple,
-} from "./TaskSkeletonLoad.tsx";
+// import {
+//   TaskSkeletonLoad,
+//   TaskSkeletonLoadMultiple,
+// } from "./TaskSkeletonLoad.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
@@ -54,16 +54,17 @@ export default function TaskColumn({
 
   const output = tasks.map((item) => (
     <Task
-      key={Math.random()}
+      id={Math.random()}
+      key={item.id}
       title={item.title}
       description={item.description}
       hideGrabIcon={false}
-      hasSubtasks={item.hasSubtasks}
-      subtaskCompletion={item.subtaskCompletion}
       status={item.status}
+      subtasks={item.subtasks}
     />
   ));
 
+  // testing skeleton loading
   // if (variant === "draft")
   //   output.push(<TaskSkeletonLoadMultiple key="draft-skeleton-1" />);
 

@@ -40,6 +40,7 @@ export default function ToggleField({
       }}
     >
       <label
+        htmlFor={title}
         style={{
           fontSize: fontSizeMap.base,
           color: highContrastMode ? accessibilityTextColor : "",
@@ -70,7 +71,12 @@ export default function ToggleField({
         </p>
 
         <label className="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" className="peer sr-only" {...props} />
+          <input
+            id={title}
+            type="checkbox"
+            className="peer sr-only"
+            {...props}
+          />
 
           {/* prettier-ignore */}
           <div className="peer h-6 w-11 rounded-full bg-gray-500 after:absolute

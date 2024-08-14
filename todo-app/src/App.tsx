@@ -21,11 +21,10 @@ export default function App() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
-
+        // console.log(user);
         // 1. Update user context.
       } else {
-        console.warn("User signed out. ");
+        // console.warn("User signed out. ");
       }
     });
 

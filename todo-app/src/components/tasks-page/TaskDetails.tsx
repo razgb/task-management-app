@@ -3,8 +3,14 @@ import useAccessibility from "../../stores/accessibility/useAccessibility";
 import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
-import { subTasksData, SubTaskType } from "./subTaskData";
 import { checkInputTextValidity } from "../../util/checkInputTextValidity";
+
+export type SubTaskType = {
+  title: string;
+  completed: boolean;
+  position: number;
+  id: string;
+};
 
 export default function TaskDetails() {
   const { accessibility } = useAccessibility();
@@ -17,7 +23,7 @@ export default function TaskDetails() {
     accessibilityTextColor,
   } = accessibility;
 
-  const [subTasks, setSubTasks] = useState<SubTaskType[]>(subTasksData || []);
+  const [subTasks, setSubTasks] = useState<SubTaskType[]>([]);
   const buttonRef = useRef<HTMLInputElement | null>(null);
 
   function addSubTask(title: string) {
@@ -71,9 +77,7 @@ export default function TaskDetails() {
     });
   }
 
-  // Has not been optimized yet.
   const reorderedTaskList: JSX.Element[] = [];
-  // const testing: SubTaskType[] = [];
 
   for (let i = 0; i < subTasks.length; i++) {
     for (let j = 0; j < subTasks.length; j++) {
@@ -87,8 +91,6 @@ export default function TaskDetails() {
           swapSubTaskPositions={swapSubTaskPositions}
         />,
       );
-
-      // testing.push(task);
     }
   }
 
@@ -201,8 +203,13 @@ export default function TaskDetails() {
           }}
           className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4"
         >
+          {/* Subtasks list */}
           <ul className="flex h-full flex-col gap-2 overflow-y-scroll pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-            {reorderedTaskList}
+            {subTasks.length ? (
+              reorderedTaskList
+            ) : (
+              <p className="text-center text-textWeak">No subtasks</p>
+            )}
           </ul>
         </div>
       </div>
