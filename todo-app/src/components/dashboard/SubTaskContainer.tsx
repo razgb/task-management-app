@@ -2,7 +2,7 @@ import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/router/useRouter";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import { SubTaskType } from "../tasks-page/TaskDetails";
+import { SubTaskType } from "../tasks-page/TaskExpanded";
 
 export default function SubTaskContainer({
   title,

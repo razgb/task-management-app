@@ -12,7 +12,7 @@ export type SubTaskType = {
   id: string;
 };
 
-export default function TaskDetails() {
+export default function TaskExpanded() {
   const { accessibility } = useAccessibility();
   const {
     reduceAnimations,

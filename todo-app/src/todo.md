@@ -8,14 +8,13 @@ Things to do: deadline 14th Aug.
 
 <CurrentPlan>
 - Task detail react context.
-- fix open timer button even when timer is not running.
 - Add dummy user data to firebase.
   -> User tasks for all 3 columns (no subtasks).
   -> Subtask uploading for the user.
 -
 - error boundary component for important parts of application.
 - An input element must have an autocomplete attribute. (later)
-- gradient for the backgrounds of all pages.
+- gradient for the backgrounds of all pages. (half complete)
 - Correct UserContextType.user structure for type safety.
 - Create verification component.
 - Create a verification function that refreshes the

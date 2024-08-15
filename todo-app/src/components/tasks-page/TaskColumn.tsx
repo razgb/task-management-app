@@ -54,7 +54,7 @@ export default function TaskColumn({
 
   const output = tasks.map((item) => (
     <Task
-      id={Math.random()}
+      id={Math.random().toString()}
       key={item.id}
       title={item.title}
       description={item.description}

@@ -2,7 +2,7 @@ import { MoveIcon } from "lucide-react";
 import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import SubTaskContainer from "./SubTaskContainer";
-import { SubTaskType } from "../tasks-page/TaskDetails";
+import { SubTaskType } from "../tasks-page/TaskExpanded";
 
 export type TaskType = {
   id: string;

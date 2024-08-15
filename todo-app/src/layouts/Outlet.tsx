@@ -1,4 +1,4 @@
-import TaskDetails from "../components/tasks-page/TaskDetails.tsx";
+import TaskExpanded from "../components/tasks-page/TaskExpanded.tsx";
 import DashboardPage from "../pages/dashboard/DashboardPage.tsx";
 import ErrorPage from "../pages/error/ErrorPage.tsx";
 import HabitTracker from "../pages/habit-tracker/HabitTrackerPage.tsx";
@@ -36,7 +36,7 @@ export default function Outlet() {
       break;
     }
     case path === "/tasks/details": {
-      content = <TaskDetails />;
+      content = <TaskExpanded />;
       break;
     }
     case new RegExp("/settings(/.*)?$").test(path): {

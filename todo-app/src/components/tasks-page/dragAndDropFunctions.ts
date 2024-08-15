@@ -1,5 +1,5 @@
-import {isSubTaskType} from "./isSubTaskType";
-import { SubTaskType } from "./subTaskData";
+import { isSubTaskType } from "./isSubTaskType";
+import { SubTaskType } from "./TaskExpanded";
 
 export function handleDragStart(
   event: React.DragEvent<HTMLLIElement>,
@@ -17,7 +17,10 @@ export function handleDragStart(
 export function handleDrop(
   event: React.DragEvent<HTMLLIElement>,
   ownTaskId: SubTaskType["id"],
-  swapSubTaskPositions: (incomingTaskId: string, outgoingTaskId: string) => void,
+  swapSubTaskPositions: (
+    incomingTaskId: string,
+    outgoingTaskId: string,
+  ) => void,
 ): void {
   event.preventDefault();
 

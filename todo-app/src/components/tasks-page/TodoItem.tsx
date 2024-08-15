@@ -3,7 +3,7 @@ import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 import { handleDrop, handleDragStart } from "./dragAndDropFunctions";
-import { SubTaskType } from "./subTaskData";
+import { SubTaskType } from "./TaskExpanded";
 
 type ToDoItemProps = {
   task: SubTaskType;
