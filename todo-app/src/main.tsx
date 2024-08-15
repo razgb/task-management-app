@@ -16,6 +16,7 @@ const queryClient = new QueryClient();
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { TaskContextProvider } from "./stores/taskExpanded/TaskExpandedContextProvider.tsx";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDtHn7FK1nLD6MvQvI2wkZMAVPX22LwBw",
@@ -41,7 +42,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <UserContextProvider>
                 <QueryClientProvider client={queryClient}>
                   <ModalContextProvider>
-                    <App />
+                    <TaskContextProvider>
+                      <App />
+                    </TaskContextProvider>
                   </ModalContextProvider>
                 </QueryClientProvider>
               </UserContextProvider>

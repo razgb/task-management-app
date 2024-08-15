@@ -7,14 +7,13 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- Task detail react context.
 - Add dummy user data to firebase.
   -> User tasks for all 3 columns (no subtasks).
   -> Subtask uploading for the user.
--
+
 - error boundary component for important parts of application.
 - An input element must have an autocomplete attribute. (later)
-- gradient for the backgrounds of all pages. (half complete)
+- gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
 - Correct UserContextType.user structure for type safety.
 - Create verification component.
 - Create a verification function that refreshes the
@@ -28,8 +27,8 @@ Things to do: deadline 14th Aug.
 </AppWideIdeas>
 
 
-task structure
-
+Task Structure:
+--------------
 task: {
   id: string,
   title: string,

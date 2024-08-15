@@ -4,6 +4,7 @@ import Button from "../shared/Button";
 import ProgressBar from "../shared/ProgressBar";
 import ToDoItem from "./TodoItem";
 import { checkInputTextValidity } from "../../util/checkInputTextValidity";
+import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 
 export type SubTaskType = {
   title: string;
@@ -22,8 +23,9 @@ export default function TaskExpanded() {
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
-
-  const [subTasks, setSubTasks] = useState<SubTaskType[]>([]);
+  const { currentTask } = useTaskExpanded();
+  const subtaskData = currentTask ? currentTask.subtasks : [];
+  const [subTasks, setSubTasks] = useState<SubTaskType[]>(subtaskData);
   const buttonRef = useRef<HTMLInputElement | null>(null);
 
   function addSubTask(title: string) {

@@ -3,6 +3,9 @@ import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/router/useRouter";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { SubTaskType } from "../tasks-page/TaskExpanded";
+import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
+
+import { draftTasksData } from "../tasks-page/taskData";
 
 export default function SubTaskContainer({
   title,
@@ -20,7 +23,8 @@ export default function SubTaskContainer({
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
-  const updatePath = useRouter().updatePath;
+  const { updatePath } = useRouter();
+  const { updateCurrentTask } = useTaskExpanded();
 
   if (subtasks.length === 0) {
     return null;
@@ -35,6 +39,11 @@ export default function SubTaskContainer({
 
   const completion = Math.round((completedSubtasks / subtasks.length) * 100);
 
+  function handleSubtaskContainerClick() {
+    updateCurrentTask(draftTasksData[1]);
+    updatePath("/tasks/details");
+  }
+
   return (
     <div className={`max-w-[60%]`}>
       <div
@@ -42,7 +51,7 @@ export default function SubTaskContainer({
         role="link"
         aria-label={`Navigate to subtasks for task named ${title}.`}
         tabIndex={0}
-        onClick={() => updatePath("/tasks/details")}
+        onClick={handleSubtaskContainerClick}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") updatePath("/tasks/details");
         }}
