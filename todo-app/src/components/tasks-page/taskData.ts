@@ -1,6 +1,6 @@
 import { TaskType } from "../dashboard/Task";
 
-const draftTasksData: TaskType[] = [
+export const taskData: TaskType[] = [
   {
     id: Math.random().toString(), // temp
     title: "Implement User Authentication",
@@ -44,9 +44,7 @@ const draftTasksData: TaskType[] = [
     subtasks: [],
     status: "draft",
   },
-];
 
-const inProgressTasksData: TaskType[] = [
   {
     id: Math.random().toString(), // temp
     title: "Implement Frontend Routing",
@@ -71,9 +69,7 @@ const inProgressTasksData: TaskType[] = [
     subtasks: [],
     status: "in-progress",
   },
-];
 
-const completeTasksData: TaskType[] = [
   {
     id: Math.random().toString(), // temp
     title: "Deploy Application",
@@ -96,5 +92,3 @@ const completeTasksData: TaskType[] = [
     status: "complete",
   },
 ];
-
-export { draftTasksData, inProgressTasksData, completeTasksData };

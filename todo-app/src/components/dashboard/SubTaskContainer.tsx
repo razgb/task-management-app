@@ -5,7 +5,7 @@ import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { SubTaskType } from "../tasks-page/TaskExpanded";
 import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 
-import { draftTasksData } from "../tasks-page/taskData";
+import { taskData } from "../tasks-page/taskData";
 
 export default function SubTaskContainer({
   title,
@@ -40,7 +40,7 @@ export default function SubTaskContainer({
   const completion = Math.round((completedSubtasks / subtasks.length) * 100);
 
   function handleSubtaskContainerClick() {
-    updateCurrentTask(draftTasksData[1]);
+    updateCurrentTask(taskData[1]);
     updatePath("/tasks/details");
   }
 

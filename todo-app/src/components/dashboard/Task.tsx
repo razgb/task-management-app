@@ -6,11 +6,11 @@ import { SubTaskType } from "../tasks-page/TaskExpanded";
 
 export type TaskType = {
   id: string;
+  status: "draft" | "in-progress" | "complete";
   title: string;
   description?: string;
-  subtasks: SubTaskType[]; // empty by default
+  subtasks: SubTaskType[];
   hideGrabIcon?: boolean; // Manually set in mapping functions depending on parent container.
-  status: "draft" | "in-progress" | "complete";
 };
 
 export default function Task(taskData: TaskType) {

@@ -11,10 +11,21 @@ Things to do: deadline 14th Aug.
   -> User tasks for all 3 columns (no subtasks).
   -> Subtask uploading for the user.
 
+-- less importantance --
 - error boundary component for important parts of application.
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
+
+-- mid importantance --
 - Correct UserContextType.user structure for type safety.
+
+-- high importantance --
+- firebase task fetching function.
+- react-query into <TasksPage>.
+- ask chatgpt max fetches for posts.
+- loading skeleton design for all three columns.
+-
+
 - Create verification component.
 - Create a verification function that refreshes the
   page and checks verification status again. (only solution to think of currently).
@@ -25,6 +36,18 @@ Things to do: deadline 14th Aug.
 - set up firebase for the application.
 - flatten the architecture as much as possible with the collections.
 </AppWideIdeas>
+
+
+<Processes>
+Branch 1: User signup:
+    -> Create account -> update displayName.
+    -> Create a user account in user collection.
+    -> inside "users"/"userId"/"tasks-collection"
+
+Branch 2: User login:
+    ->
+    ->
+</Processes>
 
 
 Task Structure:

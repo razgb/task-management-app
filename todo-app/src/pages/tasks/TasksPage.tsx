@@ -1,17 +1,13 @@
-import {
-  draftTasksData,
-  inProgressTasksData,
-  completeTasksData,
-} from "../../components/tasks-page/taskData.ts";
-
 import { TaskType } from "../../components/dashboard/Task.tsx";
-
-import { useState } from "react";
-import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import TaskColumn, {
   TaskGroupColumnType,
 } from "../../components/tasks-page/TaskColumn.tsx";
+import { taskData } from "../../components/tasks-page/taskData.ts";
 
+import { useState } from "react";
+import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
+
+// A toggle for the background color changes upon a dragover event with a <Task/>.
 const defaultColumnDragStyles = {
   draft: false,
   ["in-progress"]: false,
@@ -34,38 +30,19 @@ export default function TasksPage() {
       [newTaskColumn]: true,
     }));
   }
-  function resetColumnDragStyles() {
+  const resetColumnDragStyles = () =>
     setColumnDragStyles(defaultColumnDragStyles);
-  }
 
-  const [draftTasks, setDraftTasks] = useState<TaskType[]>(
-    draftTasksData.map((task) => ({ ...task, hideGrabIcon: false })),
-  );
-  const [inProgressTasks, setInProgressTasks] = useState<TaskType[]>(
-    inProgressTasksData.map((task) => ({ ...task, hideGrabIcon: false })),
-  );
-  const [completeTasks, setCompleteTasks] = useState<TaskType[]>(
-    completeTasksData.map((task) => ({ ...task, hideGrabIcon: false })),
+  const [tasks, setTasks] = useState<TaskType[]>(
+    taskData.map((task) => ({ ...task, hideGrabIcon: false })),
   );
 
-  const taskColumnMap: TaskGroupColumnType["taskColumnMap"] = {
-    draft: {
-      update: (task: TaskType) => setDraftTasks((prev) => [task, ...prev]),
-      remove: (title: string) =>
-        setDraftTasks((prev) => prev.filter((item) => item.title !== title)),
-    },
-    ["in-progress"]: {
-      update: (task: TaskType) => setInProgressTasks((prev) => [task, ...prev]),
-      remove: (title: string) =>
-        setInProgressTasks((prev) =>
-          prev.filter((item) => item.title !== title),
-        ),
-    },
-    complete: {
-      update: (task: TaskType) => setCompleteTasks((prev) => [task, ...prev]),
-      remove: (title: string) =>
-        setCompleteTasks((prev) => prev.filter((item) => item.title !== title)),
-    },
+  const updateTasks = (task: TaskType) => {
+    setTasks((prev) => [task, ...prev]);
+  };
+
+  const filterTasks = (id: string) => {
+    setTasks((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -77,25 +54,30 @@ export default function TasksPage() {
     >
       <div className="grid h-full grid-cols-3">
         <TaskColumn
-          taskColumnMap={taskColumnMap}
           variant="draft"
-          tasks={draftTasks}
+          updateTasks={updateTasks}
+          filterTasks={filterTasks}
+          tasks={tasks}
           columnDragStyles={columnDragStyles}
           updateColumnDragStyles={updateColumnDragStyles}
           resetColumnDragStyles={resetColumnDragStyles}
         />
+
         <TaskColumn
-          taskColumnMap={taskColumnMap}
           variant="in-progress"
-          tasks={inProgressTasks}
+          updateTasks={updateTasks}
+          filterTasks={filterTasks}
+          tasks={tasks}
           columnDragStyles={columnDragStyles}
           updateColumnDragStyles={updateColumnDragStyles}
           resetColumnDragStyles={resetColumnDragStyles}
         />
+
         <TaskColumn
-          taskColumnMap={taskColumnMap}
           variant="complete"
-          tasks={completeTasks}
+          updateTasks={updateTasks}
+          filterTasks={filterTasks}
+          tasks={tasks}
           columnDragStyles={columnDragStyles}
           updateColumnDragStyles={updateColumnDragStyles}
           resetColumnDragStyles={resetColumnDragStyles}

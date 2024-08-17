@@ -9,37 +9,27 @@ import { useState } from "react";
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
   tasks: TaskType[];
+  updateTasks: (task: TaskType) => void;
+  filterTasks: (id: string) => void;
 
   columnDragStyles: {
     draft: boolean;
     "in-progress": boolean;
     complete: boolean;
   };
+
   updateColumnDragStyles: (
     variant: "draft" | "in-progress" | "complete",
   ) => void;
-  resetColumnDragStyles: () => void;
 
-  taskColumnMap: {
-    draft: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-    ["in-progress"]: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-    complete: {
-      update: (task: TaskType) => void;
-      remove: (title: string) => void;
-    };
-  };
+  resetColumnDragStyles: () => void;
 };
 
 export default function TaskColumn({
   variant,
   tasks,
-  taskColumnMap,
+  updateTasks,
+  filterTasks,
 }: TaskGroupColumnType) {
   const { accessibility } = useAccessibility();
   const {
@@ -52,17 +42,20 @@ export default function TaskColumn({
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
 
-  const output = tasks.map((item) => (
-    <Task
-      id={Math.random().toString()}
-      key={item.id}
-      title={item.title}
-      description={item.description}
-      hideGrabIcon={false}
-      status={item.status}
-      subtasks={item.subtasks}
-    />
-  ));
+  const output = tasks.map((item) => {
+    if (item.status === variant)
+      return (
+        <Task
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          description={item.description}
+          hideGrabIcon={false}
+          status={item.status}
+          subtasks={item.subtasks}
+        />
+      );
+  });
 
   // testing skeleton loading
   // if (variant === "draft")
@@ -88,8 +81,8 @@ export default function TaskColumn({
     if (parsedTask.status === variant) return; // prevent unnecessary code.
     console.log(parsedTask);
 
-    taskColumnMap[parsedTask.status].remove(parsedTask.title);
-    taskColumnMap[variant].update({
+    filterTasks(parsedTask.id);
+    updateTasks({
       ...parsedTask,
       status: variant,
     });
