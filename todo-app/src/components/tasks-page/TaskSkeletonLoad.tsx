@@ -19,8 +19,6 @@ export function TaskSkeletonLoadMultiple() {
       <TaskSkeletonLoad key={"skel-1"} />
       <TaskSkeletonLoad key={"skel-2"} />
       <TaskSkeletonLoad key={"skel-3"} />
-      <TaskSkeletonLoad key={"skel-4"} />
-      <TaskSkeletonLoad key={"skel-5"} />
     </>
   );
 }

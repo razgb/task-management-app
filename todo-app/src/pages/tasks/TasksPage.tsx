@@ -1,48 +1,29 @@
 import { TaskType } from "../../components/dashboard/Task.tsx";
-import TaskColumn, {
-  TaskGroupColumnType,
-} from "../../components/tasks-page/TaskColumn.tsx";
-import { taskData } from "../../components/tasks-page/taskData.ts";
+import TaskColumn from "../../components/tasks-page/TaskColumn.tsx";
 
-import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
-
-// A toggle for the background color changes upon a dragover event with a <Task/>.
-const defaultColumnDragStyles = {
-  draft: false,
-  ["in-progress"]: false,
-  complete: false,
-};
+import { getTasksFromFirebase } from "./features/getTasksFromFirebase.ts";
+import { useQuery } from "react-query";
 
 export default function TasksPage() {
   const { accessibility } = useAccessibility();
   const { removeRoundEdges } = accessibility;
 
-  const [columnDragStyles, setColumnDragStyles] = useState(
-    defaultColumnDragStyles,
-  );
-
-  function updateColumnDragStyles(
-    newTaskColumn: TaskGroupColumnType["variant"],
-  ) {
-    setColumnDragStyles((prev) => ({
-      ...prev,
-      [newTaskColumn]: true,
-    }));
-  }
-  const resetColumnDragStyles = () =>
-    setColumnDragStyles(defaultColumnDragStyles);
-
-  const [tasks, setTasks] = useState<TaskType[]>(
-    taskData.map((task) => ({ ...task, hideGrabIcon: false })),
-  );
+  const {
+    // failureCount, // got some ideas for this...
+    data: tasks,
+    isLoading,
+  } = useQuery("tasks", getTasksFromFirebase, {
+    refetchOnWindowFocus: false, // Do not refetch on window focus
+    retry: 5,
+  });
 
   const updateTasks = (task: TaskType) => {
-    setTasks((prev) => [task, ...prev]);
+    // setTasks((prev) => [task, ...prev]);
   };
 
   const filterTasks = (id: string) => {
-    setTasks((prev) => prev.filter((item) => item.id !== id));
+    // setTasks((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -55,32 +36,26 @@ export default function TasksPage() {
       <div className="grid h-full grid-cols-3">
         <TaskColumn
           variant="draft"
+          loading={isLoading}
           updateTasks={updateTasks}
           filterTasks={filterTasks}
           tasks={tasks}
-          columnDragStyles={columnDragStyles}
-          updateColumnDragStyles={updateColumnDragStyles}
-          resetColumnDragStyles={resetColumnDragStyles}
         />
 
         <TaskColumn
           variant="in-progress"
+          loading={isLoading}
           updateTasks={updateTasks}
           filterTasks={filterTasks}
           tasks={tasks}
-          columnDragStyles={columnDragStyles}
-          updateColumnDragStyles={updateColumnDragStyles}
-          resetColumnDragStyles={resetColumnDragStyles}
         />
 
         <TaskColumn
           variant="complete"
+          loading={isLoading}
           updateTasks={updateTasks}
           filterTasks={filterTasks}
           tasks={tasks}
-          columnDragStyles={columnDragStyles}
-          updateColumnDragStyles={updateColumnDragStyles}
-          resetColumnDragStyles={resetColumnDragStyles}
         />
       </div>
     </div>

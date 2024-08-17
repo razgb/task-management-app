@@ -49,7 +49,7 @@ export default function RecentTasks() {
 
       <div className="grid h-fit grid-cols-1 gap-4 overflow-y-scroll p-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
         <Task
-          id={Math.random()}
+          id={Math.random().toString()}
           subtasks={[]}
           title="Research the impact of climate change on coral reefs"
           description=""
@@ -57,7 +57,7 @@ export default function RecentTasks() {
           status="draft"
         />
         <Task
-          id={Math.random()}
+          id={Math.random().toString()}
           subtasks={[]}
           title="Analyze causes of the Revolution"
           description="Study primary and secondary sources to understand the social, economic, and political factors that led to the French Revolution."
@@ -65,7 +65,7 @@ export default function RecentTasks() {
           status="in-progress"
         />
         <Task
-          id={Math.random()}
+          id={Math.random().toString()}
           subtasks={[]}
           title="Learn about the history of artificial intelligence"
           description="Explore the development of AI from its early beginnings to modern advancements."
@@ -73,7 +73,7 @@ export default function RecentTasks() {
           status="in-progress"
         />
         <Task
-          id={Math.random()}
+          id={Math.random().toString()}
           subtasks={[]}
           title="Create a digital painting using Adobe Photoshop"
           description="Experiment with different tools and techniques to create a unique digital artwork."

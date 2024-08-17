@@ -10,10 +10,13 @@ export type TaskType = {
   title: string;
   description?: string;
   subtasks: SubTaskType[];
-  hideGrabIcon?: boolean; // Manually set in mapping functions depending on parent container.
 };
 
-export default function Task(taskData: TaskType) {
+type TaskComponentType = TaskType & {
+  hideGrabIcon?: boolean;
+};
+
+export default function Task(taskData: TaskComponentType) {
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,

@@ -3,11 +3,9 @@ import { UserContext } from "./UserContext";
 import { UserContextType } from "./UserContext";
 
 const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<UserContextType["user"] | undefined>(
-    undefined,
-  );
+  const [user, setUser] = useState<UserContextType["user"] | null>(null);
 
-  const updateUserState = (newState: UserContextType["user"] | undefined) => {
+  const updateUserState = (newState: UserContextType["user"] | null) => {
     setUser(newState);
   };
 

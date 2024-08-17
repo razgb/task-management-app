@@ -1,32 +1,19 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useState } from "react";
-// import {
-//   TaskSkeletonLoad,
-//   TaskSkeletonLoadMultiple,
-// } from "./TaskSkeletonLoad.tsx";
+import { TaskSkeletonLoadMultiple } from "./TaskSkeletonLoad.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
-  tasks: TaskType[];
+  loading: boolean;
+  tasks: TaskType[] | undefined;
   updateTasks: (task: TaskType) => void;
   filterTasks: (id: string) => void;
-
-  columnDragStyles: {
-    draft: boolean;
-    "in-progress": boolean;
-    complete: boolean;
-  };
-
-  updateColumnDragStyles: (
-    variant: "draft" | "in-progress" | "complete",
-  ) => void;
-
-  resetColumnDragStyles: () => void;
 };
 
 export default function TaskColumn({
   variant,
+  loading,
   tasks,
   updateTasks,
   filterTasks,
@@ -42,24 +29,7 @@ export default function TaskColumn({
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
 
-  const output = tasks.map((item) => {
-    if (item.status === variant)
-      return (
-        <Task
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          description={item.description}
-          hideGrabIcon={false}
-          status={item.status}
-          subtasks={item.subtasks}
-        />
-      );
-  });
-
-  // testing skeleton loading
-  // if (variant === "draft")
-  //   output.push(<TaskSkeletonLoadMultiple key="draft-skeleton-1" />);
+  const output = proccessTaskData(tasks, loading, variant);
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -117,4 +87,39 @@ export default function TaskColumn({
       </div>
     </div>
   );
+}
+
+/**
+ * Turns raw task data from firebase into an array of JSX
+ * <Task/> elements that are relevant to their respective
+ * parent column's variant property.
+ */
+function proccessTaskData(
+  tasks: TaskType[] | undefined,
+  loading: boolean,
+  column: TaskGroupColumnType["variant"],
+) {
+  let output: null | React.ReactNode | Iterable<React.ReactNode> = null;
+
+  if (loading) {
+    output = <TaskSkeletonLoadMultiple />;
+  } else if (!loading && tasks) {
+    output = tasks
+      .filter((task) => task.status === column)
+      .map((task) => {
+        return (
+          <Task
+            key={task.id}
+            id={task.id}
+            subtasks={task.subtasks}
+            title={task.title}
+            description={task.description}
+            status={task.status}
+            hideGrabIcon={true}
+          />
+        );
+      });
+  }
+
+  return output;
 }
