@@ -4,7 +4,7 @@ import {
   ListTodo,
   Timer,
   Plus,
-  NotebookText,
+  // NotebookText,
 } from "lucide-react";
 import MenuButton from "./MenuButton";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
@@ -55,13 +55,14 @@ export default function MenuLinksToPages({
       >
         Timer
       </MenuButton>
-      <MenuButton
+
+      {/*<MenuButton
         to="/habit-tracker"
         icon={<NotebookText size={fontSizeMap["2xl"]} />}
         menuState={menuState}
       >
         Habit Tracker
-      </MenuButton>
+      </MenuButton>*/}
     </div>
   );
 }

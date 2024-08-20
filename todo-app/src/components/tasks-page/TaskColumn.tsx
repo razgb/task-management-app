@@ -1,22 +1,23 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TaskSkeletonLoadMultiple } from "./TaskSkeletonLoad.tsx";
+import { useMutation, useQueryClient } from "react-query";
+import { updateTaskStatusInFirebase } from "../../pages/tasks/features/updateTaskStatusInFirebase.ts";
+import useModal from "../../stores/modal/useModal.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
   loading: boolean;
   tasks: TaskType[] | undefined;
-  updateTasks: (task: TaskType) => void;
-  filterTasks: (id: string) => void;
 };
+
+type MutationParameterType = { id: string; newStatus: TaskType["status"] };
 
 export default function TaskColumn({
   variant,
   loading,
   tasks,
-  updateTasks,
-  filterTasks,
 }: TaskGroupColumnType) {
   const { accessibility } = useAccessibility();
   const {
@@ -26,6 +27,18 @@ export default function TaskColumn({
     increaseLetterSpacing,
     fontSizeMap,
   } = accessibility;
+  const { openModal } = useModal();
+  const queryClient = useQueryClient();
+
+  const { error, isError, isLoading, failureCount, mutate } = useMutation({
+    mutationFn: async ({ id, newStatus }: MutationParameterType) => {
+      await updateTaskStatusInFirebase(id, newStatus);
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["tasks"] });
+    },
+    retry: 3,
+  });
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
 
@@ -48,15 +61,24 @@ export default function TaskColumn({
     if (!droppedTask) return;
 
     const parsedTask: TaskType = JSON.parse(droppedTask);
-    if (parsedTask.status === variant) return; // prevent unnecessary code.
+    if (parsedTask.status === variant) return; // prevent unnecessary update.
     console.log(parsedTask);
 
-    filterTasks(parsedTask.id);
-    updateTasks({
-      ...parsedTask,
-      status: variant,
+    // closures: drop function has access to parent drop container's variant.
+    mutate({
+      id: parsedTask.id,
+      newStatus: variant,
     });
   }
+
+  useEffect(() => {
+    if (failureCount && failureCount < 3) {
+      openModal(
+        "error",
+        "Error syncing task status change, check internet connection and try again.",
+      );
+    }
+  });
 
   return (
     <div
@@ -115,7 +137,7 @@ function proccessTaskData(
             title={task.title}
             description={task.description}
             status={task.status}
-            hideGrabIcon={true}
+            hideGrabIcon={false}
           />
         );
       });

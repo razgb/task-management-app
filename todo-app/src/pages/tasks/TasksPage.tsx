@@ -1,30 +1,35 @@
-import { TaskType } from "../../components/dashboard/Task.tsx";
+import { useEffect } from "react";
 import TaskColumn from "../../components/tasks-page/TaskColumn.tsx";
 
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { getTasksFromFirebase } from "./features/getTasksFromFirebase.ts";
 import { useQuery } from "react-query";
+import useModal from "../../stores/modal/useModal.tsx";
 
 export default function TasksPage() {
   const { accessibility } = useAccessibility();
   const { removeRoundEdges } = accessibility;
+  const { openModal } = useModal();
 
   const {
-    // failureCount, // got some ideas for this...
+    failureCount, // got some ideas for this...
+    error,
     data: tasks,
-    isLoading,
-  } = useQuery("tasks", getTasksFromFirebase, {
+    isFetching,
+  } = useQuery(["tasks"], getTasksFromFirebase, {
     refetchOnWindowFocus: false, // Do not refetch on window focus
     retry: 5,
+    staleTime: Infinity,
   });
 
-  const updateTasks = (task: TaskType) => {
-    // setTasks((prev) => [task, ...prev]);
-  };
-
-  const filterTasks = (id: string) => {
-    // setTasks((prev) => prev.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    if (failureCount === 5) {
+      openModal(
+        "error",
+        "Failed to load tasks after multiple attempts. Check your internet connection and try again.",
+      );
+    }
+  });
 
   return (
     <div
@@ -34,29 +39,11 @@ export default function TasksPage() {
       }}
     >
       <div className="grid h-full grid-cols-3">
-        <TaskColumn
-          variant="draft"
-          loading={isLoading}
-          updateTasks={updateTasks}
-          filterTasks={filterTasks}
-          tasks={tasks}
-        />
+        <TaskColumn variant="draft" loading={isFetching} tasks={tasks} />
 
-        <TaskColumn
-          variant="in-progress"
-          loading={isLoading}
-          updateTasks={updateTasks}
-          filterTasks={filterTasks}
-          tasks={tasks}
-        />
+        <TaskColumn variant="in-progress" loading={isFetching} tasks={tasks} />
 
-        <TaskColumn
-          variant="complete"
-          loading={isLoading}
-          updateTasks={updateTasks}
-          filterTasks={filterTasks}
-          tasks={tasks}
-        />
+        <TaskColumn variant="complete" loading={isFetching} tasks={tasks} />
       </div>
     </div>
   );

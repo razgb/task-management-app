@@ -29,7 +29,6 @@ export default function Task(taskData: TaskComponentType) {
   } = accessibility;
 
   const { title, description, subtasks, hideGrabIcon } = taskData;
-
   const [isDraggable, setIsDraggable] = useState(false);
 
   function handleStartDrag(event: React.DragEvent<HTMLDivElement>) {

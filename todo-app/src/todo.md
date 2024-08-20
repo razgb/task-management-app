@@ -7,9 +7,6 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 
 <CurrentPlan>
-- Add dummy user data to firebase.
-  -> User tasks for all 3 columns (no subtasks).
-  -> Subtask uploading for the user.
 
 -- less importantance --
 - error boundary component for important parts of application.
@@ -18,13 +15,11 @@ Things to do: deadline 14th Aug.
 
 -- mid importantance --
 - Correct UserContextType.user structure for type safety.
+- Subtask uploading for the user.
 
 -- high importantance --
-- firebase task fetching function.
-- react-query into <TasksPage>.
-- ask chatgpt max fetches for posts.
-- loading skeleton design for all three columns.
--
+- add useMutation from react-query to update and remove functions in taskspage component.
+- create a function that asserts an object begin a tasktype[] upon being true (if checks).
 
 - Create verification component.
 - Create a verification function that refreshes the
