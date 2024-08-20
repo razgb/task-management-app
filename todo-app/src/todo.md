@@ -8,18 +8,18 @@ Things to do: deadline 14th Aug.
 
 <CurrentPlan>
 
--- less importantance --
-- error boundary component for important parts of application.
+-- **less importantance** --
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
 
--- mid importantance --
-- Correct UserContextType.user structure for type safety.
+-- **mid importantance** --
 - Subtask uploading for the user.
 
--- high importantance --
-- add useMutation from react-query to update and remove functions in taskspage component.
+-- **high importantance** --
 - create a function that asserts an object begin a tasktype[] upon being true (if checks).
+- error boundary component for important parts of application.
+- This document does not exist. It will not appear in queries or snapshots
+  -> https://firebase.google.com/docs/firestore/using-console?hl=en&authuser=0&_gl=1*1tiysxz*_ga*MTUwNDk5OTIwNC4xNzIzOTA5OTA1*_ga_CW55HF8NVT*MTcyNDE3ODY0MC44LjEuMTcyNDE3ODY3Ni4yNC4wLjA.#non-existent_ancestor_documents
 
 - Create verification component.
 - Create a verification function that refreshes the
@@ -28,21 +28,7 @@ Things to do: deadline 14th Aug.
 
 <AppWideIdeas>
 - the phone design of the application.
-- set up firebase for the application.
-- flatten the architecture as much as possible with the collections.
 </AppWideIdeas>
-
-
-<Processes>
-Branch 1: User signup:
-    -> Create account -> update displayName.
-    -> Create a user account in user collection.
-    -> inside "users"/"userId"/"tasks-collection"
-
-Branch 2: User login:
-    ->
-    ->
-</Processes>
 
 
 Task Structure:

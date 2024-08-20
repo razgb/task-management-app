@@ -1,35 +1,25 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-export const Routes = {
-  login: "/login",
-  signup: "/signup",
-  dashboard: "/dashboard",
-  tasks: {
-    index: "/tasks",
-    details: "/tasks/details",
-  },
-  settings: {
-    index: "/settings",
-    tasks: "/settings/tasks",
-    accountManagement: "/settings/account-management",
-    accessibility: "/settings/accessibility",
-    activityLog: "/settings/activity-log",
-    faq: "/settings/frequently-asked-questions",
-  },
-  timer: "/timer",
-  taskCreator: "/task-creator",
-  habitTracker: "/habit-tracker",
-} as const;
+export type ValidUrlPaths =
+  | "/error"
+  | "/login"
+  | "/signup"
+  | "/dashboard"
+  | "/tasks"
+  | "/settings"
+  | "/settings/tasks"
+  | "/settings/account-management"
+  | "/settings/accessibility"
+  | "/settings/activity-log"
+  | "/settings/frequently-asked-questions"
+  | "/timer"
+  | "/task-creator"
+  | "/habit-tracker";
 
-type ExtractValues<T> =
-  T extends Record<string, infer U> ? ExtractValues<U> : T;
-
-export type ValidUrlPaths = ExtractValues<typeof Routes>;
-
-interface RouterContextType {
+type RouterContextType = {
   path: string; // on page load, path could be anything.
-  updatePath: (path: ValidUrlPaths) => void;
-}
+  updatePath: (path: string) => void;
+};
 
 /*
  If there is no provider around the subscribing component then
@@ -42,18 +32,16 @@ const RouterContext = createContext<RouterContextType | undefined>(undefined);
 function RouterProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(window.location.pathname);
 
-  /**
-   * Updates url and path state in 2 ways:
-   * 1. Absolute path. '/' + path name must be given.
-   * 2. Relative path that adds on to current path. Only give the path name.
-   *
-   * @param newPath string of valid urls from type ValidUrlPaths.
-   */
-  const updatePath = (newPath: ValidUrlPaths) => {
+  const updatePath = (newPath: string | ValidUrlPaths) => {
+    if (!isValidUrlPath(newPath)) return;
+
+    // absolute
     if (newPath[0] === "/") {
       setPath(newPath);
       window.history.pushState(null, "", newPath);
-    } else {
+    }
+    // relative
+    else if (new RegExp("^[a-zA-Z]+").test(newPath[0])) {
       const updatedPath = `${path}/${newPath}`;
       setPath(updatedPath);
       window.history.pushState(null, "", updatedPath);
@@ -67,13 +55,16 @@ function RouterProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     window.addEventListener("popstate", () => {
-      setPath(window.location.pathname);
+      const currentPath = window.location.pathname;
+      if (currentPath === path) return;
+
+      setPath(currentPath);
     });
 
     return () => {
       window.removeEventListener("popstate", () => {});
     };
-  }, []);
+  }, [path]);
 
   return (
     <RouterContext.Provider value={value}>{children}</RouterContext.Provider>
@@ -81,3 +72,30 @@ function RouterProvider({ children }: { children: ReactNode }) {
 }
 
 export { RouterProvider, RouterContext };
+
+const isValidUrlPath = (url: string): url is ValidUrlPaths => {
+  const validPaths: ValidUrlPaths[] = [
+    "/error",
+    "/login",
+    "/signup",
+    "/dashboard",
+    "/tasks",
+    "/settings",
+    "/settings/tasks",
+    "/settings/account-management",
+    "/settings/accessibility",
+    "/settings/activity-log",
+    "/settings/frequently-asked-questions",
+    "/timer",
+    "/task-creator",
+    "/habit-tracker",
+  ];
+
+  if (new RegExp("^/tasks/[a-zA-Z0-9]+$").test(url)) return true; // allows any alphanumeric value after "/task/"
+
+  const result = validPaths.some((validPath) => {
+    return validPath.includes(url);
+  });
+
+  return result;
+};

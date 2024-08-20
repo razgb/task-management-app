@@ -35,7 +35,7 @@ export default function Outlet() {
       content = <TasksPage />;
       break;
     }
-    case path === "/tasks/details": {
+    case new RegExp("^/tasks/[a-zA-Z0-9]+$").test(path): {
       content = <TaskExpanded />;
       break;
     }
@@ -51,6 +51,10 @@ export default function Outlet() {
     //   content = <HabitTracker />;
     //   break;
     // }
+    case path === "error": {
+      content = <ErrorPage />;
+      break;
+    }
     default: {
       content = <ErrorPage />;
       break;

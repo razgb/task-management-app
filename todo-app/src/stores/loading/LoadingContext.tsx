@@ -1,16 +1,13 @@
 import { createContext, useState } from "react";
-import { ValidUrlPaths } from "../router/RouterContext";
 
 /*
-Pages have unique loading IDs matching routes,
-ensuring concurrent loads maintain the longest
-loading process.
+This loading queue allows non-unique IDs,
+enabling multiple items to be added concurrently.
 */
-export type LoadingQueueType = ValidUrlPaths;
 export type LoadingContextType = {
   isLoading: boolean;
-  addToLoadingQueue: (id: LoadingQueueType) => void;
-  removeFromLoadingQueue: (id: LoadingQueueType) => void;
+  addToLoadingQueue: (id: string) => void;
+  removeFromLoadingQueue: (id: string) => void;
 };
 
 export const LoadingContext = createContext<LoadingContextType | undefined>(
@@ -22,15 +19,27 @@ export function LoadingContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [loadingQueue, setLoadingQueue] = useState<LoadingQueueType[]>([]);
-  function addToLoadingQueue(id: LoadingQueueType) {
+  const [loadingQueue, setLoadingQueue] = useState<string[]>([]);
+
+  function addToLoadingQueue(id: string) {
     setLoadingQueue((prev) => [...prev, id]);
   }
 
-  function removeFromLoadingQueue(id: LoadingQueueType) {
-    setLoadingQueue((prev) => prev.filter((loadingId) => loadingId !== id));
+  function removeFromLoadingQueue(id: string) {
+    setLoadingQueue((prev) => {
+      const idFound = prev.indexOf(id); // first occurence of ID.
+      console.log("prev:\n", prev);
+
+      if (idFound === -1) return prev;
+
+      return [
+        ...loadingQueue.slice(0, idFound),
+        ...loadingQueue.slice(idFound + 1),
+      ];
+    });
   }
 
+  console.log("inside: context\n", loadingQueue);
   const isLoading = loadingQueue.length > 0;
 
   return (

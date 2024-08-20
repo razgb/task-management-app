@@ -1,11 +1,14 @@
 export function TaskSkeletonLoad() {
   return (
     <div className="">
-      <div role="status" className="animate-pulse p-3">
+      <div
+        role="status"
+        className="animate-pulse rounded-xl bg-secondary-200 p-3"
+      >
         <div className="mb-2.5 h-2.5 w-48 rounded-full bg-secondary-400"></div>
         <div className="mb-2 h-3 rounded-full bg-secondary-400"></div>
         <div className="mb-2.5 h-3 max-w-[200px] rounded-full bg-secondary-400"></div>
-        <div className="mb-2 h-6 max-w-[100px] rounded-xl bg-secondary-400"></div>
+        <div className="h-6 max-w-[100px] rounded-xl bg-secondary-400"></div>
         <span className="sr-only">Loading...</span>
       </div>
     </div>

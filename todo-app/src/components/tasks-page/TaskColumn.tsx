@@ -62,7 +62,6 @@ export default function TaskColumn({
 
     const parsedTask: TaskType = JSON.parse(droppedTask);
     if (parsedTask.status === variant) return; // prevent unnecessary update.
-    console.log(parsedTask);
 
     // closures: drop function has access to parent drop container's variant.
     mutate({

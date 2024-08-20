@@ -1,7 +1,7 @@
 import {
   AccessibilityIcon,
   Activity,
-  CalendarCog,
+  // CalendarCog,
   Info,
   UserRound,
 } from "lucide-react";
@@ -9,7 +9,6 @@ import {
 import AccountSettings from "./sub-settings/account-settings/AccountSettings";
 import ActivitySettings from "./sub-settings/activity-settings/ActivitySettings";
 import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
-import TaskSettings from "./sub-settings/task-settings/TaskSettings";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 
 import Link from "../../components/shared/Link";
@@ -45,7 +44,7 @@ function SettingsPage() {
       pageToRender = <FaqSettings />;
       break;
     default:
-      pageToRender = <TaskSettings />;
+      pageToRender = <AccountSettings />;
       break;
   }
 
@@ -72,11 +71,6 @@ function SettingsPage() {
               Settings
             </h2>
 
-            <SettingsTab
-              to="/settings/tasks"
-              icon={<CalendarCog size={fontSizeMap["2xl"]} />}
-              title="Task settings"
-            />
             <SettingsTab
               to="/settings/account-management"
               icon={<UserRound size={fontSizeMap["2xl"]} />}
@@ -156,3 +150,9 @@ function SettingsTab({
     </Link>
   );
 }
+
+// <SettingsTab
+//   to="/settings/tasks"
+//   icon={<CalendarCog size={fontSizeMap["2xl"]} />}
+//   title="Task settings"
+// />

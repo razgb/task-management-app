@@ -3,6 +3,8 @@ import { useState } from "react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import SubTaskContainer from "./SubTaskContainer";
 import { SubTaskType } from "../tasks-page/TaskExpanded";
+import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
+import useRouter from "../../stores/router/useRouter";
 
 export type TaskType = {
   id: string;
@@ -27,6 +29,8 @@ export default function Task(taskData: TaskComponentType) {
     accessibilityTextColor,
     reverseAccessibilityTextColor,
   } = accessibility;
+  const { updateCurrentTask } = useTaskExpanded();
+  const { updatePath } = useRouter();
 
   const { title, description, subtasks, hideGrabIcon } = taskData;
   const [isDraggable, setIsDraggable] = useState(false);
@@ -37,15 +41,23 @@ export default function Task(taskData: TaskComponentType) {
     event.dataTransfer.setData("application/json", jsonData); // send data through api
   }
 
+  function handleTaskExpand() {
+    updateCurrentTask(taskData);
+    updatePath(`/tasks/${taskData.id}`);
+  }
+
   return (
     <div
       onDragStart={handleStartDrag}
       draggable={isDraggable}
-      className="flex flex-col justify-center rounded-xl bg-secondaryBgWeak p-3"
+      className="flex cursor-pointer flex-col justify-center rounded-xl bg-secondaryBgWeak p-3 transition-colors hover:bg-secondaryBg"
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
       }}
+      tabIndex={0}
+      onClick={handleTaskExpand}
+      aria-label={`Open task with title ${taskData.title} into detailed view to add subtasks.`}
     >
       <div>
         <div
@@ -63,7 +75,7 @@ export default function Task(taskData: TaskComponentType) {
             {title}
           </h2>
 
-          {/* Grab icon */}
+          {/* Grab Button */}
           <button
             onMouseLeave={() => setIsDraggable(false)}
             onMouseDown={() => setIsDraggable(true)}
