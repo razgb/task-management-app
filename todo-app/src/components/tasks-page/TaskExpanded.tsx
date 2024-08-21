@@ -17,12 +17,11 @@ export type SubTaskType = {
   title: string;
   completed: boolean;
   position: number;
-  id: string;
 };
 
-type SubtaskParametersType = {
+type MutationParametersType = {
   type: "add" | "remove";
-  taskID: string;
+  taskID: string; // currentTask.id
   subtask: SubTaskType;
 };
 
@@ -47,78 +46,72 @@ export default function TaskExpanded() {
 
   const buttonRef = useRef<HTMLInputElement | null>(null);
 
-  const { isLoading, isError, error, failureCount, mutate } = useMutation({
-    mutationFn: async ({ type, taskID, subtask }: SubtaskParametersType) => {
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async ({ type, taskID, subtask }: MutationParametersType) => {
       if (!currentTask) return;
-      let promise: Promise<void> | null = null;
+      let promise: (() => Promise<void>) | null = null;
 
       if (type === "add") {
-        promise = addSubTaskToFirebase(taskID, subtask);
+        // addSubTaskOnClient(subtask.title);
+        promise = async () => await addSubTaskToFirebase(taskID, subtask);
       } else if (type === "remove") {
-        promise = removeSubTaskFromFirebase(taskID, subtask);
+        // removeSubTaskOnClient(subtask.title);
+        promise = async () => await removeSubTaskFromFirebase(taskID, subtask);
       }
-
       if (!promise) return;
 
-      const loadingID = "task-details";
-      addToLoadingQueue(loadingID);
-
+      addToLoadingQueue("task-details");
       try {
-        await promise;
+        // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
+        await promise();
+        addSubTaskOnClient(subtask.title); // remove this if you reattempt optimistic updates.
       } catch (err) {
-        openModal("error", "Error syncing, trying again.");
+        removeFromLoadingQueue("task-details");
+        throw err;
       } finally {
-        removeFromLoadingQueue(loadingID);
+        removeFromLoadingQueue("task-details");
       }
     },
-    retry: 3,
+    retry: 2,
+    onError: () => {
+      openModal(
+        "error",
+        `Error syncing subtasks, check internet connection and try again.`,
+      );
+    },
     onSuccess: () => {
       // passively invalidate TasksPage data (non-instant network request).
       queryClient.invalidateQueries(["tasks"]);
     },
   });
 
-  async function addSubTask(title: string) {
+  function addSubTaskOnClient(title: string) {
     if (!currentTask) return;
-
-    // title formatting...
     if (!checkInputTextValidity(title)) return; // Proper error messages in later update.
-
     let subtaskPosition: number | null = null;
 
     setSubTasks((prev) => {
       subtaskPosition = prev.length;
-
       return [
         ...prev,
         {
-          id: Math.random().toString(), // temp
           position: subtaskPosition,
           title: title,
           completed: false,
         },
       ];
     });
+  }
 
-    try {
-      mutate({
-        taskID: currentTask.id,
-        type: "add",
-        subtask: {
-          id: Math.random().toString(),
-          position: subtaskPosition || 0,
-          title: title,
-          completed: false,
-        },
-      });
-    } catch (err) {
-      //
-    }
+  function removeSubTaskOnClient(title: string) {
+    setSubTasks((prev) => {
+      return prev.filter((subtask) => subtask.title !== title);
+    });
   }
 
   function swapSubTaskPositions(
-    incomingTaskId: string,
-    outgoingTaskId: string,
+    incomingTaskTitle: string,
+    outgoingTaskTitle: string,
   ) {
     if (!currentTask) return;
 
@@ -127,24 +120,27 @@ export default function TaskExpanded() {
       let outgoingTaskPosition: number | undefined = undefined;
 
       prev.forEach((subTask) => {
-        const id = subTask.id;
+        const id = subTask.title;
         if (incomingTaskPosition && outgoingTaskPosition) return;
 
-        if (id === incomingTaskId) {
+        if (id === incomingTaskTitle) {
           incomingTaskPosition = subTask.position;
-        } else if (id === outgoingTaskId) {
+        } else if (id === outgoingTaskTitle) {
           outgoingTaskPosition = subTask.position;
         }
       });
 
       const newSubTasksArray = prev.map((task) => {
-        const id = task.id;
-        if (id !== incomingTaskId && id !== outgoingTaskId) return task;
+        const title = task.title;
+        if (title !== incomingTaskTitle && title !== outgoingTaskTitle)
+          return task;
 
         return {
           ...task,
           position:
-            id === incomingTaskId ? outgoingTaskPosition : incomingTaskPosition,
+            title === incomingTaskTitle
+              ? outgoingTaskPosition
+              : incomingTaskPosition,
         } as SubTaskType;
       });
 
@@ -153,7 +149,6 @@ export default function TaskExpanded() {
   }
 
   const reorderedTaskList: JSX.Element[] = [];
-
   for (let i = 0; i < subTasks.length; i++) {
     for (let j = 0; j < subTasks.length; j++) {
       const task = subTasks[j];
@@ -161,7 +156,7 @@ export default function TaskExpanded() {
 
       reorderedTaskList.push(
         <ToDoItem
-          key={task.id}
+          key={task.title}
           task={task}
           swapSubTaskPositions={swapSubTaskPositions}
         />,
@@ -171,13 +166,6 @@ export default function TaskExpanded() {
 
   useEffect(() => {
     if (!currentTask) updatePath("/error");
-
-    if (failureCount >= 3) {
-      openModal(
-        "error",
-        "Error uploading your subtask, check internet connection and try again.",
-      );
-    }
   });
 
   return (
@@ -249,10 +237,19 @@ export default function TaskExpanded() {
         </p>
 
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault(); // Prevent default form submission
-            if (!buttonRef.current) return;
-            addSubTask(buttonRef.current.value); // Use the input's value
+            if (!buttonRef.current || !currentTask) return;
+
+            await mutateAsync({
+              taskID: currentTask.id,
+              type: "add",
+              subtask: {
+                position: subTasks.length,
+                title: buttonRef.current.value,
+                completed: false,
+              },
+            });
           }}
           style={{
             borderRadius: removeRoundEdges ? "0" : "",
@@ -275,6 +272,7 @@ export default function TaskExpanded() {
             style={{ fontSize: `${fontSizeMap.sm}px` }}
             type="submit"
             variant="contrast-default"
+            disabled={isLoading}
           >
             Add
           </Button>

@@ -1,4 +1,4 @@
-import { XIcon } from "lucide-react";
+import { TriangleAlert, XIcon } from "lucide-react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useModal from "../../stores/modal/useModal";
 import styles from "../../tailwindStyles";
@@ -20,7 +20,7 @@ export default function Modal() {
   if (modalType === "success") {
     modalStyles = "bg-black bg-opacity-90";
   } else if (modalType === "error") {
-    modalStyles = "bg-red-200";
+    modalStyles = "bg-red-100";
   }
 
   return (
@@ -31,9 +31,11 @@ export default function Modal() {
         borderRadius: removeRoundEdges ? "0" : "",
       }}
       // prettier-ignore
-      className={`absolute left-1/2 top-[1%] flex max-w-[700px] -translate-x-1/2 items-center justify-between
-        gap-2 px-6 rounded-full py-4 transition-opacity ${modalType ? "" : styles.invisible} ${modalStyles}`}
+      className={`absolute left-1/2 top-[1%] font-medium flex max-w-[700px] -translate-x-1/2 items-center justify-between
+        gap-4 px-8 leading-6 rounded-full py-4 transition-opacity ${modalType ? "" : styles.invisible} ${modalStyles}`}
     >
+      <TriangleAlert size={48} />
+
       <h2
         style={{
           color: highContrastMode ? accessibilityTextColor : "",

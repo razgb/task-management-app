@@ -8,12 +8,21 @@ Things to do: deadline 14th Aug.
 
 <CurrentPlan>
 
+
+**last thing you were doing**
+
+- changing drag & drop for subtasks to be based on titles and not IDs anymore.
+- separate client side optimistic change from asyncMutate function.
+- add client side remove and async remove functions to code & the UI.
+
 -- **less importantance** --
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
 
 -- **mid importantance** --
 - Subtask uploading for the user.
+- When there is a app wide error or success, hide navigation with an opacity transition,
+  and render modal. Looks much better than layering on top.
 
 -- **high importantance** --
 - create a function that asserts an object begin a tasktype[] upon being true (if checks).

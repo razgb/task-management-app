@@ -5,12 +5,10 @@ export function isSubTaskType(obj: unknown): obj is SubTaskType {
     return false;
   }
 
-  const { title, completed, position, id } = obj as Partial<SubTaskType>;
-
+  const { title, completed, position } = obj as Partial<SubTaskType>;
   return (
     typeof title === "string" &&
     typeof completed === "boolean" &&
-    typeof position === "number" &&
-    typeof id === "string"
+    typeof position === "number"
   );
 }

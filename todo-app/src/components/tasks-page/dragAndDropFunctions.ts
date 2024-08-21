@@ -7,8 +7,6 @@ export function handleDragStart(
 ): void {
   if (!isSubTaskType(taskData)) return;
 
-  // console.log(`Incoming task: ${taskData.title}`);
-
   // Serialize in JSON format.
   const jsonTask = JSON.stringify(taskData);
   event.dataTransfer?.setData("application/json", jsonTask);
@@ -16,7 +14,7 @@ export function handleDragStart(
 
 export function handleDrop(
   event: React.DragEvent<HTMLLIElement>,
-  ownTaskId: SubTaskType["id"],
+  ownTaskTitle: SubTaskType["title"],
   swapSubTaskPositions: (
     incomingTaskId: string,
     outgoingTaskId: string,
@@ -28,7 +26,7 @@ export function handleDrop(
   if (!temp) return;
 
   const replacingTaskData = JSON.parse(temp); // Incoming task data.
-  if (ownTaskId === replacingTaskData.id) return; // Guard against drop on same position.
+  if (ownTaskTitle === replacingTaskData.id) return; // Guard against drop on same position.
 
-  swapSubTaskPositions(replacingTaskData.id, ownTaskId);
+  swapSubTaskPositions(replacingTaskData.id, ownTaskTitle);
 }

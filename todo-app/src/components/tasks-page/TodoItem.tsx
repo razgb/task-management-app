@@ -44,7 +44,7 @@ export default function ToDoItem({
       draggable={isDragging}
       onDragStart={(event) => handleDragStart(event, task)}
       onDragOver={(event) => event.preventDefault()}
-      onDrop={(event) => handleDrop(event, task.id, swapSubTaskPositions)}
+      onDrop={(event) => handleDrop(event, task.title, swapSubTaskPositions)}
     >
       <div className="flex gap-4">
         <button

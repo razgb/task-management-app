@@ -28,7 +28,7 @@ export function LoadingContextProvider({
   function removeFromLoadingQueue(id: string) {
     setLoadingQueue((prev) => {
       const idFound = prev.indexOf(id); // first occurence of ID.
-      console.log("prev:\n", prev);
+      // console.log("prev:\n", prev);
 
       if (idFound === -1) return prev;
 
@@ -39,7 +39,7 @@ export function LoadingContextProvider({
     });
   }
 
-  console.log("inside: context\n", loadingQueue);
+  // console.log("inside: context\n", loadingQueue);
   const isLoading = loadingQueue.length > 0;
 
   return (
