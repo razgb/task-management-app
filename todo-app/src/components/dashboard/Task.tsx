@@ -50,7 +50,7 @@ export default function Task(taskData: TaskComponentType) {
     <div
       onDragStart={handleStartDrag}
       draggable={isDraggable}
-      className="flex cursor-pointer flex-col justify-center rounded-xl bg-secondaryBgWeak p-3 transition-colors hover:bg-secondaryBg"
+      className="flex cursor-pointer flex-col justify-center rounded-xl bg-secondary-300 p-3 transition-colors hover:bg-secondary-400"
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
@@ -62,7 +62,7 @@ export default function Task(taskData: TaskComponentType) {
       <div>
         <div
           className={`${
-            description ? "mb-1" : undefined
+            description ? "mb-0.5" : undefined
           } flex items-center justify-between`}
         >
           <h2
@@ -103,7 +103,7 @@ export default function Task(taskData: TaskComponentType) {
         </div>
 
         <p
-          className={`${description && "mb-2"} max-w-[45ch] text-textWeak 2xl:text-base`}
+          className={`max-w-[45ch] text-textWeak 2xl:text-base`}
           style={{
             fontSize: `${fontSizeMap.sm}px`,
             color: highContrastMode ? accessibilityTextColor : "",
@@ -113,7 +113,7 @@ export default function Task(taskData: TaskComponentType) {
         </p>
       </div>
 
-      <div className="mt-1 items-start">
+      <div className="mt-2 items-start">
         <SubTaskContainer subtasks={subtasks} title={title} />
       </div>
     </div>

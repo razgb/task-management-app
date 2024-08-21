@@ -9,7 +9,6 @@ import TimerPage from "../pages/timer/TimerPage.tsx";
 
 import useAccessibility from "../stores/accessibility/useAccessibility";
 import useRouter from "../stores/router/useRouter.tsx";
-import styles from "../tailwindStyles.ts";
 
 export default function Outlet() {
   const { path } = useRouter();
@@ -66,9 +65,7 @@ export default function Outlet() {
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
       }}
-      // prettier-ignore
-      className={`h-full overflow-hidden rounded-3xl
-      ${highContrastMode ? styles.reducedAnimatonPageBackgroundColor : styles.pageBackgroundColor} p-3`}
+      className={`h-full overflow-hidden rounded-3xl bg-secondary-400 p-2`}
     >
       {content}
     </div>

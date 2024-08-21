@@ -10,7 +10,6 @@ Things to do: deadline 14th Aug.
 
 
 **last thing you were doing**
-
 - changing drag & drop for subtasks to be based on titles and not IDs anymore.
 - separate client side optimistic change from asyncMutate function.
 - add client side remove and async remove functions to code & the UI.

@@ -47,7 +47,7 @@ export default function SubTaskContainer({
   return (
     <div className={`max-w-[60%]`}>
       <div
-        className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-400 p-2 transition-colors hover:bg-secondary-500"
+        className="flex cursor-pointer flex-col gap-1 self-end rounded-lg bg-secondary-700 p-2 transition-colors hover:bg-secondary-800"
         role="link"
         aria-label={`Navigate to subtasks for task named ${title}.`}
         tabIndex={0}
@@ -62,7 +62,7 @@ export default function SubTaskContainer({
       >
         <div className="flex items-center gap-2">
           <h3
-            className="font-semibold"
+            className="mb-1 font-semibold text-textContrast"
             style={{
               fontSize: `${fontSizeMap.base}px`,
               color: highContrastMode ? accessibilityTextColor : "",
@@ -70,18 +70,23 @@ export default function SubTaskContainer({
           >
             Sub Tasks
           </h3>
-          <SquareArrowOutUpRight size={16} aria-hidden={true} />
+
+          <SquareArrowOutUpRight
+            className="text-textContrast"
+            size={16}
+            aria-hidden={true}
+          />
         </div>
 
         <div className="flex items-center gap-2">
           <ProgressBar completion={completion} width={2} />
           <span
-            className="font-semibold"
             style={{
               fontSize: `${fontSizeMap.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
             }}
+            className="font-semibold text-textContrast"
           >
             {completion}%
           </span>

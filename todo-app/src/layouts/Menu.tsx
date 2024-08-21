@@ -25,7 +25,7 @@ export default function Menu() {
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         color: highContrastMode ? "#fff" : "",
       }}
-      className={`text-primary mr-0 rounded-3xl bg-secondaryBg p-3 ${
+      className={`text-primary mr-0 rounded-3xl bg-secondaryBg p-2 ${
         menuState ? "min-w-[300px]" : "w-fit"
       }`}
     >
@@ -41,7 +41,7 @@ export default function Menu() {
           <div className={`mb-8 flex items-start`}>
             <button
               onClick={toggleMenuState}
-              className="active:bg-secondary-150 flex items-center justify-center rounded-full bg-transparent p-4 hover:bg-secondary-200"
+              className="active:bg-secondary-150 flex items-center justify-center rounded-full bg-transparent p-4 transition-colors hover:bg-secondary-200"
             >
               <MenuIcon />
             </button>

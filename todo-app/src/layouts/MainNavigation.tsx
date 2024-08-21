@@ -3,6 +3,7 @@ import NavTimerWidget from "../components/main-navigation/NavTimerWidget";
 import SearchBar from "../components/main-navigation/SearchBar";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 // import useModal from "../stores/modal/useModal";
+import styles from "../tailwindStyles";
 
 export default function MainNavigation() {
   const { accessibility } = useAccessibility();
@@ -10,21 +11,24 @@ export default function MainNavigation() {
   // const { openModal } = useModal();
 
   return (
-    <div className="flex items-center gap-4 py-6">
-      <div className="flex flex-shrink-0 items-center justify-center gap-2 self-start">
-        <img className="h-16 w-16 rounded-md" src={logo} alt="logo" />
-        {/* I may change this in the future to an image only. */}
-        <h1
-          style={{ fontSize: `${fontSizeMap["2xl"]}px` }}
-          className="text-2xl font-bold text-heading"
-        >
-          TaskBuddy
-        </h1>
-      </div>
-      <SearchBar />
-      <NavTimerWidget />
+    <div className={`mb-4 p-2 ${styles.pageBackgroundColor} rounded-3xl`}>
+      <div className={`flex items-center gap-4 rounded-2xl bg-primaryBg p-4`}>
+        <div className="flex flex-shrink-0 items-center justify-center gap-2 self-start">
+          <img className="h-12 w-12 rounded-md" src={logo} alt="logo" />
+          {/* I may change this in the future to an image only. */}
+          <h1
+            style={{ fontSize: `${fontSizeMap["xl"]}px` }}
+            className="font-bold text-heading"
+          >
+            TaskBuddy
+          </h1>
+        </div>
 
-      {/*
+        <SearchBar />
+
+        <NavTimerWidget />
+
+        {/*
         <button
           onClick={() =>
             openModal(
@@ -35,17 +39,19 @@ export default function MainNavigation() {
         >
           open success modal
         </button>
+
         <button
           onClick={() =>
             openModal(
               "error",
-              "There seems to be a connection error, please try again.",
+              "There seems to be a connection error, please try again, please try again.",
             )
           }
         >
           open error modal
         </button>
         */}
+      </div>
     </div>
   );
 }
