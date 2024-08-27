@@ -11,11 +11,13 @@ type ToDoItemProps = {
     incomingTaskId: string,
     outgoingTaskId: string,
   ) => void;
+  onDelete: () => void;
 };
 
 export default function ToDoItem({
   task,
   swapSubTaskPositions,
+  onDelete,
 }: ToDoItemProps) {
   const { accessibility } = useAccessibility();
   const {
@@ -40,7 +42,7 @@ export default function ToDoItem({
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
       }}
-      className={`flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300`}
+      className={`group flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300`}
       draggable={isDragging}
       onDragStart={(event) => handleDragStart(event, task)}
       onDragOver={(event) => event.preventDefault()}
@@ -68,22 +70,34 @@ export default function ToDoItem({
         </h3>
       </div>
 
-      <button
-        onClick={() => setChecked((prev: boolean): boolean => !prev)}
-        role="checkbox"
-        aria-checked={checked ? "true" : "false"}
-        aria-label={ariaLabel}
-        style={{
-          fontSize: `${fontSizeMap.base}px`,
-          borderRadius: removeRoundEdges ? "0" : "",
-        }}
-      >
-        {checked ? (
-          <SquareCheck size={fontSizeMap["3xl"]} className="stroke-checkbox" />
-        ) : (
-          <Square size={fontSizeMap["3xl"]} className="stroke-checkbox" />
-        )}
-      </button>
+      <div className="flex items-center justify-center gap-4">
+        <button
+          onClick={() => onDelete()}
+          className="opacity-0 transition-opacity group-hover:opacity-100"
+        >
+          Delete
+        </button>
+
+        <button
+          onClick={() => setChecked((prev: boolean): boolean => !prev)}
+          role="checkbox"
+          aria-checked={checked ? "true" : "false"}
+          aria-label={ariaLabel}
+          style={{
+            fontSize: `${fontSizeMap.base}px`,
+            borderRadius: removeRoundEdges ? "0" : "",
+          }}
+        >
+          {checked ? (
+            <SquareCheck
+              size={fontSizeMap["3xl"]}
+              className="stroke-checkbox"
+            />
+          ) : (
+            <Square size={fontSizeMap["3xl"]} className="stroke-checkbox" />
+          )}
+        </button>
+      </div>
     </li>
   );
 }

@@ -3,7 +3,6 @@ import NavTimerWidget from "../components/main-navigation/NavTimerWidget";
 import SearchBar from "../components/main-navigation/SearchBar";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 // import useModal from "../stores/modal/useModal";
-import styles from "../tailwindStyles";
 
 export default function MainNavigation() {
   const { accessibility } = useAccessibility();
@@ -11,7 +10,7 @@ export default function MainNavigation() {
   // const { openModal } = useModal();
 
   return (
-    <div className={`mb-4 p-2 ${styles.pageBackgroundColor} rounded-3xl`}>
+    <div className={`mb-4 rounded-3xl bg-secondary-400 p-2`}>
       <div className={`flex items-center gap-4 rounded-2xl bg-primaryBg p-4`}>
         <div className="flex flex-shrink-0 items-center justify-center gap-2 self-start">
           <img className="h-12 w-12 rounded-md" src={logo} alt="logo" />

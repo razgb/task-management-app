@@ -38,6 +38,8 @@ export default function TaskExpanded() {
   const queryClient = useQueryClient();
   const { updatePath } = useRouter();
   const { currentTask } = useTaskExpanded();
+  console.log(currentTask);
+
   const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
   const { openModal } = useModal();
 
@@ -52,19 +54,26 @@ export default function TaskExpanded() {
       let promise: (() => Promise<void>) | null = null;
 
       if (type === "add") {
-        // addSubTaskOnClient(subtask.title);
         promise = async () => await addSubTaskToFirebase(taskID, subtask);
       } else if (type === "remove") {
-        // removeSubTaskOnClient(subtask.title);
-        promise = async () => await removeSubTaskFromFirebase(taskID, subtask);
+        promise = async () =>
+          await removeSubTaskFromFirebase(taskID, subtask.title);
       }
-      if (!promise) return;
 
+      if (!promise) return;
       addToLoadingQueue("task-details");
+
       try {
         // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
         await promise();
-        addSubTaskOnClient(subtask.title); // remove this if you reattempt optimistic updates.
+
+        if (type === "add") {
+          promise = async () => await addSubTaskToFirebase(taskID, subtask);
+        } else if (type === "remove") {
+          promise = async () =>
+            await removeSubTaskFromFirebase(taskID, subtask.title);
+          removeSubTaskOnClient(subtask.title);
+        }
       } catch (err) {
         removeFromLoadingQueue("task-details");
         throw err;
@@ -81,7 +90,7 @@ export default function TaskExpanded() {
     },
     onSuccess: () => {
       // passively invalidate TasksPage data (non-instant network request).
-      queryClient.invalidateQueries(["tasks"]);
+      queryClient.refetchQueries(["tasks"]);
     },
   });
 
@@ -159,6 +168,20 @@ export default function TaskExpanded() {
           key={task.title}
           task={task}
           swapSubTaskPositions={swapSubTaskPositions}
+          onDelete={async () => {
+            if (!currentTask) return;
+
+            const { position, title, completed } = task;
+            await mutateAsync({
+              taskID: currentTask.id,
+              type: "remove",
+              subtask: {
+                position,
+                title,
+                completed,
+              },
+            });
+          }}
         />,
       );
     }
