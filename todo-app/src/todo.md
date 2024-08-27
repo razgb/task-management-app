@@ -5,14 +5,7 @@ Things to do: deadline 14th Aug.
 - create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
   -> If the user happens to not use due dates, remove the widget entirely.
 </WidgetIdeas>
-
 <CurrentPlan>
-
-these are some testing words
-these are some testing words
-these are some testing words
-these are some testing words
-these are some testing words
 
 make this an exported function that fake promises.
 // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
@@ -29,6 +22,7 @@ make this an exported function that fake promises.
 - subtask removal
 - subtask status updates
 
+this does work and is a better idea than current solution so let's do this in free time.
 - Incorrect architecture in firebase. Let's use Maps/Objects instead of arrays.
   -> Keys should be based on titles. Since in this apps they are unique.
   ->

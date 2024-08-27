@@ -129,12 +129,12 @@ export default function TaskExpanded() {
       let outgoingTaskPosition: number | undefined = undefined;
 
       prev.forEach((subTask) => {
-        const id = subTask.title;
+        const title = subTask.title;
         if (incomingTaskPosition && outgoingTaskPosition) return;
 
-        if (id === incomingTaskTitle) {
+        if (title === incomingTaskTitle) {
           incomingTaskPosition = subTask.position;
-        } else if (id === outgoingTaskTitle) {
+        } else if (title === outgoingTaskTitle) {
           outgoingTaskPosition = subTask.position;
         }
       });
