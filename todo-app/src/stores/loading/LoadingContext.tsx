@@ -21,6 +21,9 @@ export function LoadingContextProvider({
 }) {
   const [loadingQueue, setLoadingQueue] = useState<string[]>([]);
 
+  /**
+   * Enter none unique id of your choice.
+   */
   function addToLoadingQueue(id: string) {
     setLoadingQueue((prev) => [...prev, id]);
   }

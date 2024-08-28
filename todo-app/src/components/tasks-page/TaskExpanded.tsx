@@ -22,7 +22,7 @@ export type SubTaskType = {
 type MutationParametersType = {
   type: "add" | "remove";
   taskID: string; // currentTask.id
-  subtask: SubTaskType;
+  subTask: SubTaskType;
 };
 
 export default function TaskExpanded() {
@@ -38,48 +38,48 @@ export default function TaskExpanded() {
   const queryClient = useQueryClient();
   const { updatePath } = useRouter();
   const { currentTask } = useTaskExpanded();
-  console.log(currentTask);
-
   const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
   const { openModal } = useModal();
-
-  const subtaskData = currentTask ? currentTask.subtasks : [];
-  const [subTasks, setSubTasks] = useState<SubTaskType[]>(subtaskData);
-
-  const buttonRef = useRef<HTMLInputElement | null>(null);
+  const [subTasks, setSubTasks] = useState<SubTaskType[]>(
+    currentTask ? currentTask.subtasks : [],
+  );
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { mutateAsync, isLoading } = useMutation({
-    mutationFn: async ({ type, taskID, subtask }: MutationParametersType) => {
+    mutationFn: async ({ type, taskID, subTask }: MutationParametersType) => {
       if (!currentTask) return;
       let promise: (() => Promise<void>) | null = null;
 
       if (type === "add") {
-        promise = async () => await addSubTaskToFirebase(taskID, subtask);
+        const titleAlreadyExists = subTasks.some((st) => {
+          if (st.title === subTask.title) return true;
+          return false;
+        });
+
+        if (titleAlreadyExists) {
+          openModal("error", "This subtask already exists.");
+          if (inputRef.current) inputRef.current.value = "";
+          return;
+        }
+
+        promise = async () => await addSubTaskToFirebase(taskID, subTask);
       } else if (type === "remove") {
-        promise = async () =>
-          await removeSubTaskFromFirebase(taskID, subtask.title);
+        promise = async () => await removeSubTaskFromFirebase(taskID, subTask);
       }
 
       if (!promise) return;
       addToLoadingQueue("task-details");
 
-      try {
-        // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
-        await promise();
+      // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
+      await promise();
 
-        if (type === "add") {
-          promise = async () => await addSubTaskToFirebase(taskID, subtask);
-        } else if (type === "remove") {
-          promise = async () =>
-            await removeSubTaskFromFirebase(taskID, subtask.title);
-          removeSubTaskOnClient(subtask.title);
-        }
-      } catch (err) {
-        removeFromLoadingQueue("task-details");
-        throw err;
-      } finally {
-        removeFromLoadingQueue("task-details");
+      if (type === "add") {
+        addSubTaskOnClient(subTask.title);
+      } else if (type === "remove") {
+        removeSubTaskOnClient(subTask);
       }
+
+      removeFromLoadingQueue("task-details");
     },
     retry: 2,
     onError: () => {
@@ -89,32 +89,48 @@ export default function TaskExpanded() {
       );
     },
     onSuccess: () => {
-      // passively invalidate TasksPage data (non-instant network request).
-      queryClient.refetchQueries(["tasks"]);
+      queryClient.refetchQueries(["tasks"]); // passive invalidation (not direct).
     },
   });
 
   function addSubTaskOnClient(title: string) {
-    if (!currentTask) return;
-    if (!checkInputTextValidity(title)) return; // Proper error messages in later update.
-    let subtaskPosition: number | null = null;
+    if (!currentTask) return; // ts complains...
+    if (!checkInputTextValidity(title)) {
+      openModal("error", "Invalid text, please try again.");
+    }
 
     setSubTasks((prev) => {
-      subtaskPosition = prev.length;
-      return [
+      const newSubTasksState = [
         ...prev,
         {
-          position: subtaskPosition,
+          position: prev.length || 0,
           title: title,
           completed: false,
         },
       ];
+
+      return newSubTasksState;
     });
+
+    if (inputRef.current) inputRef.current.value = "";
   }
 
-  function removeSubTaskOnClient(title: string) {
+  function removeSubTaskOnClient(subTask: SubTaskType) {
+    if (!currentTask) return;
+
     setSubTasks((prev) => {
-      return prev.filter((subtask) => subtask.title !== title);
+      const newSubTasksState = prev
+        .filter((st) => st.title !== subTask.title)
+        .map((st) => {
+          if (st.position < subTask.position) return st;
+
+          return {
+            ...st,
+            position: st.position - 1,
+          };
+        });
+
+      return newSubTasksState;
     });
   }
 
@@ -159,27 +175,25 @@ export default function TaskExpanded() {
 
   const reorderedTaskList: JSX.Element[] = [];
   for (let i = 0; i < subTasks.length; i++) {
+    if (reorderedTaskList.length === subTasks.length) {
+      break;
+    }
+
     for (let j = 0; j < subTasks.length; j++) {
-      const task = subTasks[j];
-      if (task?.position !== i) continue;
+      const subTask = subTasks[j];
+      if (subTask.position !== i) continue;
 
       reorderedTaskList.push(
         <ToDoItem
-          key={task.title}
-          task={task}
+          key={subTask.title}
+          subTask={subTask}
           swapSubTaskPositions={swapSubTaskPositions}
           onDelete={async () => {
             if (!currentTask) return;
-
-            const { position, title, completed } = task;
             await mutateAsync({
               taskID: currentTask.id,
               type: "remove",
-              subtask: {
-                position,
-                title,
-                completed,
-              },
+              subTask: subTask,
             });
           }}
         />,
@@ -262,14 +276,14 @@ export default function TaskExpanded() {
         <form
           onSubmit={async (e) => {
             e.preventDefault(); // Prevent default form submission
-            if (!buttonRef.current || !currentTask) return;
+            if (!inputRef.current || !currentTask) return;
 
             await mutateAsync({
               taskID: currentTask.id,
               type: "add",
-              subtask: {
+              subTask: {
                 position: subTasks.length,
-                title: buttonRef.current.value,
+                title: inputRef.current.value,
                 completed: false,
               },
             });
@@ -284,7 +298,7 @@ export default function TaskExpanded() {
             className="h-full w-full rounded-xl bg-transparent px-3 py-1 outline-none placeholder:text-textPlaceholder"
             type="text"
             placeholder="Add a sub task"
-            ref={buttonRef}
+            ref={inputRef}
             style={{
               fontSize: `${fontSizeMap.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",

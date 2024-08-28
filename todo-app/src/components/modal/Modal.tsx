@@ -3,6 +3,7 @@ import useAccessibility from "../../stores/accessibility/useAccessibility";
 import useModal from "../../stores/modal/useModal";
 import styles from "../../tailwindStyles";
 import Button from "../shared/Button";
+import useTheme from "../../stores/timer/useTheme";
 
 export default function Modal() {
   const { closeModal, modalType, modalMessage } = useModal();
@@ -15,6 +16,7 @@ export default function Modal() {
     accessibilityTextColor,
     reduceAnimations,
   } = accessibility;
+  const { theme } = useTheme();
 
   let modalStyles = "";
   let icon: React.ReactNode | null = null;
@@ -23,7 +25,7 @@ export default function Modal() {
     icon = null;
     icon = <Mail size={48} />;
   } else if (modalType === "error") {
-    modalStyles = "bg-red-200";
+    modalStyles = theme === "light" ? "bg-red-200" : "bg-red-950";
     icon = <TriangleAlert size={48} />;
   }
 
@@ -44,15 +46,13 @@ export default function Modal() {
         className={`font-medium bg-primaryBg w-full p-3 leading-6 rounded-2xl transition-opacity ${modalType ? "" : styles.invisible}`}
       >
         <div className="mx-auto flex max-w-[800px] items-center justify-center gap-6">
-          {icon}
-
           <h2
             style={{
               color: highContrastMode ? accessibilityTextColor : "",
               fontSize: fontSizeMap["xl"],
               borderRadius: removeRoundEdges ? "0" : "",
             }}
-            className={`${modalType === "success" ? "text-text" : "text-black"}`}
+            className={`${modalType === "success" ? "text-text" : "text-text"}`}
           >
             {modalMessage ||
               "Welcome to the modal! This is a test message to see how it looks."}
@@ -60,7 +60,7 @@ export default function Modal() {
 
           {/* The button will soon be a unstyled button. */}
           <Button onClick={closeModal} type="button" variant="ghost-icon">
-            <XIcon size={28} color={"#000"} />
+            <XIcon size={32} color={theme === "light" ? "#000" : "#fff"} />
           </Button>
         </div>
       </div>
@@ -68,5 +68,6 @@ export default function Modal() {
   );
 }
 
+// {icon}
 // className={`absolute left-1/2 top-[1%] font-medium flex max-w-[700px] -translate-x-1/2 items-center justify-between
 //   gap-4 px-8 leading-6 rounded-full py-4 transition-opacity ${modalType ? "" : styles.invisible} ${modalStyles}`}

@@ -6,7 +6,7 @@ import { handleDrop, handleDragStart } from "./dragAndDropFunctions";
 import { SubTaskType } from "./TaskExpanded";
 
 type ToDoItemProps = {
-  task: SubTaskType;
+  subTask: SubTaskType;
   swapSubTaskPositions: (
     incomingTaskId: string,
     outgoingTaskId: string,
@@ -15,7 +15,7 @@ type ToDoItemProps = {
 };
 
 export default function ToDoItem({
-  task,
+  subTask,
   swapSubTaskPositions,
   onDelete,
 }: ToDoItemProps) {
@@ -29,7 +29,7 @@ export default function ToDoItem({
     accessibilityTextColor,
   } = accessibility;
 
-  const [checked, setChecked] = useState(task.completed || false);
+  const [checked, setChecked] = useState(subTask.completed || false);
   const [isDragging, setIsDragging] = useState(false);
 
   const ariaLabel = checked
@@ -44,9 +44,9 @@ export default function ToDoItem({
       }}
       className={`group flex items-center justify-between gap-4 rounded bg-secondary-200 px-4 py-3 transition-colors hover:bg-secondary-300`}
       draggable={isDragging}
-      onDragStart={(event) => handleDragStart(event, task)}
+      onDragStart={(event) => handleDragStart(event, subTask)}
       onDragOver={(event) => event.preventDefault()}
-      onDrop={(event) => handleDrop(event, task.title, swapSubTaskPositions)}
+      onDrop={(event) => handleDrop(event, subTask.title, swapSubTaskPositions)}
     >
       <div className="flex gap-4">
         <button
@@ -66,7 +66,7 @@ export default function ToDoItem({
           }}
           className="text-lg font-medium"
         >
-          {task.title}
+          {subTask.title}
         </h3>
       </div>
 
