@@ -2,6 +2,7 @@ import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
 import { formatFirebaseDate } from "../../../util/formatFirebaseDate";
 import ProgressBar from "../../shared/ProgressBar";
+import { calculateCompletion } from "../functions/calculateCompletion";
 
 /**
  * Renders progress bar, last edited, title, and the description.
@@ -21,6 +22,8 @@ export default function TaskDetails() {
   const lastEdited = updatedAt
     ? `Edited: ${formatFirebaseDate(updatedAt)}`
     : null;
+
+  const completion = calculateCompletion(currentTask?.subtasks || []);
   // if (!currentTask) return null;
 
   return (
@@ -32,7 +35,7 @@ export default function TaskDetails() {
           }}
           className="flex w-full max-w-[150px] flex-shrink-0 items-center gap-1 rounded-xl bg-secondary-100 px-2 py-1"
         >
-          <ProgressBar completion={50} width={1} />
+          <ProgressBar completion={completion} width={1} />
           <p
             style={{
               fontSize: `${fontSizeMap.sm}px`,
@@ -40,7 +43,7 @@ export default function TaskDetails() {
             }}
             className="flex-shrink-0 font-light"
           >
-            50%
+            {`${completion}%`}
           </p>
         </div>
 

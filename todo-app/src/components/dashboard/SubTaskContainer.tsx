@@ -6,6 +6,7 @@ import { SubTaskType } from "../tasks-page/TaskExpanded";
 import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 
 import { taskData } from "../tasks-page/taskData";
+import { calculateCompletion } from "../tasks-page/functions/calculateCompletion";
 
 export default function SubTaskContainer({
   title,
@@ -28,14 +29,7 @@ export default function SubTaskContainer({
 
   if (subtasks.length === 0) return null;
 
-  let completedSubtasks = 0;
-  subtasks.forEach((subtask) => {
-    if (subtask.completed) {
-      completedSubtasks += 1;
-    }
-  });
-
-  const completion = Math.round((completedSubtasks / subtasks.length) * 100);
+  const completion = calculateCompletion(subtasks);
 
   function handleSubtaskContainerClick() {
     updateCurrentTask(taskData[1]);

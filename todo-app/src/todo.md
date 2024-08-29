@@ -15,8 +15,8 @@ make this an exported function that fake promises.
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
 
 **mid importantance**
-- Task deletion.
-- Progress bar feature based on subtask completion.
+- Task deletion. (easy but requires a modal... not sure yet...)
+
 - Subtask completion clientside function.
 - Subtask completion firebase.
 
@@ -24,7 +24,10 @@ make this an exported function that fake promises.
 - Upload beta of the application and show on discord.
 - Logging out feature.
   -> Own modal component.
+
 - Reorder feature on the main TasksPage.
+  -> Requires another firebase reset for new structure.
+  -> Same position style reordering and client side updates done with the subtasks before.
 
 **most importantant**
 - optimistic updates on queryClient.
