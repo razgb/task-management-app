@@ -15,7 +15,13 @@ import { ModalContextProvider } from "./stores/modal/ModalContextProvider.tsx";
 const queryClient = new QueryClient();
 
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, doc, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { TaskContextProvider } from "./stores/taskExpanded/TaskExpandedContextProvider.tsx";
 import { TaskType } from "./components/dashboard/Task.tsx";
@@ -150,8 +156,17 @@ const tasks = [
 //   const user = auth.currentUser;
 //   if (!user) return;
 
+//   if (typeof task !== "object" || task === null) {
+//     throw new Error("Task must be an object");
+//   }
+
 //   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");
-//   const docRef = await addDoc(tasksCollectionRef, task);
+//   const docRef = await addDoc(tasksCollectionRef, {
+//     ...task,
+//     createdAt: serverTimestamp(),
+//     updatedAt: serverTimestamp(),
+//   });
+
 //   return docRef;
 // }
 

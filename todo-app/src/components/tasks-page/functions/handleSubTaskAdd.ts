@@ -1,15 +1,15 @@
 import { SubTaskType } from "../TaskExpanded";
 
 type HandleSubTaskAddProps = {
+  taskID: string;
   subTasks: SubTaskType[];
   subTask: SubTaskType;
-  openModal: (type: "success" | "error", message: string) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
   addToLoadingQueue: (key: string) => void;
   removeFromLoadingQueue: (key: string) => void;
   addSubTaskToFirebase: (taskID: string, subTask: SubTaskType) => Promise<void>;
   addSubTaskOnClient: (title: string) => void;
-  taskID: string;
+  inputRef: React.RefObject<HTMLInputElement>;
+  openModal: (type: "success" | "error", message: string) => void;
 };
 
 export async function handleSubTaskAdd({

@@ -30,7 +30,7 @@ export async function removeSubTaskFromFirebase(
 
     await updateDoc(tasksCollectionRef, {
       subtasks: updatedSubtasks,
-      lastEdited: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   } else
     throw new Error(

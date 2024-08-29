@@ -1,6 +1,6 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTaskStatusInFirebase } from "../../pages/tasks/features/updateTaskStatusInFirebase.ts";
@@ -42,7 +42,10 @@ export default function TaskColumn({
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
 
-  const output = proccessTaskData(tasks, loading, variant);
+  const output = useMemo(
+    () => proccessTaskData(tasks, loading, variant),
+    [tasks, loading, variant],
+  );
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -128,14 +131,25 @@ function proccessTaskData(
     output = tasks
       .filter((task) => task.status === column)
       .map((task) => {
+        const {
+          id,
+          subtasks,
+          title,
+          description,
+          status,
+          createdAt,
+          updatedAt,
+        } = task;
         return (
           <Task
-            key={task.id}
-            id={task.id}
-            subtasks={task.subtasks}
-            title={task.title}
-            description={task.description}
-            status={task.status}
+            key={id}
+            id={id}
+            subtasks={subtasks}
+            title={title}
+            description={description}
+            status={status}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
             hideGrabIcon={false}
           />
         );

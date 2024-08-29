@@ -1,5 +1,6 @@
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
+import { formatFirebaseDate } from "../../../util/formatFirebaseDate";
 import ProgressBar from "../../shared/ProgressBar";
 
 /**
@@ -16,6 +17,10 @@ export default function TaskDetails() {
     accessibilityTextColor,
   } = accessibility;
   const { currentTask } = useTaskExpanded();
+  const updatedAt = currentTask?.updatedAt;
+  const lastEdited = updatedAt
+    ? `Edited: ${formatFirebaseDate(updatedAt)}`
+    : null;
   // if (!currentTask) return null;
 
   return (
@@ -52,7 +57,7 @@ export default function TaskDetails() {
             }}
             className="text-sm font-light"
           >
-            Last edited: 30-07-2024
+            {lastEdited || "Edited: 30-07-2024"}
           </p>
         </div>
       </div>
@@ -71,7 +76,7 @@ export default function TaskDetails() {
 
         <select className="rounded-full bg-secondaryBgWeak px-1 py-0.5 text-text hover:bg-secondaryBg active:bg-secondaryBgStrong">
           <option value="draft">Draft</option>
-          <option value="in-progress">In-progress</option>
+          <option value="in-progress">In-Progress</option>
           <option value="complete">Complete</option>
         </select>
       </div>

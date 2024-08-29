@@ -12,6 +12,14 @@ export type TaskType = {
   title: string;
   description?: string;
   subtasks: SubTaskType[];
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  updatedAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
 };
 
 type TaskComponentType = TaskType & {

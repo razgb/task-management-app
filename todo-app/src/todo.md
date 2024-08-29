@@ -16,7 +16,6 @@ make this an exported function that fake promises.
 
 **mid importantance**
 - Task deletion.
-- Task last updated/edited feature. (should be after every firebase function success/resolve)
 - Progress bar feature based on subtask completion.
 - Subtask completion clientside function.
 - Subtask completion firebase.

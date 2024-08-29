@@ -15,7 +15,7 @@ export async function addSubTaskToFirebase(
   try {
     await updateDoc(tasksCollectionRef, {
       subtasks: arrayUnion(subtask),
-      lastEdited: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   } catch (_) {
     throw new Error("Error adding sub task to our servers, please try again.");

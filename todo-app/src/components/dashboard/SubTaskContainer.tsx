@@ -26,9 +26,7 @@ export default function SubTaskContainer({
   const { updatePath } = useRouter();
   const { updateCurrentTask } = useTaskExpanded();
 
-  if (subtasks.length === 0) {
-    return null;
-  }
+  if (subtasks.length === 0) return null;
 
   let completedSubtasks = 0;
   subtasks.forEach((subtask) => {

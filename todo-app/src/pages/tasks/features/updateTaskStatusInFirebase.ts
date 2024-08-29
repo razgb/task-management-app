@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../main";
 import { TaskType } from "../../../components/dashboard/Task";
 
@@ -15,6 +15,7 @@ export async function updateTaskStatusInFirebase(
   try {
     await updateDoc(taskDocRef, {
       status: newStatus,
+      updatedAt: serverTimestamp(),
     });
     console.log("updated");
   } catch (error) {
