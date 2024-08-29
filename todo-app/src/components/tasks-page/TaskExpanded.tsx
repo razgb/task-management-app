@@ -12,7 +12,8 @@ import Button from "../shared/Button";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
 import ToDoItem from "./sub-components/TodoItem";
-import TaskActions from "./sub-components/TaskActions";
+import { handleSubTaskAdd } from "./functions/handleSubtaskAdd";
+import { handleSubTaskRemove } from "./functions/handleSubtaskDeletion";
 import { BadgeX } from "lucide-react";
 
 export type SubTaskType = {
@@ -22,7 +23,7 @@ export type SubTaskType = {
 };
 
 type MutationParametersType = {
-  type: "add" | "remove";
+  type: "add-sub-task" | "delete-sub-task" | "delete-task";
   taskID: string; // currentTask.id
   subTask: SubTaskType;
 };
@@ -30,12 +31,12 @@ type MutationParametersType = {
 export default function TaskExpanded() {
   const { accessibility } = useAccessibility();
   const {
-    reduceAnimations,
     removeRoundEdges,
-    increaseLetterSpacing,
     highContrastMode,
     fontSizeMap,
+    increaseLetterSpacing,
     accessibilityTextColor,
+    reduceAnimations,
   } = accessibility;
   const queryClient = useQueryClient();
   const { updatePath } = useRouter();
@@ -50,41 +51,42 @@ export default function TaskExpanded() {
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async ({ type, taskID, subTask }: MutationParametersType) => {
       if (!currentTask) return;
-      let promise: (() => Promise<void>) | null = null;
 
-      if (type === "add") {
-        const titleAlreadyExists = subTasks.some((st) => {
-          if (st.title === subTask.title) return true;
-          return false;
+      if (type === "add-sub-task") {
+        await handleSubTaskAdd({
+          subTasks,
+          subTask,
+          openModal,
+          inputRef,
+          addToLoadingQueue,
+          removeFromLoadingQueue,
+          addSubTaskToFirebase,
+          addSubTaskOnClient,
+          taskID,
         });
-
-        if (titleAlreadyExists) {
-          openModal("error", "This subtask already exists.");
-          if (inputRef.current) inputRef.current.value = "";
-          return;
-        }
-
-        promise = async () => await addSubTaskToFirebase(taskID, subTask);
-      } else if (type === "remove") {
-        promise = async () => await removeSubTaskFromFirebase(taskID, subTask);
+      } else if (type === "delete-sub-task") {
+        await handleSubTaskRemove({
+          subTasks,
+          subTask,
+          addToLoadingQueue,
+          removeFromLoadingQueue,
+          removeSubTaskFromFirebase,
+          removeSubTaskOnClient,
+          taskID,
+        });
+      } else if (type === "delete-task") {
+        // await placeholder
       }
-
-      if (!promise) return;
-      addToLoadingQueue("task-details");
-
-      // await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
-      await promise();
-
-      if (type === "add") {
-        addSubTaskOnClient(subTask.title);
-      } else if (type === "remove") {
-        removeSubTaskOnClient(subTask);
-      }
-
-      removeFromLoadingQueue("task-details");
     },
     retry: 2,
-    onError: () => {
+    onError: (err) => {
+      // proof-read this.
+      if (err instanceof Error) {
+        // thrown from the handle functions.
+        openModal("error", err.message);
+        return;
+      }
+
       openModal(
         "error",
         `Error syncing subtasks, check internet connection and try again.`,
@@ -194,7 +196,7 @@ export default function TaskExpanded() {
             if (!currentTask) return;
             await mutateAsync({
               taskID: currentTask.id,
-              type: "remove",
+              type: "delete-sub-task",
               subTask: subTask,
             });
           }}
@@ -232,7 +234,7 @@ export default function TaskExpanded() {
 
             await mutateAsync({
               taskID: currentTask.id,
-              type: "add",
+              type: "add-sub-task",
               subTask: {
                 position: subTasks.length,
                 title: inputRef.current.value,

@@ -17,8 +17,7 @@ export async function addSubTaskToFirebase(
       subtasks: arrayUnion(subtask),
       lastEdited: serverTimestamp(),
     });
-  } catch (error) {
-    console.error("Error updating your task status, please try again: ", error);
-    throw error;
+  } catch (_) {
+    throw new Error("Error adding sub task to our servers, please try again.");
   }
 }

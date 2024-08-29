@@ -17,15 +17,15 @@ make this an exported function that fake promises.
 **mid importantance**
 - Task deletion.
 - Task last updated/edited feature. (should be after every firebase function success/resolve)
-- Loading bar feature based on subtask completion.
-- Subtask completion clientside functionk.
+- Progress bar feature based on subtask completion.
+- Subtask completion clientside function.
 - Subtask completion firebase.
 
 - Fully setup and review login for users.
 - Upload beta of the application and show on discord.
 - Logging out feature.
   -> Own modal component.
--
+- Reorder feature on the main TasksPage.
 
 **most importantant**
 - optimistic updates on queryClient.
