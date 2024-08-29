@@ -1,7 +1,7 @@
 import Task, { TaskType } from "../dashboard/Task.tsx";
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useEffect, useState } from "react";
-import { TaskSkeletonLoadMultiple } from "./TaskSkeletonLoad.tsx";
+import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTaskStatusInFirebase } from "../../pages/tasks/features/updateTaskStatusInFirebase.ts";
 import useModal from "../../stores/modal/useModal.tsx";

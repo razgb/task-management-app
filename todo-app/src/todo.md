@@ -13,12 +13,19 @@ make this an exported function that fake promises.
 **least importantant**
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
--
 
 **mid importantance**
-this does work and is a better idea than current solution so let's do this in free time.
-- Incorrect architecture in firebase. Let's use Maps/Objects instead of arrays.
-  -> Keys should be based on titles. Since in this apps they are unique.
+- Task deletion.
+- Task last updated/edited feature. (should be after every firebase function success/resolve)
+- Loading bar feature based on subtask completion.
+- Subtask completion clientside functionk.
+- Subtask completion firebase.
+
+- Fully setup and review login for users.
+- Upload beta of the application and show on discord.
+- Logging out feature.
+  -> Own modal component.
+-
 
 **most importantant**
 - optimistic updates on queryClient.
@@ -27,7 +34,6 @@ this does work and is a better idea than current solution so let's do this in fr
 - error boundary component for important parts of application.
 - This document does not exist. It will not appear in queries or snapshots
   -> https://firebase.google.com/docs/firestore/using-console?hl=en&authuser=0&_gl=1*1tiysxz*_ga*MTUwNDk5OTIwNC4xNzIzOTA5OTA1*_ga_CW55HF8NVT*MTcyNDE3ODY0MC44LjEuMTcyNDE3ODY3Ni4yNC4wLjA.#non-existent_ancestor_documents
-
 - Create verification component.
 - Create a verification function that refreshes the
   page and checks verification status again. (only solution to think of currently).

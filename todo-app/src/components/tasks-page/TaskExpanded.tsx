@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
-import Button from "../shared/Button";
-import ProgressBar from "../shared/ProgressBar";
-import ToDoItem from "./TodoItem";
-import { checkInputTextValidity } from "../../util/checkInputTextValidity";
-import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
-import useRouter from "../../stores/router/useRouter";
-import { AlertTriangleIcon } from "lucide-react";
-import { useLoading } from "../../stores/loading/useLoading";
 import { useMutation, useQueryClient } from "react-query";
 import { addSubTaskToFirebase } from "../../pages/tasks/features/addSubTaskToFirebase";
 import { removeSubTaskFromFirebase } from "../../pages/tasks/features/removeSubTaskFromFirebase";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import { useLoading } from "../../stores/loading/useLoading";
 import useModal from "../../stores/modal/useModal";
+import useRouter from "../../stores/router/useRouter";
+import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
+import { checkInputTextValidity } from "../../util/checkInputTextValidity";
+import Button from "../shared/Button";
+import SubTaskList from "./sub-components/SubTaskList";
+import TaskDetails from "./sub-components/TaskDetails";
+import ToDoItem from "./sub-components/TodoItem";
+import TaskActions from "./sub-components/TaskActions";
+import { BadgeX } from "lucide-react";
 
 export type SubTaskType = {
   title: string;
@@ -202,7 +204,7 @@ export default function TaskExpanded() {
   }
 
   useEffect(() => {
-    if (!currentTask) updatePath("/error");
+    // if (!currentTask) updatePath("/error");
   });
 
   return (
@@ -215,63 +217,13 @@ export default function TaskExpanded() {
       className="h-full overflow-hidden rounded-2xl bg-primaryBg px-6 py-12"
     >
       <div className="mx-auto flex h-full w-full max-w-[800px] flex-1 flex-col gap-2">
-        <div className="mb-2 flex h-full max-h-8 gap-4">
-          <div
-            style={{
-              borderRadius: removeRoundEdges ? "0" : "",
-            }}
-            className="flex w-full max-w-[150px] items-center gap-1 rounded-xl bg-secondary-100 px-2 py-1"
-          >
-            <ProgressBar completion={50} width={1} />
-            <p
-              style={{
-                fontSize: `${fontSizeMap.sm}px`,
-                color: highContrastMode ? accessibilityTextColor : "",
-              }}
-              className="flex-shrink-0 font-light"
-            >
-              50%
-            </p>
-          </div>
-
-          <div
-            style={{
-              borderRadius: removeRoundEdges ? "0" : "",
-            }}
-            className="flex items-center rounded-xl bg-secondary-100 p-2"
-          >
-            <p
-              style={{
-                fontSize: `${fontSizeMap.sm}px`,
-                color: highContrastMode ? accessibilityTextColor : "",
-              }}
-              className="text-sm font-light"
-            >
-              Last edited: 30-07-2024
-            </p>
-          </div>
+        <div className="mb-8 flex items-start justify-between gap-4">
+          <TaskDetails />
+          <Button variant="contrast-icon-text">
+            <BadgeX></BadgeX>
+            <span>Delete task</span>
+          </Button>
         </div>
-
-        <h1
-          style={{
-            fontSize: `${fontSizeMap["3xl"]}px`,
-            color: highContrastMode ? accessibilityTextColor : "",
-            letterSpacing: increaseLetterSpacing ? "0.2rem" : "",
-          }}
-          className="text-3xl font-bold capitalize"
-        >
-          {currentTask?.title}
-        </h1>
-
-        <p
-          style={{
-            fontSize: `${fontSizeMap["lg"]}px`,
-            color: highContrastMode ? accessibilityTextColor : "",
-          }}
-          className="mb-4 max-w-[75ch] text-lg text-textWeak"
-        >
-          {currentTask?.description}
-        </p>
 
         <form
           onSubmit={async (e) => {
@@ -316,36 +268,7 @@ export default function TaskExpanded() {
         </form>
 
         {/* Subtasks List */}
-        <div
-          style={{
-            borderRadius: removeRoundEdges ? "0" : "",
-          }}
-          className="h-1/2 flex-1 rounded-2xl border-4 border-secondary-300 py-4 pl-4"
-        >
-          <ul className="flex h-full flex-col gap-2 overflow-y-scroll pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-            {subTasks.length ? (
-              reorderedTaskList
-            ) : (
-              <div className="flex h-full w-full items-center justify-center">
-                <div className="flex max-w-[300px] flex-col items-center">
-                  <AlertTriangleIcon size={64} />
-                  <h3
-                    style={{
-                      fontSize: fontSizeMap["2xl"],
-                    }}
-                    className=""
-                  >
-                    No sub tasks
-                  </h3>
-                  <p className="text-center text-textWeak">
-                    You'll see your sub tasks here upon adding one in the form
-                    above!
-                  </p>
-                </div>
-              </div>
-            )}
-          </ul>
-        </div>
+        <SubTaskList taskList={reorderedTaskList} />
       </div>
     </div>
   );

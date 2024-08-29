@@ -1,11 +1,11 @@
 import { Move, Square, SquareCheck } from "lucide-react";
 import { useState } from "react";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
-import { handleDrop, handleDragStart } from "./dragAndDropFunctions";
-import { SubTaskType } from "./TaskExpanded";
+import { handleDrop, handleDragStart } from "../functions/dragAndDropFunctions";
+import { SubTaskType } from "../TaskExpanded";
 
-type ToDoItemProps = {
+export type ToDoItemProps = {
   subTask: SubTaskType;
   swapSubTaskPositions: (
     incomingTaskId: string,
@@ -73,7 +73,7 @@ export default function ToDoItem({
       <div className="flex items-center justify-center gap-4">
         <button
           onClick={() => onDelete()}
-          className="opacity-0 transition-opacity group-hover:opacity-100"
+          className="text-textWeak opacity-0 transition-opacity group-hover:opacity-100 hover:text-text"
         >
           Delete
         </button>
