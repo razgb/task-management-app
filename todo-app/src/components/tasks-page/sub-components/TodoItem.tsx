@@ -11,7 +11,7 @@ export type ToDoItemProps = {
     incomingTaskId: string,
     outgoingTaskId: string,
   ) => void;
-  onDelete: () => void;
+  onDelete: (subTask: SubTaskType) => void;
 };
 
 export default function ToDoItem({
@@ -72,7 +72,7 @@ export default function ToDoItem({
 
       <div className="flex items-center justify-center gap-4">
         <button
-          onClick={() => onDelete()}
+          onClick={() => onDelete(subTask)}
           className="text-textWeak opacity-0 transition-opacity group-hover:opacity-100 hover:text-text"
         >
           Delete

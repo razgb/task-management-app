@@ -11,10 +11,10 @@ import { checkInputTextValidity } from "../../util/checkInputTextValidity";
 import Button from "../shared/Button";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
-import ToDoItem from "./sub-components/TodoItem";
 import { handleSubTaskAdd } from "./functions/handleSubTaskAdd";
 import { handleSubTaskRemove } from "./functions/handleSubTaskRemove";
 import { BadgeX } from "lucide-react";
+import { reorderSubtasks } from "./functions/reorderSubtasks";
 
 export type SubTaskType = {
   title: string;
@@ -204,33 +204,21 @@ export default function TaskExpanded() {
     });
   }
 
-  const reorderedTaskList: JSX.Element[] = [];
-  for (let i = 0; i < localCurrentTask.subtasks.length; i++) {
-    if (reorderedTaskList.length === localCurrentTask.subtasks.length) {
-      break;
-    }
+  async function removalMutation(subTask: SubTaskType) {
+    if (!currentTask) return;
 
-    for (let j = 0; j < localCurrentTask.subtasks.length; j++) {
-      const subTask = localCurrentTask.subtasks[j];
-      if (subTask.position !== i) continue;
-
-      reorderedTaskList.push(
-        <ToDoItem
-          key={subTask.title}
-          subTask={subTask}
-          swapSubTaskPositions={swapSubTaskPositions}
-          onDelete={async () => {
-            if (!localCurrentTask) return;
-            await mutateAsync({
-              taskID: localCurrentTask.id,
-              type: "delete-sub-task",
-              subTask: subTask,
-            });
-          }}
-        />,
-      );
-    }
+    await mutateAsync({
+      taskID: currentTask.id,
+      type: "delete-sub-task",
+      subTask: subTask,
+    });
   }
+
+  const reorderedTaskList = reorderSubtasks(
+    localCurrentTask,
+    removalMutation,
+    swapSubTaskPositions,
+  );
 
   useEffect(() => {
     // if (!localCurrentTask) updatePath("/error");
