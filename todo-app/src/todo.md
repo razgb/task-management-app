@@ -25,6 +25,7 @@ make this an exported function that fake promises.
 - Logging out feature.
   -> Own modal component.
 
+  **Leave this for after the beta**
 - Reorder feature on the main TasksPage.
   -> Requires another firebase reset for new structure.
   -> Same position style reordering and client side updates done with the subtasks before.

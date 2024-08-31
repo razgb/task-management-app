@@ -2,7 +2,7 @@ import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
 import { formatFirebaseDate } from "../../../util/formatFirebaseDate";
 import ProgressBar from "../../shared/ProgressBar";
-import { calculateCompletion } from "../functions/calculateCompletion";
+import { calculateCompletion } from "../functions/client/calculateCompletion";
 
 /**
  * Renders progress bar, last edited, title, and the description.
@@ -68,11 +68,11 @@ export default function TaskDetails() {
       <div className="flex items-center gap-2">
         <h1
           style={{
-            fontSize: `${fontSizeMap["3xl"]}px`,
+            fontSize: `${fontSizeMap["4xl"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
             letterSpacing: increaseLetterSpacing ? "0.2rem" : "",
           }}
-          className="mb-1 text-3xl font-bold capitalize"
+          className="mb-1 text-4xl font-bold capitalize"
         >
           {currentTask?.title || "Task title"}
         </h1>
@@ -86,10 +86,10 @@ export default function TaskDetails() {
 
       <p
         style={{
-          fontSize: `${fontSizeMap["lg"]}px`,
+          fontSize: `${fontSizeMap["xl"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
         }}
-        className="mb-4 max-w-[75ch] text-lg text-textWeak"
+        className="mb-4 max-w-[75ch] text-xl text-textWeak"
       >
         {currentTask?.description || "Task description"}
       </p>

@@ -1,4 +1,4 @@
-import { SubTaskType } from "../TaskExpanded";
+import { SubTaskType } from "../../TaskExpanded";
 
 export function calculateCompletion(subTasks: SubTaskType[]) {
   const total = subTasks.length;

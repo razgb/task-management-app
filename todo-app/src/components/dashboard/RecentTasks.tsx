@@ -49,32 +49,68 @@ export default function RecentTasks() {
 
       <div className="grid h-fit grid-cols-1 gap-4 overflow-y-scroll p-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
         <Task
+          createdAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          updatedAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          authorID=""
           id={Math.random().toString()}
-          subtasks={[]}
+          subTasks={[]}
           title="Research the impact of climate change on coral reefs"
           description=""
           hideGrabIcon={true}
           status="draft"
         />
         <Task
+          createdAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          updatedAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          authorID=""
           id={Math.random().toString()}
-          subtasks={[]}
+          subTasks={[]}
           title="Analyze causes of the Revolution"
           description="Study primary and secondary sources to understand the social, economic, and political factors that led to the French Revolution."
           hideGrabIcon={true}
           status="in-progress"
         />
         <Task
+          createdAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          updatedAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          authorID=""
           id={Math.random().toString()}
-          subtasks={[]}
+          subTasks={[]}
           title="Learn about the history of artificial intelligence"
           description="Explore the development of AI from its early beginnings to modern advancements."
           hideGrabIcon={true}
           status="in-progress"
         />
         <Task
+          createdAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          updatedAt={{
+            seconds: 0,
+            nanoseconds: 0,
+          }}
+          authorID=""
           id={Math.random().toString()}
-          subtasks={[]}
+          subTasks={[]}
           title="Create a digital painting using Adobe Photoshop"
           description="Experiment with different tools and techniques to create a unique digital artwork."
           hideGrabIcon={true}

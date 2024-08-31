@@ -11,10 +11,11 @@ import { checkInputTextValidity } from "../../util/checkInputTextValidity";
 import Button from "../shared/Button";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
-import { handleSubTaskAdd } from "./functions/handleSubTaskAdd";
-import { handleSubTaskRemove } from "./functions/handleSubTaskRemove";
+import { handleSubTaskAdd } from "./functions/async/handleSubTaskAdd";
+import { handleSubTaskRemove } from "./functions/async/handleSubTaskRemove";
 import { BadgeX } from "lucide-react";
-import { reorderSubtasks } from "./functions/reorderSubtasks";
+import { reorderSubtasks } from "./functions/client/reorderSubtasks";
+import { TaskType } from "../dashboard/Task";
 
 export type SubTaskType = {
   title: string;
@@ -45,28 +46,31 @@ export default function TaskExpanded() {
   const { openModal } = useModal();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const localCurrentTask = currentTask || {
-    id: "",
-    title: "",
-    description: "",
-    dueDate: "",
-    status: "draft",
-    createdAt: {
-      seconds: 0,
-      nanoseconds: 0,
-    },
-    updatedAt: {
-      seconds: 0,
-      nanoseconds: 0,
-    },
-    subtasks: [],
-  };
+  const localCurrentTask =
+    currentTask ||
+    ({
+      authorID: "",
+      id: "",
+      title: "",
+      description: "",
+      dueDate: "",
+      status: "draft",
+      createdAt: {
+        seconds: 0,
+        nanoseconds: 0,
+      },
+      updatedAt: {
+        seconds: 0,
+        nanoseconds: 0,
+      },
+      subTasks: [],
+    } as TaskType);
 
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async ({ type, taskID, subTask }: MutationParametersType) => {
       if (type === "add-sub-task") {
         await handleSubTaskAdd({
-          subTasks: localCurrentTask.subtasks,
+          subTasks: localCurrentTask.subTasks,
           subTask,
           openModal,
           inputRef,
@@ -78,7 +82,7 @@ export default function TaskExpanded() {
         });
       } else if (type === "delete-sub-task") {
         await handleSubTaskRemove({
-          subTasks: localCurrentTask.subtasks,
+          subTasks: localCurrentTask.subTasks,
           subTask,
           addToLoadingQueue,
           removeFromLoadingQueue,
@@ -88,6 +92,7 @@ export default function TaskExpanded() {
         });
       } else if (type === "delete-task") {
         // await placeholder
+        // redirect use to /taks-page
       }
     },
     retry: 2,
@@ -101,7 +106,7 @@ export default function TaskExpanded() {
 
       openModal(
         "error",
-        `Error syncing subtasks, check internet connection and try again.`,
+        `Error syncing subTasks, check internet connection and try again.`,
       );
     },
     onSuccess: () => {
@@ -116,9 +121,9 @@ export default function TaskExpanded() {
     }
 
     const newSubTasksState = [
-      ...localCurrentTask.subtasks,
+      ...localCurrentTask.subTasks,
       {
-        position: localCurrentTask.subtasks.length || 0,
+        position: localCurrentTask.subTasks.length || 0,
         title: title,
         completed: false,
       },
@@ -126,7 +131,7 @@ export default function TaskExpanded() {
 
     updateCurrentTask({
       ...localCurrentTask,
-      subtasks: newSubTasksState,
+      subTasks: newSubTasksState,
       updatedAt: {
         seconds: new Date().getTime() / 1000,
         nanoseconds: 0,
@@ -139,7 +144,7 @@ export default function TaskExpanded() {
   function removeSubTaskOnClient(subTask: SubTaskType) {
     if (!localCurrentTask) return;
 
-    const newSubTasksState = localCurrentTask.subtasks
+    const newSubTasksState = localCurrentTask.subTasks
       .filter((st) => st.title !== subTask.title)
       .map((st) => {
         if (st.position < subTask.position) return st;
@@ -152,7 +157,7 @@ export default function TaskExpanded() {
 
     updateCurrentTask({
       ...localCurrentTask,
-      subtasks: newSubTasksState,
+      subTasks: newSubTasksState,
       updatedAt: {
         seconds: new Date().getTime() / 1000,
         nanoseconds: 0,
@@ -169,7 +174,7 @@ export default function TaskExpanded() {
     let incomingTaskPosition: number | undefined = undefined;
     let outgoingTaskPosition: number | undefined = undefined;
 
-    localCurrentTask.subtasks.forEach((subTask) => {
+    localCurrentTask.subTasks.forEach((subTask) => {
       const title = subTask.title;
       if (incomingTaskPosition && outgoingTaskPosition) return;
 
@@ -180,7 +185,7 @@ export default function TaskExpanded() {
       }
     });
 
-    const newSubTasksArray = localCurrentTask.subtasks.map((task) => {
+    const newSubTasksArray = localCurrentTask.subTasks.map((task) => {
       const title = task.title;
       if (title !== incomingTaskTitle && title !== outgoingTaskTitle)
         return task;
@@ -196,7 +201,7 @@ export default function TaskExpanded() {
 
     updateCurrentTask({
       ...localCurrentTask,
-      subtasks: newSubTasksArray,
+      subTasks: newSubTasksArray,
       updatedAt: {
         seconds: new Date().getTime() / 1000,
         nanoseconds: 0,
@@ -251,7 +256,7 @@ export default function TaskExpanded() {
               taskID: currentTask.id,
               type: "add-sub-task",
               subTask: {
-                position: currentTask.subtasks.length,
+                position: currentTask.subTasks.length,
                 title: inputRef.current.value,
                 completed: false,
               },

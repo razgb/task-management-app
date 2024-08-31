@@ -23,10 +23,10 @@ export default function TasksPage() {
   });
 
   useEffect(() => {
-    if (failureCount === 5) {
+    if (failureCount === 3) {
       openModal(
         "error",
-        "Failed to load tasks after multiple attempts. Check your internet connection and try again.",
+        "Error loading your data. Check your internet connection and try again.",
       );
     }
   });

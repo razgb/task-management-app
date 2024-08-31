@@ -1,21 +1,19 @@
-import { SubTaskType } from "../TaskExpanded";
+import { removeSubTaskFromFirebase } from "../../../../pages/tasks/features/removeSubTaskFromFirebase";
+import { SubTaskType } from "../../TaskExpanded";
 
 type HandleSubTaskRemoveProps = {
-  subTasks: SubTaskType[];
   subTask: SubTaskType;
+  subTasks: SubTaskType[];
   addToLoadingQueue: (key: string) => void;
   removeFromLoadingQueue: (key: string) => void;
-  removeSubTaskFromFirebase: (
-    taskID: string,
-    subTaskTitle: SubTaskType,
-  ) => Promise<void>;
+  removeSubTaskFromFirebase: typeof removeSubTaskFromFirebase;
   removeSubTaskOnClient: (subTaskId: SubTaskType) => void;
   taskID: string;
 };
 
 export async function handleSubTaskRemove({
-  subTasks,
   subTask,
+  subTasks,
   addToLoadingQueue,
   removeFromLoadingQueue,
   removeSubTaskFromFirebase,
@@ -31,7 +29,7 @@ export async function handleSubTaskRemove({
 
   addToLoadingQueue("task-details");
 
-  await removeSubTaskFromFirebase(taskID, subTask); // react-query onError function handles err.
+  await removeSubTaskFromFirebase(taskID, subTask, subTasks); // react-query onError function handles err.
   removeSubTaskOnClient(subTask);
 
   removeFromLoadingQueue("task-details");

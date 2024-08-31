@@ -7,11 +7,12 @@ import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 import useRouter from "../../stores/router/useRouter";
 
 export type TaskType = {
+  authorID: string;
   id: string;
   status: "draft" | "in-progress" | "complete";
   title: string;
   description?: string;
-  subtasks: SubTaskType[];
+  subTasks: SubTaskType[];
   createdAt: {
     seconds: number;
     nanoseconds: number;
@@ -40,7 +41,7 @@ export default function Task(taskData: TaskComponentType) {
   const { updateCurrentTask } = useTaskExpanded();
   const { updatePath } = useRouter();
 
-  const { title, description, subtasks, hideGrabIcon } = taskData;
+  const { title, description, subTasks, hideGrabIcon } = taskData;
   const [isDraggable, setIsDraggable] = useState(false);
 
   function handleStartDrag(event: React.DragEvent<HTMLDivElement>) {
@@ -65,7 +66,7 @@ export default function Task(taskData: TaskComponentType) {
       }}
       tabIndex={0}
       onClick={handleTaskExpand}
-      aria-label={`Open task with title ${taskData.title} into detailed view to add subtasks.`}
+      aria-label={`Open task with title ${taskData.title} into detailed view to add subTasks.`}
     >
       <div>
         <div
@@ -122,7 +123,7 @@ export default function Task(taskData: TaskComponentType) {
       </div>
 
       <div className="mt-2 items-start">
-        <SubTaskContainer subtasks={subtasks} title={title} />
+        <SubTaskContainer subTasks={subTasks} title={title} />
       </div>
     </div>
   );

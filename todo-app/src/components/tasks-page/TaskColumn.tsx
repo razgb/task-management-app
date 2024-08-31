@@ -131,25 +131,17 @@ function proccessTaskData(
     output = tasks
       .filter((task) => task.status === column)
       .map((task) => {
-        const {
-          id,
-          subtasks,
-          title,
-          description,
-          status,
-          createdAt,
-          updatedAt,
-        } = task;
         return (
           <Task
-            key={id}
-            id={id}
-            subtasks={subtasks}
-            title={title}
-            description={description}
-            status={status}
-            createdAt={createdAt}
-            updatedAt={updatedAt}
+            authorID={task.authorID}
+            key={task.id}
+            id={task.id}
+            subTasks={task.subTasks}
+            title={task.title}
+            description={task.description}
+            status={task.status}
+            createdAt={task.createdAt}
+            updatedAt={task.updatedAt}
             hideGrabIcon={false}
           />
         );

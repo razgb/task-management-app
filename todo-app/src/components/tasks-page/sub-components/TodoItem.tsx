@@ -2,8 +2,12 @@ import { Move, Square, SquareCheck } from "lucide-react";
 import { useState } from "react";
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 
-import { handleDrop, handleDragStart } from "../functions/dragAndDropFunctions";
+import {
+  handleDrop,
+  handleDragStart,
+} from "../functions/client/dragAndDropFunctions";
 import { SubTaskType } from "../TaskExpanded";
+import { handleCheckEvents } from "../functions/async/handleCheckEvent";
 
 export type ToDoItemProps = {
   subTask: SubTaskType;
@@ -31,6 +35,10 @@ export default function ToDoItem({
 
   const [checked, setChecked] = useState(subTask.completed || false);
   const [isDragging, setIsDragging] = useState(false);
+
+  function toggleCheckOnClient() {
+    setChecked((prev): boolean => !prev);
+  }
 
   const ariaLabel = checked
     ? "Toggle action to mark as incomplete."
@@ -79,7 +87,7 @@ export default function ToDoItem({
         </button>
 
         <button
-          onClick={() => setChecked((prev: boolean): boolean => !prev)}
+          onClick={() => handleCheckEvents(toggleCheckOnClient)}
           role="checkbox"
           aria-checked={checked ? "true" : "false"}
           aria-label={ariaLabel}

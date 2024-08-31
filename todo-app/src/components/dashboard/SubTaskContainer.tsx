@@ -2,18 +2,18 @@ import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
 import useRouter from "../../stores/router/useRouter";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import { SubTaskType } from "../tasks-page/TaskExpanded";
 import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 
 import { taskData } from "../tasks-page/taskData";
-import { calculateCompletion } from "../tasks-page/functions/calculateCompletion";
+import { calculateCompletion } from "../tasks-page/functions/client/calculateCompletion";
+import { TaskType } from "./Task";
 
 export default function SubTaskContainer({
   title,
-  subtasks,
+  subTasks,
 }: {
   title: string;
-  subtasks: SubTaskType[];
+  subTasks: TaskType["subTasks"];
 }) {
   const { accessibility } = useAccessibility();
   const {
@@ -27,9 +27,8 @@ export default function SubTaskContainer({
   const { updatePath } = useRouter();
   const { updateCurrentTask } = useTaskExpanded();
 
-  if (subtasks.length === 0) return null;
-
-  const completion = calculateCompletion(subtasks);
+  if (subTasks.length === 0) return null;
+  const completion = calculateCompletion(subTasks);
 
   function handleSubtaskContainerClick() {
     updateCurrentTask(taskData[1]);
@@ -41,7 +40,7 @@ export default function SubTaskContainer({
       <div
         className="flex cursor-pointer flex-col self-end rounded-lg bg-secondary-700 p-2 transition-colors hover:bg-secondary-800"
         role="link"
-        aria-label={`Navigate to subtasks for task named ${title}.`}
+        aria-label={`Navigate to subTasks for task named ${title}.`}
         tabIndex={0}
         onClick={handleSubtaskContainerClick}
         onKeyDown={(e) => {
