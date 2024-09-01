@@ -1,6 +1,6 @@
 import { TaskType } from "../../../dashboard/Task";
 import { SubTaskType } from "../../TaskExpanded";
-import { updateSubTaskCompletion } from "../../../../pages/tasks/features/updateSubTaskCompletion";
+import { updateSubTaskCompletion } from "../async/updateSubTaskCompletion";
 
 /**
  * Middle ware between client side & async firebase functions.

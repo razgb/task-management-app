@@ -1,6 +1,6 @@
-import { TaskType } from "../../../components/dashboard/Task";
-import { SubTaskType } from "../../../components/tasks-page/TaskExpanded";
-import { auth, db } from "../../../main";
+import { TaskType } from "../../../dashboard/Task";
+import { SubTaskType } from "../../TaskExpanded";
+import { auth, db } from "../../../../main";
 import { collection, getDocs, query } from "firebase/firestore";
 
 export type RawSubTaskType = {

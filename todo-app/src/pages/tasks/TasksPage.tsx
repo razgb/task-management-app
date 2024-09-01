@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import TaskColumn from "../../components/tasks-page/TaskColumn.tsx";
 
 import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
-import { getTasksFromFirebase } from "./features/getTasksFromFirebase.ts";
+import { getTasksFromFirebase } from "../../components/tasks-page/functions/async/getTasksFromFirebase.ts";
 import { useQuery } from "react-query";
 import useModal from "../../stores/modal/useModal.tsx";
 

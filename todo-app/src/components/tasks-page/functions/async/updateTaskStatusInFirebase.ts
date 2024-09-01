@@ -1,6 +1,6 @@
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../../main";
-import { TaskType } from "../../../components/dashboard/Task";
+import { auth, db } from "../../../../main";
+import { TaskType } from "../../../dashboard/Task";
 
 export async function updateTaskStatusInFirebase(
   taskID: string,

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addSubTaskToFirebase } from "../../pages/tasks/features/addSubTaskToFirebase";
-import { removeSubTaskFromFirebase } from "../../pages/tasks/features/removeSubTaskFromFirebase";
+import { addSubTaskToFirebase } from "./functions/async/addSubTaskToFirebase";
+import { removeSubTaskFromFirebase } from "./functions/async/removeSubTaskFromFirebase";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { useLoading } from "../../stores/loading/useLoading";
 import useModal from "../../stores/modal/useModal";
@@ -11,8 +11,8 @@ import { checkInputTextValidity } from "../../util/checkInputTextValidity";
 import Button from "../shared/Button";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
-import { handleSubTaskAdd } from "./functions/async/handleSubTaskAdd";
-import { handleSubTaskRemove } from "./functions/async/handleSubTaskRemove";
+import { handleSubTaskAdd } from "./functions/handlers/handleSubTaskAdd";
+import { handleSubTaskRemove } from "./functions/handlers/handleSubTaskRemove";
 import { BadgeX } from "lucide-react";
 import { reorderSubtasks } from "./functions/client/reorderSubtasks";
 import { TaskType } from "../dashboard/Task";
@@ -24,7 +24,7 @@ export type SubTaskType = {
 };
 
 type MutationParametersType = {
-  type: "add-sub-task" | "delete-sub-task" | "delete-task";
+  type: "add-sub-task" | "delete-sub-task" | "delete-task" | "update-status";
   taskID: string; // currentTask.id
   subTask: SubTaskType;
 };
@@ -92,6 +92,8 @@ export default function TaskExpanded() {
         });
       } else if (type === "delete-task") {
         // redirect use to /taks-page
+      } else if (type === "update-status") {
+        // await handleSubTaskStatusUpdate();
       }
     },
     retry: 2,

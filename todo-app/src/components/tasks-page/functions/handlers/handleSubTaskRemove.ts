@@ -1,4 +1,4 @@
-import { removeSubTaskFromFirebase } from "../../../../pages/tasks/features/removeSubTaskFromFirebase";
+import { removeSubTaskFromFirebase } from "../async/removeSubTaskFromFirebase";
 import { SubTaskType } from "../../TaskExpanded";
 
 type HandleSubTaskRemoveProps = {

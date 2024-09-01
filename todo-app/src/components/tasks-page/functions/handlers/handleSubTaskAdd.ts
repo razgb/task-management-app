@@ -1,4 +1,4 @@
-import { addSubTaskToFirebase } from "../../../../pages/tasks/features/addSubTaskToFirebase";
+import { addSubTaskToFirebase } from "../async/addSubTaskToFirebase";
 import { SubTaskType } from "../../TaskExpanded";
 
 type HandleSubTaskAddProps = {

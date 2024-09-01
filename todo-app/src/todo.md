@@ -7,15 +7,15 @@ Things to do: deadline 14th Aug.
 </WidgetIdeas>
 <CurrentPlan>
 
-make this an exported function that fake promises.
-// await new Promise((_, reject) => setTimeout(reject, 1000)); // testing failures.
-
 **least importantant**
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
+- found bug for changing break and work modes button in the timer page.
 
 **mid importantance**
 - Task deletion. (easy but requires a modal... not sure yet...)
+
+- Update task status in expanded view.
 
 - Fully setup and review login for users.
 - Upload beta of the application and show on discord.

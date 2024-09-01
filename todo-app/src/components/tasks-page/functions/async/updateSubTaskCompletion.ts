@@ -1,7 +1,7 @@
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { TaskType } from "../../../components/dashboard/Task";
-import { SubTaskType } from "../../../components/tasks-page/TaskExpanded";
-import { db, auth } from "../../../main";
+import { TaskType } from "../../../dashboard/Task";
+import { SubTaskType } from "../../TaskExpanded";
+import { db, auth } from "../../../../main";
 import { RawSubTaskType } from "./getTasksFromFirebase";
 
 export async function updateSubTaskCompletion(

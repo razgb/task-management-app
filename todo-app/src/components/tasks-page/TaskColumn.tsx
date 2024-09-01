@@ -3,7 +3,7 @@ import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
 import { useEffect, useMemo, useState } from "react";
 import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx";
 import { useMutation, useQueryClient } from "react-query";
-import { updateTaskStatusInFirebase } from "../../pages/tasks/features/updateTaskStatusInFirebase.ts";
+import { updateTaskStatusInFirebase } from "./functions/async/updateTaskStatusInFirebase.ts";
 import useModal from "../../stores/modal/useModal.tsx";
 
 export type TaskGroupColumnType = {

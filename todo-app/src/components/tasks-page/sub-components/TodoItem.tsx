@@ -7,7 +7,7 @@ import {
   handleDragStart,
 } from "../functions/client/dragAndDropFunctions";
 import { SubTaskType } from "../TaskExpanded";
-import { handleCheckEvents } from "../functions/async/handleCheckEvent";
+import { handleCheckEvents } from "../functions/handlers/handleCheckEvent";
 import { useLoading } from "../../../stores/loading/useLoading";
 import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
 import { useMutation, useQueryClient } from "react-query";

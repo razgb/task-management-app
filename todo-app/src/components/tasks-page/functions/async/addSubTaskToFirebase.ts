@@ -1,6 +1,6 @@
 import { doc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../../../main";
-import { SubTaskType } from "../../../components/tasks-page/TaskExpanded";
+import { auth, db } from "../../../../main";
+import { SubTaskType } from "../../TaskExpanded";
 import { updateDoc } from "firebase/firestore";
 
 export async function addSubTaskToFirebase(
