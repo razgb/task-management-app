@@ -1,11 +1,8 @@
 import { createContext, useState } from "react";
 
-/*
-This loading queue allows non-unique IDs,
-enabling multiple items to be added concurrently.
-*/
 export type LoadingContextType = {
   isLoading: boolean;
+  loadingQueue: string[];
   addToLoadingQueue: (id: string) => void;
   removeFromLoadingQueue: (id: string) => void;
 };
@@ -14,6 +11,11 @@ export const LoadingContext = createContext<LoadingContextType | undefined>(
   undefined,
 );
 
+/*
+ * This loading queue allows non-unique IDs,
+ * enabling multiple items to be added concurrently.
+ *
+ */
 export function LoadingContextProvider({
   children,
 }: {
@@ -49,6 +51,7 @@ export function LoadingContextProvider({
     <LoadingContext.Provider
       value={{
         isLoading,
+        loadingQueue,
         addToLoadingQueue,
         removeFromLoadingQueue,
       }}

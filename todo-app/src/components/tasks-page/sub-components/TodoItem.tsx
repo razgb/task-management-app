@@ -8,9 +8,13 @@ import {
 } from "../functions/client/dragAndDropFunctions";
 import { SubTaskType } from "../TaskExpanded";
 import { handleCheckEvents } from "../functions/async/handleCheckEvent";
+import { useLoading } from "../../../stores/loading/useLoading";
+import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
+import { useMutation, useQueryClient } from "react-query";
+import useModal from "../../../stores/modal/useModal";
 
 export type ToDoItemProps = {
-  subTask: SubTaskType;
+  title: string;
   swapSubTaskPositions: (
     incomingTaskId: string,
     outgoingTaskId: string,
@@ -19,7 +23,7 @@ export type ToDoItemProps = {
 };
 
 export default function ToDoItem({
-  subTask,
+  title,
   swapSubTaskPositions,
   onDelete,
 }: ToDoItemProps) {
@@ -32,15 +36,48 @@ export default function ToDoItem({
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
+  const queryClient = useQueryClient();
+  const { addToLoadingQueue, removeFromLoadingQueue, loadingQueue } =
+    useLoading();
+  const { openModal } = useModal();
+  const { currentTask, updateCurrentTask } = useTaskExpanded();
 
-  const [checked, setChecked] = useState(subTask.completed || false);
   const [isDragging, setIsDragging] = useState(false);
 
-  function toggleCheckOnClient() {
-    setChecked((prev): boolean => !prev);
-  }
+  const subTask = currentTask?.subTasks.find((st) => st.title === title);
 
-  const ariaLabel = checked
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async () => {
+      if (!currentTask || !subTask) return;
+
+      await handleCheckEvents(
+        currentTask,
+        subTask,
+        addToLoadingQueue,
+        removeFromLoadingQueue,
+        updateCurrentTask,
+      );
+    },
+    retry: 2,
+    onError: (err) => {
+      if (err instanceof Error) {
+        openModal("error", err.message);
+        return;
+      }
+
+      openModal(
+        "error",
+        `Error syncing sub task with server, check internet connection and try again.`,
+      );
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries(["tasks"]); // active invalidation
+    },
+  });
+
+  if (!currentTask || !subTask) return null;
+
+  const ariaLabel = subTask.completed
     ? "Toggle action to mark as incomplete."
     : "Toggle action to mark as complete.";
 
@@ -80,6 +117,7 @@ export default function ToDoItem({
 
       <div className="flex items-center justify-center gap-4">
         <button
+          disabled={loadingQueue.includes("task-details")}
           onClick={() => onDelete(subTask)}
           className="text-textWeak opacity-0 transition-opacity group-hover:opacity-100 hover:text-text"
         >
@@ -87,16 +125,17 @@ export default function ToDoItem({
         </button>
 
         <button
-          onClick={() => handleCheckEvents(toggleCheckOnClient)}
+          onClick={async () => await mutateAsync()}
+          disabled={isLoading}
           role="checkbox"
-          aria-checked={checked ? "true" : "false"}
+          aria-checked={subTask.completed ? "true" : "false"}
           aria-label={ariaLabel}
           style={{
             fontSize: `${fontSizeMap.base}px`,
             borderRadius: removeRoundEdges ? "0" : "",
           }}
         >
-          {checked ? (
+          {subTask.completed ? (
             <SquareCheck
               size={fontSizeMap["3xl"]}
               className="stroke-checkbox"

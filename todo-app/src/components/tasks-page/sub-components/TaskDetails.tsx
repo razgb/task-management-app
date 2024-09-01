@@ -23,7 +23,7 @@ export default function TaskDetails() {
     ? `Edited: ${formatFirebaseDate(updatedAt)}`
     : null;
 
-  const completion = calculateCompletion(currentTask?.subtasks || []);
+  const completion = calculateCompletion(currentTask?.subTasks || []);
   // if (!currentTask) return null;
 
   return (

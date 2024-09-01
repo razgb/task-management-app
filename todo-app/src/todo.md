@@ -17,9 +17,6 @@ make this an exported function that fake promises.
 **mid importantance**
 - Task deletion. (easy but requires a modal... not sure yet...)
 
-- Subtask completion clientside function.
-- Subtask completion firebase.
-
 - Fully setup and review login for users.
 - Upload beta of the application and show on discord.
 - Logging out feature.

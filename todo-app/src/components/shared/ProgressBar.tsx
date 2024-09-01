@@ -28,14 +28,14 @@ export default function ProgressBar({
 
   return (
     <div
-      className={`${heightClasses[width]} w-full overflow-hidden rounded-full bg-secondary-200`}
+      className={`${heightClasses[width]} w-full rounded-3xl bg-secondary-100`}
       style={{
         backgroundColor: highContrastMode ? reverseAccessibilityTextColor : "",
         borderRadius: reduceAnimations ? "0" : "",
       }}
     >
       <div
-        className={`h-full rounded-full bg-secondary-700`}
+        className={`h-full rounded-3xl bg-secondary-600`}
         style={{
           width: completion + "%",
           backgroundColor: highContrastMode ? accessibilityTextColor : "",

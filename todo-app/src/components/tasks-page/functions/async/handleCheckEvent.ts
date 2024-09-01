@@ -1,29 +1,39 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../../../main";
 import { TaskType } from "../../../dashboard/Task";
 import { SubTaskType } from "../../TaskExpanded";
+import { updateSubTaskCompletion } from "../../../../pages/tasks/features/updateSubTaskCompletion";
 
-// DO NOT USE THIS YET, NEED ENTIRE APP RESTRUCTURE....
+/**
+ * Middle ware between client side & async firebase functions.
+ * App load state -> invoke async firebase function
+ * -> update client -> update currentTask state -> remove app load state.
+ */
 export async function handleCheckEvents(
-  taskID: string,
-  checkValue: boolean,
   currentTask: TaskType,
-  subTasks: SubTaskType[],
   subTask: SubTaskType,
-  toggleCheckOnClient: (check: boolean) => void,
+  addToLoadingQueue: (key: string) => void,
+  removeFromLoadingQueue: (key: string) => void,
+  updateCurrentTask: (newCurrentTaskState: TaskType) => void,
 ) {
-  const user = auth.currentUser;
-  if (!user) throw new Error("Firebase user doesn't exist.");
+  addToLoadingQueue("task-details");
 
-  const tasksCollectionRef = doc(db, "users", user.uid, "tasks", taskID);
+  const filteredSubTasksArray = currentTask.subTasks.filter(
+    (st) => st.title !== subTask.title,
+  );
+  const completeSubTasksArray = [
+    ...filteredSubTasksArray,
+    {
+      ...subTask,
+      completed: !subTask.completed,
+    },
+  ];
 
-  try {
-    await updateDoc(tasksCollectionRef, {
-      ...currentTask,
-      subtasks: [...subTasks, subTask],
-    });
-  } catch (error) {
-    console.error("Error uploading your task, please try again: ", error);
-    throw error;
-  }
+  const newCurrentTask = {
+    ...currentTask,
+    subTasks: completeSubTasksArray,
+  };
+
+  await updateSubTaskCompletion(newCurrentTask, subTask);
+  updateCurrentTask(newCurrentTask);
+
+  removeFromLoadingQueue("task-details");
 }

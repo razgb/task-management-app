@@ -2,14 +2,20 @@ import { TaskType } from "../../../dashboard/Task";
 import ToDoItem from "../../sub-components/TodoItem";
 import { SubTaskType } from "../../TaskExpanded";
 
-export function reorderSubtasks(
-  currentTask: TaskType,
-  removalMutation: (subtask: SubTaskType) => void,
+type ReorderSubTasksType = {
+  currentTask: TaskType;
+  removalMutation: (subtask: SubTaskType) => void;
   swapSubTaskPositions: (
     incomingTaskTitle: string,
     outgoingTaskTitle: string,
-  ) => void,
-) {
+  ) => void;
+};
+
+export function reorderSubtasks({
+  currentTask,
+  removalMutation,
+  swapSubTaskPositions,
+}: ReorderSubTasksType) {
   const reorderedTaskList: JSX.Element[] = [];
   for (let i = 0; i < currentTask.subTasks.length; i++) {
     if (reorderedTaskList.length === currentTask.subTasks.length) {
@@ -23,7 +29,7 @@ export function reorderSubtasks(
       reorderedTaskList.push(
         <ToDoItem
           key={subTask.title}
-          subTask={subTask}
+          title={subTask.title}
           swapSubTaskPositions={swapSubTaskPositions}
           onDelete={removalMutation}
         />,

@@ -91,7 +91,6 @@ export default function TaskExpanded() {
           taskID,
         });
       } else if (type === "delete-task") {
-        // await placeholder
         // redirect use to /taks-page
       }
     },
@@ -219,11 +218,11 @@ export default function TaskExpanded() {
     });
   }
 
-  const reorderedTaskList = reorderSubtasks(
-    localCurrentTask,
+  const reorderedTaskList = reorderSubtasks({
+    currentTask: localCurrentTask,
     removalMutation,
     swapSubTaskPositions,
-  );
+  });
 
   useEffect(() => {
     // if (!localCurrentTask) updatePath("/error");
