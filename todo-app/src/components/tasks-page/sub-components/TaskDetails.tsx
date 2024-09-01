@@ -1,6 +1,7 @@
 import useAccessibility from "../../../stores/accessibility/useAccessibility";
 import useTaskExpanded from "../../../stores/taskExpanded/useTaskExpanded";
 import { formatFirebaseDate } from "../../../util/formatFirebaseDate";
+import { TaskType } from "../../dashboard/Task";
 import ProgressBar from "../../shared/ProgressBar";
 import { calculateCompletion } from "../functions/client/calculateCompletion";
 
@@ -8,7 +9,11 @@ import { calculateCompletion } from "../functions/client/calculateCompletion";
  * Renders progress bar, last edited, title, and the description.
  * Imports it's own accessiblity and taskExpanded hooks.
  */
-export default function TaskDetails() {
+export default function TaskDetails({
+  statusMutation,
+}: {
+  statusMutation: (newStatus: TaskType["status"]) => Promise<void>;
+}) {
   const { accessibility } = useAccessibility();
   const {
     removeRoundEdges,
@@ -77,7 +82,16 @@ export default function TaskDetails() {
           {currentTask?.title || "Task title"}
         </h1>
 
-        <select className="rounded-full bg-secondaryBgWeak px-1 py-0.5 text-text hover:bg-secondaryBg active:bg-secondaryBgStrong">
+        <select
+          defaultValue={currentTask?.status || "draft"}
+          onChange={async (e) => {
+            const value = e.target.value;
+            if (!["draft", "in-progress", "complete"].includes(value)) return;
+
+            await statusMutation(value as TaskType["status"]);
+          }}
+          className="cursor-pointer rounded-lg bg-secondaryBgWeak px-1 py-0.5 text-text hover:bg-secondaryBg active:bg-secondaryBgStrong"
+        >
           <option value="draft">Draft</option>
           <option value="in-progress">In-Progress</option>
           <option value="complete">Complete</option>

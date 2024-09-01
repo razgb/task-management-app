@@ -16,6 +16,7 @@ Things to do: deadline 14th Aug.
 - Task deletion. (easy but requires a modal... not sure yet...)
 
 - Update task status in expanded view.
+  -> Adding progress bar className selections through props such as outerContainerColor: secondary-200
 
 - Fully setup and review login for users.
 - Upload beta of the application and show on discord.
