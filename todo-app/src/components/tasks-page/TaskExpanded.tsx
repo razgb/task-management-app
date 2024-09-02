@@ -1,22 +1,23 @@
+import { BadgeX } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addSubTaskToFirebase } from "./functions/async/addSubTaskToFirebase";
-import { removeSubTaskFromFirebase } from "./functions/async/removeSubTaskFromFirebase";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { useLoading } from "../../stores/loading/useLoading";
 import useModal from "../../stores/modal/useModal";
-// import useRouter from "../../stores/router/useRouter";
+import useRouter from "../../stores/router/useRouter";
 import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
 import { checkInputTextValidity } from "../../util/checkInputTextValidity";
+import { TaskType } from "../dashboard/Task";
 import Button from "../shared/Button";
-import SubTaskList from "./sub-components/SubTaskList";
-import TaskDetails from "./sub-components/TaskDetails";
+import { addSubTaskToFirebase } from "./functions/async/addSubTaskToFirebase";
+import { removeSubTaskFromFirebase } from "./functions/async/removeSubTaskFromFirebase";
+import { reorderSubtasks } from "./functions/client/reorderSubtasks";
 import { handleSubTaskAdd } from "./functions/handlers/handleSubTaskAdd";
 import { handleSubTaskRemove } from "./functions/handlers/handleSubTaskRemove";
-import { BadgeX } from "lucide-react";
-import { reorderSubtasks } from "./functions/client/reorderSubtasks";
-import { TaskType } from "../dashboard/Task";
+import { handleTaskDeletion } from "./functions/handlers/handleTaskDeletion";
 import { handleTaskStatusUpdate } from "./functions/handlers/handleTaskStatusUpdate";
+import SubTaskList from "./sub-components/SubTaskList";
+import TaskDetails from "./sub-components/TaskDetails";
 
 export type SubTaskType = {
   title: string;
@@ -30,7 +31,6 @@ type MutationParametersType = {
     | "delete-sub-task"
     | "delete-task"
     | "update-task-status";
-  taskID?: string; // currentTask.id
   subTask?: SubTaskType;
   newStatus?: TaskType["status"];
 };
@@ -46,7 +46,7 @@ export default function TaskExpanded() {
     reduceAnimations,
   } = accessibility;
   const queryClient = useQueryClient();
-  // const { updatePath } = useRouter();
+  const { updatePath } = useRouter();
   const { currentTask, updateCurrentTask } = useTaskExpanded();
   const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
   const { openModal } = useModal();
@@ -75,14 +75,13 @@ export default function TaskExpanded() {
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async ({
       type,
-      taskID,
       subTask,
       newStatus,
     }: MutationParametersType) => {
       if (!currentTask) return;
 
       if (type === "add-sub-task") {
-        if (!subTask || !taskID) return;
+        if (!subTask || !currentTask.id) return;
 
         await handleSubTaskAdd({
           subTasks: localCurrentTask.subTasks,
@@ -93,10 +92,10 @@ export default function TaskExpanded() {
           removeFromLoadingQueue,
           addSubTaskToFirebase,
           addSubTaskOnClient,
-          taskID,
+          taskID: currentTask.id,
         });
       } else if (type === "delete-sub-task") {
-        if (!subTask || !taskID) return;
+        if (!subTask || !currentTask.id) return;
 
         await handleSubTaskRemove({
           subTasks: localCurrentTask.subTasks,
@@ -105,10 +104,16 @@ export default function TaskExpanded() {
           removeFromLoadingQueue,
           removeSubTaskFromFirebase,
           removeSubTaskOnClient,
-          taskID,
+          taskID: currentTask.id,
         });
       } else if (type === "delete-task") {
-        // redirect use to /taks-page
+        await handleTaskDeletion({
+          currentTask,
+          updatePath,
+          updateCurrentTask,
+          addToLoadingQueue,
+          removeFromLoadingQueue,
+        });
       } else if (type === "update-task-status") {
         if (!newStatus) return;
 
@@ -239,7 +244,6 @@ export default function TaskExpanded() {
     if (!currentTask) return;
 
     await mutateAsync({
-      taskID: currentTask.id,
       type: "delete-sub-task",
       subTask: subTask,
     });
@@ -247,6 +251,10 @@ export default function TaskExpanded() {
 
   async function statusMutation(newStatus: TaskType["status"]) {
     await mutateAsync({ newStatus, type: "update-task-status" });
+  }
+
+  async function deletionMutation() {
+    await mutateAsync({ type: "delete-task" });
   }
 
   const reorderedTaskList = reorderSubtasks({
@@ -271,7 +279,7 @@ export default function TaskExpanded() {
       <div className="mx-auto flex h-full w-full max-w-[800px] flex-1 flex-col gap-2">
         <div className="mb-8 flex items-start justify-between gap-4">
           <TaskDetails statusMutation={statusMutation} />
-          <Button variant="contrast-icon-text">
+          <Button onClick={deletionMutation} variant="contrast-icon-text">
             <BadgeX></BadgeX>
             <span>Delete task</span>
           </Button>
@@ -283,7 +291,6 @@ export default function TaskExpanded() {
             if (!inputRef.current || !currentTask) return;
 
             await mutateAsync({
-              taskID: currentTask.id,
               type: "add-sub-task",
               subTask: {
                 position: currentTask.subTasks.length,
@@ -319,7 +326,6 @@ export default function TaskExpanded() {
           </Button>
         </form>
 
-        {/* Subtasks List */}
         <SubTaskList taskList={reorderedTaskList} />
       </div>
     </div>

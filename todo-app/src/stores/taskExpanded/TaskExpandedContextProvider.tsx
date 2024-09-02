@@ -11,7 +11,8 @@ export const TaskContextProvider = ({
     undefined,
   );
 
-  const updateCurrentTask = (task: TaskType) => setCurrentTask(task);
+  const updateCurrentTask = (task: TaskType | undefined) =>
+    setCurrentTask(task);
 
   return (
     <TaskExpandedContext.Provider value={{ currentTask, updateCurrentTask }}>

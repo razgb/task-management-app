@@ -3,7 +3,7 @@ import { TaskType } from "../../components/dashboard/Task";
 
 type TaskContextType = {
   currentTask: TaskType | undefined;
-  updateCurrentTask: (task: TaskType) => void;
+  updateCurrentTask: (task: TaskType | undefined) => void;
 };
 
 const TaskExpandedContext = createContext<TaskContextType | undefined>(

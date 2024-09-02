@@ -1,6 +1,6 @@
 import { collection, addDoc } from "firebase/firestore";
-import { TaskType } from "../../../components/dashboard/Task";
-import { auth, db } from "../../../main";
+import { TaskType } from "../../../../components/dashboard/Task";
+import { auth, db } from "../../../../main";
 
 // use this for the task adding page.
 export async function addNewTaskToFirebase(task: TaskType) {
