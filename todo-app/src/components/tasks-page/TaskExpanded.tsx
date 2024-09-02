@@ -18,6 +18,7 @@ import { handleTaskDeletion } from "./functions/handlers/handleTaskDeletion";
 import { handleTaskStatusUpdate } from "./functions/handlers/handleTaskStatusUpdate";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
+import DeleteTaskButtonContainer from "./sub-components/DeleteTaskButtonContainer";
 
 export type SubTaskType = {
   title: string;
@@ -279,10 +280,8 @@ export default function TaskExpanded() {
       <div className="mx-auto flex h-full w-full max-w-[800px] flex-1 flex-col gap-2">
         <div className="mb-8 flex items-start justify-between gap-4">
           <TaskDetails statusMutation={statusMutation} />
-          <Button onClick={deletionMutation} variant="contrast-icon-text">
-            <BadgeX></BadgeX>
-            <span>Delete task</span>
-          </Button>
+
+          <DeleteTaskButtonContainer deletionMutation={deletionMutation} />
         </div>
 
         <form

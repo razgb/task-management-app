@@ -10,11 +10,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "ghost-icon"
     | "contrast-default"
     | "icon-text"
-    | "contrast-icon-text";
+    | "contrast-icon-text"
+    | "custom";
   transitionDuration?: number;
   "aria-label"?: string;
   style?: CSSProperties;
   loading?: boolean;
+  className?: string;
 }
 
 export default function Button({
@@ -23,6 +25,7 @@ export default function Button({
   "aria-label": ariaLabel,
   style,
   loading,
+  className,
   ...props
 }: ButtonProps) {
   let classes = `transition-colors duration-${transitionDuration} `;
@@ -72,6 +75,10 @@ export default function Button({
       break;
     }
 
+    case "custom": {
+      break;
+    }
+
     default: {
       classes += `rounded-full bg-secondaryBgWeak hover:bg-secondaryBg active:bg-secondaryBgStrong px-6 py-2 text-text`;
       break;
@@ -98,7 +105,7 @@ export default function Button({
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         color: highContrastMode ? textColor : "",
       }}
-      className={`${classes} relative flex items-center justify-center`}
+      className={`${variant === "custom" ? className : ""} ${classes} relative flex items-center justify-center`}
       aria-label={ariaLabel}
       disabled={loading}
       {...props}

@@ -70,7 +70,7 @@ export default function SubTaskContainer({
         </div>
 
         <div className="flex items-center gap-2">
-          <ProgressBar completion={completion} width={2} />
+          <ProgressBar completion={completion} height={2} />
           <span
             style={{
               fontSize: `${fontSizeMap.sm}px`,

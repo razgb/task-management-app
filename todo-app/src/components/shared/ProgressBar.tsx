@@ -13,10 +13,14 @@ const heightClasses = {
 
 export default function ProgressBar({
   completion,
-  width = 4,
+  height = 4,
+  innerClassName,
+  outerClassName,
 }: {
   completion: number;
-  width?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  height?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  innerClassName?: string;
+  outerClassName?: string;
 }) {
   const { accessibility } = useAccessibility();
   const {
@@ -26,16 +30,27 @@ export default function ProgressBar({
     reverseAccessibilityTextColor,
   } = accessibility;
 
+  let innerStyles = "";
+  let outerStyles = "";
+
+  if (innerClassName && outerClassName) {
+    outerStyles = outerClassName;
+    innerStyles = innerClassName;
+  } else {
+    outerStyles = `${heightClasses[height]} w-full rounded-3xl bg-secondary-100`;
+    innerStyles = `h-full rounded-3xl bg-secondary-600`;
+  }
+
   return (
     <div
-      className={`${heightClasses[width]} w-full rounded-3xl bg-secondary-100`}
+      className={outerStyles}
       style={{
         backgroundColor: highContrastMode ? reverseAccessibilityTextColor : "",
         borderRadius: reduceAnimations ? "0" : "",
       }}
     >
       <div
-        className={`h-full rounded-3xl bg-secondary-600`}
+        className={innerStyles}
         style={{
           width: completion + "%",
           backgroundColor: highContrastMode ? accessibilityTextColor : "",

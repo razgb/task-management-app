@@ -10,26 +10,23 @@ Things to do: deadline 14th Aug.
 **least importantant**
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
-- found bug for changing break and work modes button in the timer page.
+- Found bug for changing break and work modes button in the timer page.
 
 **mid importantance**
-- Task deletion. (easy but requires a modal... not sure yet...)
-
-- Adding progress bar className selections through props such as outerContainerColor: secondary-200
 
 - Fully setup and review login for users.
 - Upload beta of the application and show on discord.
 - Logging out feature.
   -> Own modal component.
 
-  **Leave this for after the beta**
+**Leave this for after the beta**
 - Reorder feature on the main TasksPage.
   -> Requires another firebase reset for new structure.
   -> Same position style reordering and client side updates done with the subtasks before.
 
 **most importantant**
-- optimistic updates on queryClient.
-- create a function that asserts an object begin a tasktype[] upon being true (if checks).
+- Optimistic updates on queryClient.
+- Create a function that asserts an object begin a tasktype[] upon being true (if checks).
 
 - error boundary component for important parts of application.
 - This document does not exist. It will not appear in queries or snapshots

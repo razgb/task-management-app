@@ -10,6 +10,7 @@ export default {
         textWeak: "var(--text-weak)",
         textPlaceholder: "var(--text-placeholder)",
         textContrast: "var(--text-contrast)",
+        textWeakContrast: "var(--text-weak-contrast)",
 
         testing: "#443344",
 

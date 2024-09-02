@@ -23,30 +23,35 @@ export default function TaskDetails({
     accessibilityTextColor,
   } = accessibility;
   const { currentTask } = useTaskExpanded();
+  // if (!currentTask) return null;
+
   const updatedAt = currentTask?.updatedAt;
   const lastEdited = updatedAt
     ? `Edited: ${formatFirebaseDate(updatedAt)}`
     : null;
 
   const completion = calculateCompletion(currentTask?.subTasks || []);
-  // if (!currentTask) return null;
 
   return (
     <div className="">
-      <div className="mb-8 flex h-full max-h-8 gap-2">
+      <div className="mb-4 flex h-full max-h-8 gap-2">
         <div
           style={{
             borderRadius: removeRoundEdges ? "0" : "",
           }}
-          className="flex w-full max-w-[150px] flex-shrink-0 items-center gap-1 rounded-xl bg-secondary-100 px-2 py-1"
+          className="flex w-full max-w-[150px] flex-shrink-0 items-center gap-1 rounded-xl bg-secondary-900 px-2"
         >
-          <ProgressBar completion={completion} width={1} />
+          <ProgressBar
+            outerClassName="h-2 w-full rounded-3xl bg-secondary-100"
+            innerClassName="h-full rounded-3xl bg-secondary-600"
+            completion={completion}
+          />
           <p
             style={{
               fontSize: `${fontSizeMap.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
-            className="flex-shrink-0 font-light"
+            className="flex-shrink-0 text-textContrast"
           >
             {`${completion}%`}
           </p>
@@ -56,31 +61,18 @@ export default function TaskDetails({
           style={{
             borderRadius: removeRoundEdges ? "0" : "",
           }}
-          className="flex flex-shrink-0 items-center rounded-xl bg-secondary-100 p-2"
+          className="flex flex-shrink-0 items-center rounded-xl bg-secondary-900 p-2"
         >
           <p
             style={{
               fontSize: `${fontSizeMap.sm}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
-            className="text-sm font-light"
+            className="text-sm text-textContrast"
           >
             {lastEdited || "Edited: 30-07-2024"}
           </p>
         </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <h1
-          style={{
-            fontSize: `${fontSizeMap["4xl"]}px`,
-            color: highContrastMode ? accessibilityTextColor : "",
-            letterSpacing: increaseLetterSpacing ? "0.2rem" : "",
-          }}
-          className="mb-1 text-4xl font-bold capitalize"
-        >
-          {currentTask?.title || "Task title"}
-        </h1>
 
         <select
           defaultValue={currentTask?.status || "draft"}
@@ -90,13 +82,24 @@ export default function TaskDetails({
 
             await statusMutation(value as TaskType["status"]);
           }}
-          className="cursor-pointer rounded-lg bg-secondaryBgWeak px-1 py-0.5 text-text hover:bg-secondaryBg active:bg-secondaryBgStrong"
+          className="cursor-pointer rounded-xl bg-secondaryBgWeak px-1 py-0.5 text-text hover:bg-secondaryBg active:bg-secondaryBgStrong"
         >
           <option value="draft">Draft</option>
           <option value="in-progress">In-Progress</option>
           <option value="complete">Complete</option>
         </select>
       </div>
+
+      <h1
+        style={{
+          fontSize: `${fontSizeMap["4xl"]}px`,
+          color: highContrastMode ? accessibilityTextColor : "",
+          letterSpacing: increaseLetterSpacing ? "0.2rem" : "",
+        }}
+        className="mb-1 text-4xl font-bold capitalize"
+      >
+        {currentTask?.title || "Task title"}
+      </h1>
 
       <p
         style={{
