@@ -20,6 +20,7 @@ import TaskDetails from "./sub-components/TaskDetails";
 import DeleteTaskButtonContainer from "./sub-components/DeleteTaskButtonContainer";
 import { handleSingleTaskFetch } from "./functions/handlers/handleSingleTaskFetch";
 import { parseTaskFromURL } from "./functions/client/parseTaskFromURL";
+import TaskExpandedSkeleton from "./TaskExpandedSkeleton";
 
 export type SubTaskType = {
   title: string;
@@ -185,7 +186,7 @@ export default function TaskExpanded() {
   });
 
   if (isFetching) {
-    return <p>Temporary loading UI...</p>;
+    return <TaskExpandedSkeleton />;
   }
 
   function addSubTaskOnClient(title: string) {
