@@ -12,7 +12,6 @@ export async function addNewTaskToFirebase(task: TaskType) {
   try {
     await addDoc(tasksCollectionRef, task);
   } catch (error) {
-    console.error("Error uploading your task, please try again: ", error);
-    throw error;
+    throw new Error(`Error uploading your task, please try again.`);
   }
 }

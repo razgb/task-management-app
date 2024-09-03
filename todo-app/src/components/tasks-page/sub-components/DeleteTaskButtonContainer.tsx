@@ -19,11 +19,13 @@ export default function DeleteTaskButtonContainer({
     "invisible select-none pointer-events-none opacity-0";
 
   return (
-    <div className="relative">
+    <div className="relative flex-shrink-0">
       <Button
         variant="custom"
-        className="flex-shrink-0 rounded-xl bg-secondary-700 px-3 py-1 text-sm text-textContrast hover:bg-secondary-900"
+        className="rounded-xl bg-secondary-700 px-3 py-1 text-sm text-textContrast hover:bg-secondary-900"
         onClick={() => setModalState((prev) => !prev)}
+        onKeyDown={(e) => e.key === "Escape" && setModalState(false)}
+        tabIndex={0}
       >
         <Trash size={20} />
         <span>Delete task</span>
@@ -39,7 +41,7 @@ export default function DeleteTaskButtonContainer({
         <div className="flex items-center gap-0.5">
           <Button
             variant="custom"
-            className="text-textWeakContrast px-3 py-1 text-sm hover:text-textContrast"
+            className="px-3 py-1 text-sm text-textWeakContrast hover:text-textContrast"
             onClick={cancelModal}
           >
             Cancel

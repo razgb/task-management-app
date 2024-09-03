@@ -10,14 +10,21 @@ Things to do: deadline 14th Aug.
 **least importantant**
 - An input element must have an autocomplete attribute. (later)
 - gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
-- Found bug for changing break and work modes button in the timer page.
+- Theme button not as thick as other menu buttons.
+
+- Fully rewrite the error and success components.
 
 **mid importantance**
+- Refresh page on task expanded feature. (fetching single task from firebase)
+  -> After create a skeleton load for this feature.
+
+- Timer widget needs to be larger to fill out dashboard.
 
 - Fully setup and review login for users.
-- Upload beta of the application and show on discord.
 - Logging out feature.
   -> Own modal component.
+
+- Found bug for changing break and work modes button in the timer page.
 
 **Leave this for after the beta**
 - Reorder feature on the main TasksPage.
@@ -29,12 +36,10 @@ Things to do: deadline 14th Aug.
 - Create a function that asserts an object begin a tasktype[] upon being true (if checks).
 
 - error boundary component for important parts of application.
-- This document does not exist. It will not appear in queries or snapshots
-  -> https://firebase.google.com/docs/firestore/using-console?hl=en&authuser=0&_gl=1*1tiysxz*_ga*MTUwNDk5OTIwNC4xNzIzOTA5OTA1*_ga_CW55HF8NVT*MTcyNDE3ODY0MC44LjEuMTcyNDE3ODY3Ni4yNC4wLjA.#non-existent_ancestor_documents
+
 - Create verification component.
 - Create a verification function that refreshes the
   page and checks verification status again. (only solution to think of currently).
-</CurrentPlan>
 **most important end**
 
 <AppWideIdeas>

@@ -2,6 +2,7 @@ import { TaskType } from "../../../dashboard/Task";
 import { SubTaskType } from "../../TaskExpanded";
 import { auth, db } from "../../../../main";
 import { collection, getDocs, query } from "firebase/firestore";
+import { convertRawTaskToClientTask } from "../client/convertRawTaskToClientTask";
 
 export type RawSubTaskType = {
   completed: boolean;
@@ -33,29 +34,22 @@ export async function getTasksFromFirebase() {
   if (!user) throw new Error("no user state");
 
   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");
-  const tasksSnapshot = await getDocs(query(tasksCollectionRef));
+
+  let tasksSnapshot;
+  try {
+    tasksSnapshot = await getDocs(query(tasksCollectionRef));
+  } catch (error) {
+    throw new Error(`Failed to load tasks, check internet and try again.`);
+  }
 
   const temp = tasksSnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   })) as RawTaskType[];
 
-  const tasks: TaskType[] = temp.map((task) => {
-    const subTasks = task.subTasks;
-    const subTaskEntries = Object.entries(subTasks);
-
-    const correctSubTasksStructure = subTaskEntries.map(([title, rest]) => {
-      return {
-        title,
-        ...rest,
-      } as SubTaskType;
-    });
-
-    return {
-      ...task,
-      subTasks: correctSubTasksStructure,
-    };
-  });
+  const tasks: TaskType[] = temp.map((rawTask) =>
+    convertRawTaskToClientTask(rawTask),
+  );
 
   return tasks;
 }

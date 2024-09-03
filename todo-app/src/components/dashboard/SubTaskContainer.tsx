@@ -1,10 +1,6 @@
 import { SquareArrowOutUpRight } from "lucide-react";
 import ProgressBar from "../shared/ProgressBar";
-import useRouter from "../../stores/router/useRouter";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useTaskExpanded from "../../stores/taskExpanded/useTaskExpanded";
-
-import { taskData } from "../tasks-page/taskData";
 import { calculateCompletion } from "../tasks-page/functions/client/calculateCompletion";
 import { TaskType } from "./Task";
 
@@ -24,16 +20,9 @@ export default function SubTaskContainer({
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
-  const { updatePath } = useRouter();
-  const { updateCurrentTask } = useTaskExpanded();
 
   if (subTasks.length === 0) return null;
   const completion = calculateCompletion(subTasks);
-
-  function handleSubtaskContainerClick() {
-    updateCurrentTask(taskData[1]);
-    updatePath("/tasks/details");
-  }
 
   return (
     <div className={`max-w-[60%]`}>
@@ -42,10 +31,6 @@ export default function SubTaskContainer({
         role="link"
         aria-label={`Navigate to subTasks for task named ${title}.`}
         tabIndex={0}
-        onClick={handleSubtaskContainerClick}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") updatePath("/tasks/details");
-        }}
         style={{
           borderRadius: removeRoundEdges ? "0" : "",
           transition: reduceAnimations ? "none" : "",

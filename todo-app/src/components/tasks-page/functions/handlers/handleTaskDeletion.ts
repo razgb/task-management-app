@@ -21,9 +21,7 @@ export async function handleTaskDeletion({
   try {
     await deleteTaskFromFirebase(currentTask.id);
   } catch (_) {
-    throw new Error(
-      `Error deleting task called "${currentTask.title}". Check internet connection and try again.`,
-    );
+    throw new Error(`Error deleting task called "${currentTask.title}".`);
   } finally {
     removeFromLoadingQueue("task-details");
   }

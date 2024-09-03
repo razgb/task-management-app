@@ -22,7 +22,7 @@ export async function handleTaskStatusUpdate({
     await updateTaskStatusInFirebase(currentTask.id, newStatus);
   } catch (_) {
     throw new Error(
-      `Error syncing task status for task called "${currentTask.title}". Check internet connection and try again.`,
+      `Error syncing task status for task called "${currentTask.title}".`,
     );
   } finally {
     removeFromLoadingQueue("task-details");

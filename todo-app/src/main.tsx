@@ -160,6 +160,7 @@ const tasks = [
 //     throw new Error("Task must be an object");
 //   }
 
+//   console.log(user.uid);
 //   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");
 //   const docRef = await addDoc(tasksCollectionRef, {
 //     ...task,

@@ -37,11 +37,10 @@ export async function handleSubTaskAdd({
   try {
     await addSubTaskToFirebase(taskID, subTask); // react-query onError function handles err.
   } catch (_) {
-    throw new Error(
-      `Error adding sub task called "${subTask.title}". Check internet connection and try again.`,
-    );
+    throw new Error(`Error adding sub task called "${subTask.title}".`);
+  } finally {
+    removeFromLoadingQueue("task-details");
   }
 
   addSubTaskOnClient(subTask.title);
-  removeFromLoadingQueue("task-details");
 }

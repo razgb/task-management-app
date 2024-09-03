@@ -1,6 +1,5 @@
-import { BadgeX } from "lucide-react";
-import { useEffect, useRef } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useRef } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import { useLoading } from "../../stores/loading/useLoading";
 import useModal from "../../stores/modal/useModal";
@@ -13,12 +12,14 @@ import { addSubTaskToFirebase } from "./functions/async/addSubTaskToFirebase";
 import { removeSubTaskFromFirebase } from "./functions/async/removeSubTaskFromFirebase";
 import { reorderSubtasks } from "./functions/client/reorderSubtasks";
 import { handleSubTaskAdd } from "./functions/handlers/handleSubTaskAdd";
-import { handleSubTaskRemove } from "./functions/handlers/handleSubTaskRemove";
+import { handleSubTaskRemove } from "./functions/handlers/handleSubTaskDeletion";
 import { handleTaskDeletion } from "./functions/handlers/handleTaskDeletion";
 import { handleTaskStatusUpdate } from "./functions/handlers/handleTaskStatusUpdate";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
 import DeleteTaskButtonContainer from "./sub-components/DeleteTaskButtonContainer";
+import { handleSingleTaskFetch } from "./functions/handlers/handleSingleTaskFetch";
+import { parseTaskFromURL } from "./functions/client/parseTaskFromURL";
 
 export type SubTaskType = {
   title: string;
@@ -73,78 +74,119 @@ export default function TaskExpanded() {
       subTasks: [],
     } as TaskType);
 
+  const { isFetching } = useQuery({
+    queryFn: async () => {
+      if (currentTask) return;
+
+      const parsedTaskID = parseTaskFromURL(window.location.pathname);
+      if (!parsedTaskID) {
+        updatePath("error");
+        return;
+      }
+
+      await handleSingleTaskFetch({
+        taskID: parsedTaskID,
+        addToLoadingQueue,
+        removeFromLoadingQueue,
+        updateCurrentTask,
+      });
+    },
+    queryKey: ["task-expanded"],
+    staleTime: Infinity,
+    retry: (failureCount) => {
+      if (failureCount < 2) return true; // retries query
+
+      updatePath("error");
+      return false; // stops query
+    },
+  });
+
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async ({
       type,
       subTask,
       newStatus,
     }: MutationParametersType) => {
-      if (!currentTask) return;
+      if (!type) return;
 
-      if (type === "add-sub-task") {
-        if (!subTask || !currentTask.id) return;
+      switch (type) {
+        case "add-sub-task":
+          if (!currentTask) return;
+          if (!subTask || !currentTask.id) return;
 
-        await handleSubTaskAdd({
-          subTasks: localCurrentTask.subTasks,
-          subTask,
-          openModal,
-          inputRef,
-          addToLoadingQueue,
-          removeFromLoadingQueue,
-          addSubTaskToFirebase,
-          addSubTaskOnClient,
-          taskID: currentTask.id,
-        });
-      } else if (type === "delete-sub-task") {
-        if (!subTask || !currentTask.id) return;
+          await handleSubTaskAdd({
+            subTasks: localCurrentTask.subTasks,
+            subTask,
+            openModal,
+            inputRef,
+            addToLoadingQueue,
+            removeFromLoadingQueue,
+            addSubTaskToFirebase,
+            addSubTaskOnClient,
+            taskID: currentTask.id,
+          });
+          break;
 
-        await handleSubTaskRemove({
-          subTasks: localCurrentTask.subTasks,
-          subTask,
-          addToLoadingQueue,
-          removeFromLoadingQueue,
-          removeSubTaskFromFirebase,
-          removeSubTaskOnClient,
-          taskID: currentTask.id,
-        });
-      } else if (type === "delete-task") {
-        await handleTaskDeletion({
-          currentTask,
-          updatePath,
-          updateCurrentTask,
-          addToLoadingQueue,
-          removeFromLoadingQueue,
-        });
-      } else if (type === "update-task-status") {
-        if (!newStatus) return;
+        case "delete-sub-task":
+          if (!currentTask) return;
+          if (!subTask || !currentTask.id) return;
 
-        await handleTaskStatusUpdate({
-          newStatus,
-          currentTask,
-          updateCurrentTask,
-          addToLoadingQueue,
-          removeFromLoadingQueue,
-        });
+          await handleSubTaskRemove({
+            subTasks: localCurrentTask.subTasks,
+            subTask,
+            addToLoadingQueue,
+            removeFromLoadingQueue,
+            removeSubTaskFromFirebase,
+            removeSubTaskOnClient,
+            taskID: currentTask.id,
+          });
+          break;
+
+        case "delete-task":
+          if (!currentTask) return;
+          await handleTaskDeletion({
+            currentTask,
+            updatePath,
+            updateCurrentTask,
+            addToLoadingQueue,
+            removeFromLoadingQueue,
+          });
+          break;
+
+        case "update-task-status":
+          if (!newStatus || !currentTask) return;
+
+          await handleTaskStatusUpdate({
+            newStatus,
+            currentTask,
+            updateCurrentTask,
+            addToLoadingQueue,
+            removeFromLoadingQueue,
+          });
+          break;
       }
     },
     retry: 2,
     onError: (err) => {
-      // proof-read this.
       if (err instanceof Error) {
-        // thrown from the handle functions.
+        // thrown from the handler functions.
         openModal("error", err.message);
         return;
       }
 
       openModal(
         "error",
-        `Error syncing subTasks, check internet connection and try again.`,
+        `Error syncing your data with server, check internet connection and try again.`,
       );
     },
     onSuccess: () => {
       queryClient.refetchQueries(["tasks"]); // passive invalidation (not direct).
     },
   });
+
+  if (isFetching) {
+    return <p>Temporary loading UI...</p>;
+  }
 
   function addSubTaskOnClient(title: string) {
     if (!localCurrentTask) return;
@@ -262,10 +304,6 @@ export default function TaskExpanded() {
     currentTask: localCurrentTask,
     removalMutation,
     swapSubTaskPositions,
-  });
-
-  useEffect(() => {
-    // if (!localCurrentTask) updatePath("/error");
   });
 
   return (

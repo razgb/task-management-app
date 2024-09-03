@@ -16,9 +16,9 @@ export type ValidUrlPaths =
   | "/task-creator"
   | "/habit-tracker";
 
-type RouterContextType = {
+export type RouterContextType = {
   path: string; // on page load, path could be anything.
-  updatePath: (path: string) => void;
+  updatePath: (path: string | ValidUrlPaths) => void;
 };
 
 /*

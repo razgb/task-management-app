@@ -32,8 +32,12 @@ export async function handleCheckEvents(
     subTasks: completeSubTasksArray,
   };
 
-  await updateSubTaskCompletion(newCurrentTask, subTask);
-  updateCurrentTask(newCurrentTask);
-
-  removeFromLoadingQueue("task-details");
+  try {
+    await updateSubTaskCompletion(newCurrentTask, subTask);
+    updateCurrentTask(newCurrentTask);
+  } catch (error) {
+    console.error("Error syncing your sub tasks with server.");
+  } finally {
+    removeFromLoadingQueue("task-details");
+  }
 }
