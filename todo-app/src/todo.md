@@ -15,9 +15,6 @@ Things to do: deadline 14th Aug.
 - Fully rewrite the error and success components.
 
 **mid importantance**
-- Refresh page on task expanded feature. (fetching single task from firebase)
-  -> After create a skeleton load for this feature.
-
 - Timer widget needs to be larger to fill out dashboard.
 
 - Fully setup and review login for users.
@@ -26,41 +23,29 @@ Things to do: deadline 14th Aug.
 
 - Found bug for changing break and work modes button in the timer page.
 
+**most importantant**
+- Combine login and signup states to access accessiblity settings. (done)
+- find a better svg image or something else to show to user.
+
+- ERROR MODAL NOT SET INSIDE AUTHFLOWPAGE COMPONENT. DO THIS AFTER TEA.
+
+- Replace async functions with useMutation from react-query.
+- Make sure the login flow correctly creates a user document in the "users" collection.
+- useEffect hooks to redirect already logged in users.
+
+- Add google for logins for UX.
+- Find hosting options for application.
+- Fix other less important bugs and ship the damn app.
+
+- Optimistic updates on queryClient.
+- error boundary component for important parts of application.
+
+- Create verification component.
+  -> function that refreshes the page and checks verification status
+     again. (only solution to think of currently).
+**most important end**
+
 **Leave this for after the beta**
 - Reorder feature on the main TasksPage.
   -> Requires another firebase reset for new structure.
   -> Same position style reordering and client side updates done with the subtasks before.
-
-**most importantant**
-- Optimistic updates on queryClient.
-- Create a function that asserts an object begin a tasktype[] upon being true (if checks).
-
-- error boundary component for important parts of application.
-
-- Create verification component.
-- Create a verification function that refreshes the
-  page and checks verification status again. (only solution to think of currently).
-**most important end**
-
-<AppWideIdeas>
-- the phone design of the application.
-</AppWideIdeas>
-
-
-Task Structure:
---------------
-task: {
-  id: string,
-  title: string,
-  description: string, (optional)
-  dueDate: string, (unix timestamp)
-  status: string, (draft, inProgress, completed)
-  subtasks: [
-    {
-      id: string,
-      title: string,
-      position: number,
-      completed: boolean,
-    }
-  ],
-}

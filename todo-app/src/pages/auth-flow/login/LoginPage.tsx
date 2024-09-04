@@ -1,12 +1,19 @@
 import { useState } from "react";
-import useTheme from "../../stores/timer/useTheme";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
-import Button from "../../components/shared/Button";
-import Link from "../../components/shared/Link.tsx";
-import TextInput from "../../components/flow/custom-input-elements/TextInput.tsx";
+import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import Button from "../../../components/shared/Button";
+import Link from "../../../components/shared/Link.tsx";
+import TextInput from "../../../components/flow/custom-input-elements/TextInput.tsx";
+import Recruiters from "../Recruiters.tsx";
+import { useMutation } from "react-query";
+import { loginUserToFirebase } from "./async/loginUserToFirebase.ts";
+import useRouter from "../../../stores/router/useRouter.tsx";
+import ErrorModal from "../../../components/flow/ErrorModal.tsx";
 
-export default function LoginPage() {
-  const { theme } = useTheme();
+type Parameters = {
+  updateSignupError: (err: { message: string; isError: boolean }) => void;
+};
+
+export default function LoginPage({ updateSignupError }: Parameters) {
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
@@ -16,38 +23,63 @@ export default function LoginPage() {
     accessibilityTextColor,
   } = accessibility;
 
+  const { updatePath } = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { isLoading, mutateAsync } = useMutation({
+    mutationFn: loginUserToFirebase,
+    mutationKey: "signup",
+    onError: (err: unknown) => {
+      if (err instanceof Error) {
+        updateSignupError({
+          isError: true,
+          message: err.message,
+        });
+      } else {
+        updateSignupError({
+          isError: true,
+          message:
+            "An unexpected error occurred while signing you up. Check your connection and try again.",
+        });
+      }
+    },
+    onSuccess: () => {
+      updatePath("/dashboard");
+    },
+    retry: 2,
+    retryDelay: 500,
+  });
 
   const handleEmailChange = (newEmailValue: string) => {
     setEmail(newEmailValue);
   };
 
-  // will create my own custom password format checking functions.
   const handlePasswordChange = (newPasswordValue: string) => {
     setPassword(newPasswordValue);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`${email} \n${password}`);
+    await mutateAsync({ email, password });
   };
 
   return (
     <div
-      className={`${theme} flex h-screen flex-col items-center justify-center overflow-hidden bg-primaryBg`}
+      // prettier-ignore
+      className={` col-start-2 col-end-2 row-span-4 flex w-full flex-col
+ rounded-2xl bg-primaryBg p-8`}
     >
       <div
         style={{
           borderRadius: removeRoundEdges ? 0 : "",
         }}
-        className="w-full max-w-[500px] rounded-3xl bg-secondary-300 p-3"
       >
         <div
           style={{
             borderRadius: removeRoundEdges ? 0 : "",
           }}
-          className="rounded-2xl bg-primaryBg p-8"
+          className="rounded-2xl bg-primaryBg"
         >
           <h2
             style={{
@@ -64,6 +96,7 @@ export default function LoginPage() {
             className="mb-6 max-w-[25ch] text-textWeak"
             style={{
               fontSize: fontSizeMap["base"],
+              color: highContrastMode ? accessibilityTextColor : "",
             }}
           >
             Please enter your details to access your account.
@@ -89,13 +122,22 @@ export default function LoginPage() {
               style={{
                 fontSize: fontSizeMap["lg"],
               }}
+              loading={isLoading}
+              disabled={isLoading}
             >
               Login
             </Button>
           </form>
 
           <div className="mt-1 flex items-center">
-            <span className="text-textWeak">Don't have an account?</span>
+            <span
+              style={{
+                color: highContrastMode ? accessibilityTextColor : "",
+              }}
+              className="text-textWeak"
+            >
+              Don't have an account?
+            </span>
             <Link
               to="/signup"
               className="ml-1 text-textWeak underline hover:text-text active:text-textWeak"
@@ -106,6 +148,8 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+
+      <Recruiters />
     </div>
   );
 }

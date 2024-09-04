@@ -1,5 +1,5 @@
 import { TriangleAlertIcon } from "lucide-react";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
 
 export default function ErrorModal({
   isError,
@@ -27,13 +27,16 @@ export default function ErrorModal({
       style={{
         borderRadius: removeRoundEdges ? 0 : "",
       }}
-      className={`absolute ${reduceAnimations ? "transition-opacity" : ""} ${modalStyles} -top-[15%] left-0 flex w-full items-center gap-4 rounded-full bg-red-200 px-6 py-3`}
+      // prettier-ignore
+      className={`absolute max-w-[800px] ${reduceAnimations ? "transition-opacity" : ""} ${modalStyles}
+      top-[2%] left-1/2 -translate-x-1/2 flex w-full items-center gap-4 rounded-full bg-red-200 px-6 py-3`}
     >
       <TriangleAlertIcon size={42} />
 
       <p
+        className="font-medium"
         style={{
-          fontSize: fontSizeMap["lg"],
+          fontSize: fontSizeMap["xl"],
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
         }}

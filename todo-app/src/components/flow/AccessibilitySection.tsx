@@ -1,7 +1,7 @@
 import { Moon, Scan, Space, Type } from "lucide-react";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import ToggleField from "../../../pages/settings/sub-settings/accessibility-settings/ToggleField";
-import useTheme from "../../../stores/timer/useTheme";
+import useAccessibility from "../../stores/accessibility/useAccessibility";
+import ToggleField from "../../pages/settings/sub-settings/accessibility-settings/ToggleField";
+import useTheme from "../../stores/timer/useTheme";
 
 export default function AccessibilitySection() {
   const { theme } = useTheme();

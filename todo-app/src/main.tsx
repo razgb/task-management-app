@@ -9,7 +9,6 @@ import ThemeContextProvider from "./stores/timer/ThemeContext.tsx";
 import AccessibilityContextProvider from "./stores/accessibility/AccessibilityProvider.tsx";
 import TimerContextProvider from "./stores/timer/TimerContextProvider.tsx";
 import { LoadingContextProvider } from "./stores/loading/LoadingContext.tsx";
-import UserContextProvider from "./stores/user/UserContextProvider.tsx";
 import { ModalContextProvider } from "./stores/modal/ModalContextProvider.tsx";
 
 const queryClient = new QueryClient();
@@ -184,15 +183,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <AccessibilityContextProvider>
           <TimerContextProvider>
             <LoadingContextProvider>
-              <UserContextProvider>
-                <QueryClientProvider client={queryClient}>
-                  <ModalContextProvider>
-                    <TaskContextProvider>
-                      <App />
-                    </TaskContextProvider>
-                  </ModalContextProvider>
-                </QueryClientProvider>
-              </UserContextProvider>
+              <QueryClientProvider client={queryClient}>
+                <ModalContextProvider>
+                  <TaskContextProvider>
+                    <App />
+                  </TaskContextProvider>
+                </ModalContextProvider>
+              </QueryClientProvider>
             </LoadingContextProvider>
           </TimerContextProvider>
         </AccessibilityContextProvider>
