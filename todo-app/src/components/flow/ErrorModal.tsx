@@ -29,20 +29,22 @@ export default function ErrorModal({
       }}
       // prettier-ignore
       className={`absolute max-w-[800px] ${reduceAnimations ? "transition-opacity" : ""} ${modalStyles}
-      top-[2%] left-1/2 -translate-x-1/2 flex w-full items-center gap-4 rounded-full bg-red-200 px-6 py-3`}
+      top-[2%] left-1/2 -translate-x-1/2  w-full rounded-full bg-red-200 px-6 py-3`}
     >
-      <TriangleAlertIcon size={42} />
+      <div className="flex items-center gap-4">
+        <TriangleAlertIcon size={42} />
 
-      <p
-        className="font-medium"
-        style={{
-          fontSize: fontSizeMap["xl"],
-          color: highContrastMode ? accessibilityTextColor : "",
-          letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-        }}
-      >
-        {message}
-      </p>
+        <p
+          className="font-medium"
+          style={{
+            fontSize: fontSizeMap["xl"],
+            color: highContrastMode ? accessibilityTextColor : "",
+            letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          }}
+        >
+          {message}
+        </p>
+      </div>
     </div>
   );
 }

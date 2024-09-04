@@ -32,7 +32,7 @@ export default function SignupPage({ updateSignupError }: Parameters) {
         }}
         className="font-medium text-text"
       >
-        Welcome to task buddy!
+        Welcome to TaskBuddy
       </h2>
 
       <p

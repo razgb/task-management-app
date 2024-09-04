@@ -8,23 +8,21 @@ import LoginPage from "./login/LoginPage";
 import SignupPage from "./signup/SignupPage";
 import ErrorModal from "../../components/flow/ErrorModal";
 
+export type FlowErrorType = {
+  isError: boolean;
+  message: string;
+};
+const defaultErrorState: FlowErrorType = { isError: false, message: "" };
+
 export default function AuthFlowPage() {
   const { theme } = useTheme();
   const { accessibility } = useAccessibility();
   const { removeRoundEdges } = accessibility;
   const { path } = useRouter();
 
-  const defaultErrorState = { isError: false, message: "" };
   const [flowError, setFlowError] = useState(defaultErrorState);
-
-  const updateSignupError = (flowError: {
-    isError: boolean;
-    message: string;
-  }) => {
-    setFlowError((prev) => ({
-      ...prev,
-      ...flowError,
-    }));
+  const updateSignupError = (flowError: FlowErrorType) => {
+    setFlowError(flowError);
   };
 
   let flowContent: JSX.Element | null = null;
@@ -40,24 +38,21 @@ export default function AuthFlowPage() {
       style={{
         borderRadius: removeRoundEdges ? 0 : "",
       }}
-      className={`${theme} relative flex h-screen items-center justify-center gap-4 overflow-hidden bg-primaryBg`}
+      className={`${theme} relative flex h-screen min-h-[600px] items-center justify-center gap-4 overflow-hidden bg-primaryBg`}
     >
-      <ErrorModal
-        isError={true}
-        message="Login disabled - too many failed attempts. Try again later."
-      />
+      <ErrorModal isError={flowError.isError} message={flowError.message} />
 
       <div
         style={{
           borderRadius: removeRoundEdges ? 0 : "",
         }}
         // prettier-ignore
-        className="relative grid max-h-[70dvh] w-[65dvw] max-w-[1000px] grid-cols-1
-      grid-rows-4 gap-3 rounded-3xl bg-secondary-200 p-3 lg:grid-cols-2"
+        className="relative grid max-h-[70dvh] w-[65dvw] max-w-[800px] grid-cols-1
+      grid-rows-4 gap-3 rounded-3xl bg-secondary-400 p-3 lg:grid-cols-2"
       >
         <WelcomeSection />
 
-        <AccessibilitySection />
+        <AccessibilitySection flowError={flowError} />
 
         {flowContent}
       </div>

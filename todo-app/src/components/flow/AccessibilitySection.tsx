@@ -2,8 +2,13 @@ import { Moon, Scan, Space, Type } from "lucide-react";
 import useAccessibility from "../../stores/accessibility/useAccessibility";
 import ToggleField from "../../pages/settings/sub-settings/accessibility-settings/ToggleField";
 import useTheme from "../../stores/timer/useTheme";
+import { FlowErrorType } from "../../pages/auth-flow/AuthFlowPage";
 
-export default function AccessibilitySection() {
+export default function AccessibilitySection({
+  flowError,
+}: {
+  flowError: FlowErrorType;
+}) {
   const { theme } = useTheme();
   const { accessibility, updateAccessibility } = useAccessibility();
   const {
@@ -15,12 +20,18 @@ export default function AccessibilitySection() {
     reduceAnimations,
   } = accessibility;
 
+  const imageRenderingError =
+    flowError.message === "Failed to fetch welcome image.";
+  const rowStyles = imageRenderingError
+    ? "row-start-1 -row-end-1"
+    : "row-start-3 -row-end-1";
+
   return (
     <div
       style={{
         borderRadius: removeRoundEdges ? 0 : "",
       }}
-      className="col-start-1 col-end-1 row-start-3 -row-end-1 flex w-full flex-col gap-4 rounded-2xl bg-primaryBg p-6"
+      className={`col-start-1 col-end-1 ${rowStyles} flex w-full flex-col gap-4 rounded-2xl bg-primaryBg p-6`}
     >
       <h2
         className="font-medium text-text"

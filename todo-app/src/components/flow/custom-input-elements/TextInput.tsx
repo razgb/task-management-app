@@ -29,6 +29,16 @@ export default function TextInput({
     accessibilityTextColor,
   } = accessibility;
 
+  let autoCompleteValue: string | undefined;
+
+  if (type === "email") {
+    autoCompleteValue = "email";
+  } else if (type === "password") {
+    autoCompleteValue = "current-password";
+  } else {
+    autoCompleteValue = undefined;
+  }
+
   return (
     <div className={`${containerClasses}`}>
       <label
@@ -54,6 +64,7 @@ export default function TextInput({
         placeholder={placeholder}
         required
         aria-required
+        autoComplete={autoCompleteValue}
         className={inputClasses}
         style={{
           fontSize: fontSizeMap["lg"],

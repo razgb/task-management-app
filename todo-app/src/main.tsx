@@ -14,6 +14,7 @@ import { ModalContextProvider } from "./stores/modal/ModalContextProvider.tsx";
 const queryClient = new QueryClient();
 
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import {
   addDoc,
   collection,
@@ -37,8 +38,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app, "gs://task-buddy-project.appspot.com");
 
-export { auth, db };
+export { auth, db, storage };
 
 const tasks = [
   {

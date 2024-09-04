@@ -7,7 +7,6 @@ import Recruiters from "../Recruiters.tsx";
 import { useMutation } from "react-query";
 import { loginUserToFirebase } from "./async/loginUserToFirebase.ts";
 import useRouter from "../../../stores/router/useRouter.tsx";
-import ErrorModal from "../../../components/flow/ErrorModal.tsx";
 
 type Parameters = {
   updateSignupError: (err: { message: string; isError: boolean }) => void;
@@ -89,7 +88,7 @@ export default function LoginPage({ updateSignupError }: Parameters) {
             }}
             className="font-medium text-text"
           >
-            Login into your account
+            Welcome to TaskBuddy
           </h2>
 
           <p
@@ -102,20 +101,22 @@ export default function LoginPage({ updateSignupError }: Parameters) {
             Please enter your details to access your account.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <TextInput
-              type="email"
-              value={email}
-              updateState={handleEmailChange}
-              label="Email"
-            />
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+              <TextInput
+                type="email"
+                value={email}
+                updateState={handleEmailChange}
+                label="Email"
+              />
 
-            <TextInput
-              type="password"
-              value={password}
-              updateState={handlePasswordChange}
-              label="Password"
-            />
+              <TextInput
+                type="password"
+                value={password}
+                updateState={handlePasswordChange}
+                label="Password"
+              />
+            </div>
 
             <Button
               type="submit"
@@ -138,6 +139,7 @@ export default function LoginPage({ updateSignupError }: Parameters) {
             >
               Don't have an account?
             </span>
+
             <Link
               to="/signup"
               className="ml-1 text-textWeak underline hover:text-text active:text-textWeak"
