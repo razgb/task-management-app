@@ -5,7 +5,7 @@ import { isFirebaseError } from "../../../../util/isFirebaseError";
 
 export async function createFirebaseUser(email: string, password: string) {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    return await createUserWithEmailAndPassword(auth, email, password);
   } catch (err) {
     if (!isFirebaseError(err)) {
       throw new Error(

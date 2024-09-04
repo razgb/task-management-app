@@ -24,14 +24,7 @@ Things to do: deadline 14th Aug.
 - Found bug for changing break and work modes button in the timer page.
 
 **most importantant**
-- Combine login and signup states to access accessiblity settings. (done)
-- find a better svg image or something else to show to user.
-
-- ERROR MODAL NOT SET INSIDE AUTHFLOWPAGE COMPONENT. DO THIS AFTER TEA.
-
-- Replace async functions with useMutation from react-query.
-- Make sure the login flow correctly creates a user document in the "users" collection.
-- useEffect hooks to redirect already logged in users.
+- testing for errors during signing up user.
 
 - Add google for logins for UX.
 - Find hosting options for application.
