@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
-import MenuButton from "../components/menu/MenuButton";
-import ThemeAccordion from "../components/menu/ThemeAccordion";
-import MenuLinksToPages from "../components/menu/MenuLinksToPages";
+import MenuButton from "@/pages/outlet/components/menu/MenuButton";
+import ThemeAccordion from "@/pages/outlet/components/menu/ThemeAccordion";
+import MenuLinksToPages from "@/pages/outlet/components/menu/MenuLinksToPages";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 import { MenuIcon } from "lucide-react";
 import { useState } from "react";

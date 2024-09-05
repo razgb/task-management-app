@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { TaskType } from "../../components/dashboard/Task";
+import { TaskType } from "@/pages/tasks/components/Task";
 
 type TaskContextType = {
   currentTask: TaskType | undefined;

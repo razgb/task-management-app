@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import TaskColumn from "../../components/tasks-page/TaskColumn.tsx";
+import TaskColumn from "@/pages/tasks/components/TaskColumn.tsx";
 
-import useAccessibility from "../../stores/accessibility/useAccessibility.tsx";
-import { getTasksFromFirebase } from "../../components/tasks-page/functions/async/getTasksFromFirebase.ts";
+import useAccessibility from "@/stores/accessibility/useAccessibility.tsx";
+import { getTasksFromFirebase } from "@/pages/tasks/functions/async/getTasksFromFirebase.ts";
 import { useQuery } from "react-query";
-import useModal from "../../stores/modal/useModal.tsx";
+import useModal from "@/stores/modal/useModal.tsx";
 
 export default function TasksPage() {
   const { accessibility } = useAccessibility();

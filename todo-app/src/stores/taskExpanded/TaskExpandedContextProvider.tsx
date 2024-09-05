@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TaskExpandedContext from "./TaskExpandedContext";
-import { TaskType } from "../../components/dashboard/Task";
+import { TaskType } from "@/pages/tasks/components/Task";
 
 export const TaskContextProvider = ({
   children,

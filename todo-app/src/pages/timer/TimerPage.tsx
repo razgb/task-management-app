@@ -1,4 +1,4 @@
-import Button from "../../components/shared/Button";
+import Button from "@/shared-components/Button";
 import {
   Minus,
   //  Minus , Plus,
@@ -8,10 +8,10 @@ import {
   TimerResetIcon,
 } from "lucide-react";
 
-import useTimer from "../../stores/timer/useTimer";
-import formatSecondsToDigitalFormat from "../../util/formatSecondsToDigitalFormat";
-import TimerSettingsForm from "../../components/settings/timer-page/TimerSettingsForm";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
+import useTimer from "@/stores/timer/useTimer";
+import formatSecondsToDigitalFormat from "@/util/formatSecondsToDigitalFormat";
+import TimerSettingsForm from "@/pages/timer/TimerSettingsForm";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
 
 export default function TimerPage() {
   const { accessibility } = useAccessibility();

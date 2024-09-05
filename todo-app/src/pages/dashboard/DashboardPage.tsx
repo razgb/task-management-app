@@ -1,7 +1,7 @@
-import CurrentDateWidget from "../../components/dashboard/CurrentDateWidget";
-import TimerWidget from "../../components/dashboard/TimerWidget";
-import RecentTasks from "../../components/dashboard/RecentTasks";
-import TotalTaskProgress from "../../components/dashboard/TotalTaskProgress";
+import CurrentDateWidget from "@/pages/dashboard/components/CurrentDateWidget";
+import TimerWidget from "@/pages/dashboard/components/TimerWidget";
+import RecentTasks from "@/pages/dashboard/components/RecentTasks";
+import TotalTaskProgress from "@/pages/dashboard/components/TotalTaskProgress";
 
 export default function DashboardPage() {
   return (

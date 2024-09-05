@@ -1,6 +1,6 @@
 import logo from "../assets/logo.jpg";
-import NavTimerWidget from "../components/main-navigation/NavTimerWidget";
-import SearchBar from "../components/main-navigation/SearchBar";
+import NavTimerWidget from "@/pages/outlet/components/main-nav/NavTimerWidget";
+import SearchBar from "@/pages/outlet/components/main-nav/SearchBar";
 import useAccessibility from "../stores/accessibility/useAccessibility";
 // import useModal from "../stores/modal/useModal";
 

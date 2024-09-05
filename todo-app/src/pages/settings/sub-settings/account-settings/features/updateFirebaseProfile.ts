@@ -1,5 +1,5 @@
 import { updateProfile } from "firebase/auth";
-import { auth } from "../../../../../main";
+import { auth } from "@/main";
 
 export async function updateFirebaseProfile(displayName: string) {
   if (!auth.currentUser) {

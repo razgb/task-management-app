@@ -2,8 +2,8 @@ import Menu from "./layouts/Menu";
 import MainNavigation from "./layouts/MainNavigation";
 import Outlet from "./layouts/Outlet";
 import useTheme from "./stores/timer/useTheme";
-import LoadingWave from "./components/shared/LoadingWave";
-import Modal from "./components/modal/Modal";
+import LoadingWave from "@/shared-components/LoadingWave";
+import Modal from "@/pages/outlet/components/modal/Modal";
 import useModal from "./stores/modal/useModal";
 
 export default function MainContent() {

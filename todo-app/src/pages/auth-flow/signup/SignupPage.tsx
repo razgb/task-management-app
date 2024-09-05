@@ -1,6 +1,6 @@
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import Link from "../../../components/shared/Link";
-import SignupForm from "../../../components/flow/signup/SignupForm";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
+import Link from "@/shared-components/Link";
+import SignupForm from "@/pages/auth-flow/components/signup/SignupForm";
 import Recruiters from "../Recruiters";
 
 type Parameters = {

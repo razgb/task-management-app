@@ -1,5 +1,5 @@
-import Button from "../../components/shared/Button";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
+import Button from "@/shared-components/Button";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
 
 export default function Recruiters() {
   const { accessibility } = useAccessibility();

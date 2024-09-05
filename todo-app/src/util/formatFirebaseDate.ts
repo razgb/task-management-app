@@ -1,4 +1,4 @@
-import { TaskType } from "../components/dashboard/Task";
+import { TaskType } from "@/pages/tasks/components/Task";
 
 export const formatFirebaseDate = (
   timestamp: TaskType["updatedAt"] | TaskType["createdAt"],

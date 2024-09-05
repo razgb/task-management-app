@@ -11,10 +11,10 @@ import ActivitySettings from "./sub-settings/activity-settings/ActivitySettings"
 import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 
-import Link from "../../components/shared/Link";
-import { ValidUrlPaths } from "../../stores/router/RouterContext";
-import useRouter from "../../stores/router/useRouter";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
+import Link from "@/shared-components/Link";
+import { ValidUrlPaths } from "@/stores/router/RouterContext";
+import useRouter from "@/stores/router/useRouter";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
 
 function SettingsPage() {
   const { path } = useRouter();

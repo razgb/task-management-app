@@ -8,11 +8,7 @@ Things to do: deadline 14th Aug.
 <CurrentPlan>
 
 **least importantant**
-- An input element must have an autocomplete attribute. (later)
-- gradient for the backgrounds of all pages. (half complete) (not sure on what type of gradient...)
 - Theme button not as thick as other menu buttons.
-
-- Fully rewrite the error and success components.
 
 **mid importantance**
 - Timer widget needs to be larger to fill out dashboard.
@@ -23,7 +19,11 @@ Things to do: deadline 14th Aug.
 
 - Found bug for changing break and work modes button in the timer page.
 
+- Creating an option to change the description of the to do task when expanded.
+
 **most importantant**
+- Fully rewrite the error and success components.
+
 - testing for errors during signing up user.
 
 - Add google for logins for UX.

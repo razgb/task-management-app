@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { AccessibilityContext } from "./AccessibilityContext";
 import useAccessibilityTextColor from "./useAccessibilityTextColor";
 
@@ -32,18 +32,21 @@ export default function useAccessibility() {
 
   const { accessibility, updateAccessibility } = context;
   const { fontSizeMultiplier } = accessibility;
-  const fontSizeMap: FontSizeMapType = {
-    xs: 12 * fontSizeMultiplier,
-    sm: 14 * fontSizeMultiplier,
-    base: 16 * fontSizeMultiplier,
-    lg: 18 * fontSizeMultiplier,
-    xl: 20 * fontSizeMultiplier,
-    "2xl": 24 * fontSizeMultiplier,
-    "3xl": 30 * fontSizeMultiplier,
-    "4xl": 36 * fontSizeMultiplier,
-    "5xl": 48 * fontSizeMultiplier,
-    "6xl": 60 * fontSizeMultiplier,
-  };
+
+  const fontSizeMap: FontSizeMapType = useMemo(() => {
+    return {
+      xs: 12 * fontSizeMultiplier,
+      sm: 14 * fontSizeMultiplier,
+      base: 16 * fontSizeMultiplier,
+      lg: 18 * fontSizeMultiplier,
+      xl: 20 * fontSizeMultiplier,
+      "2xl": 24 * fontSizeMultiplier,
+      "3xl": 30 * fontSizeMultiplier,
+      "4xl": 36 * fontSizeMultiplier,
+      "5xl": 48 * fontSizeMultiplier,
+      "6xl": 60 * fontSizeMultiplier,
+    };
+  }, [fontSizeMultiplier]);
 
   return {
     accessibility: {

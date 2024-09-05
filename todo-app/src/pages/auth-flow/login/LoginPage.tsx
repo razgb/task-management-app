@@ -1,12 +1,12 @@
 import { useState } from "react";
-import useAccessibility from "../../../stores/accessibility/useAccessibility";
-import Button from "../../../components/shared/Button";
-import Link from "../../../components/shared/Link.tsx";
-import TextInput from "../../../components/flow/custom-input-elements/TextInput.tsx";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
+import Button from "@/shared-components/Button";
+import Link from "@/shared-components/Link.tsx";
+import TextInput from "@/pages/auth-flow/components/TextInput.tsx";
 import Recruiters from "../Recruiters.tsx";
 import { useMutation } from "react-query";
 import { loginUserToFirebase } from "./async/loginUserToFirebase.ts";
-import useRouter from "../../../stores/router/useRouter.tsx";
+import useRouter from "@/stores/router/useRouter.tsx";
 
 type Parameters = {
   updateSignupError: (err: { message: string; isError: boolean }) => void;

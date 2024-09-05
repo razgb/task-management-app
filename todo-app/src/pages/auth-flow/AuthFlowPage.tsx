@@ -1,12 +1,12 @@
 import { useState } from "react";
-import AccessibilitySection from "../../components/flow/AccessibilitySection";
-import WelcomeSection from "../../components/flow/WelcomeSection";
-import useAccessibility from "../../stores/accessibility/useAccessibility";
-import useRouter from "../../stores/router/useRouter";
-import useTheme from "../../stores/timer/useTheme";
+import AccessibilitySection from "@/pages/auth-flow/components/AccessibilitySection";
+import WelcomeSection from "@/pages/auth-flow/components/WelcomeSection";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
+import useRouter from "@/stores/router/useRouter";
+import useTheme from "@/stores/timer/useTheme";
 import LoginPage from "./login/LoginPage";
 import SignupPage from "./signup/SignupPage";
-import ErrorModal from "../../components/flow/ErrorModal";
+import ErrorModal from "@/pages/auth-flow/components/ErrorModal";
 
 export type FlowErrorType = {
   isError: boolean;

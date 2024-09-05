@@ -1,19 +1,18 @@
-import TaskExpanded from "../components/tasks-page/TaskExpanded.tsx";
-import DashboardPage from "../pages/dashboard/DashboardPage.tsx";
-import ErrorPage from "../pages/error/ErrorPage.tsx";
-// import HabitTracker from "../pages/habit-tracker/HabitTrackerPage.tsx";
-import SettingsPage from "../pages/settings/SettingsPage.tsx";
-import TaskCreator from "../pages/task-creator/TaskCreator.tsx";
-import TasksPage from "../pages/tasks/TasksPage.tsx";
-import TimerPage from "../pages/timer/TimerPage.tsx";
+import TaskExpanded from "@/pages/tasks/components/TaskExpanded.tsx";
+import DashboardPage from "@/pages/dashboard/DashboardPage.tsx";
+import ErrorPage from "@/pages/error/ErrorPage.tsx";
+import SettingsPage from "@/pages/settings/SettingsPage.tsx";
+import TaskCreator from "@/pages/task-creator/TaskCreator.tsx";
+import TasksPage from "@/pages/tasks/TasksPage.tsx";
+import TimerPage from "@/pages/timer/TimerPage.tsx";
 
-import useAccessibility from "../stores/accessibility/useAccessibility";
-import useRouter from "../stores/router/useRouter.tsx";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
+import useRouter from "@/stores/router/useRouter.tsx";
 
 export default function Outlet() {
   const { path } = useRouter();
   const { accessibility } = useAccessibility();
-  const { removeRoundEdges, highContrastMode } = accessibility;
+  const { removeRoundEdges } = accessibility;
 
   let content: React.ReactNode | null = null;
 
@@ -46,10 +45,6 @@ export default function Outlet() {
       content = <TimerPage />;
       break;
     }
-    // case path === "/habit-tracker": {
-    //   content = <HabitTracker />;
-    //   break;
-    // }
     case path === "error": {
       content = <ErrorPage />;
       break;

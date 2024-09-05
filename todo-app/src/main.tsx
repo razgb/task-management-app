@@ -24,7 +24,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { TaskContextProvider } from "./stores/taskExpanded/TaskExpandedContextProvider.tsx";
-import { TaskType } from "./components/dashboard/Task.tsx";
+import { TaskType } from "@/pages/tasks/components/Task";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDtHn7FK1nLD6MvQvI2wkZMAVPX22LwBw",
