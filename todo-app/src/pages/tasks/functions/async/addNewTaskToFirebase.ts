@@ -1,16 +1,27 @@
-import { collection, addDoc } from "firebase/firestore";
-import { TaskType } from "@/pages/tasks/components/Task";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/main";
+import { TaskFormState } from "@/pages/task-creator/functions/client/reducer";
 
-// use this for the task adding page.
-export async function addNewTaskToFirebase(task: TaskType) {
+export async function addNewTaskToFirebase(taskFormData: TaskFormState) {
   const user = auth.currentUser;
   if (!user) throw new Error("Firebase user doesn't exist.");
 
   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");
 
+  const { dueDate } = taskFormData;
+  const dateObject = new Date(dueDate);
+  const unixTimestamp = dateObject.getTime().toString();
+
   try {
-    await addDoc(tasksCollectionRef, task);
+    await addDoc(tasksCollectionRef, {
+      ...taskFormData,
+      status: "draft",
+      authorID: user.uid,
+      dueDate: unixTimestamp,
+      subTasks: {},
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
   } catch (error) {
     throw new Error(`Error uploading your task, please try again.`);
   }

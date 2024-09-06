@@ -99,7 +99,7 @@ export default function TaskColumn({
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
           color: highContrastMode ? "#fff" : "",
         }}
-        className="font-bold capitalize"
+        className="font-bold capitalize text-text"
       >
         {variant}
       </h2>

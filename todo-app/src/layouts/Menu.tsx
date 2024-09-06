@@ -41,7 +41,9 @@ export default function Menu() {
           <div className={`mb-8 flex items-start`}>
             <button
               onClick={toggleMenuState}
-              className="active:bg-secondary-150 flex items-center justify-center rounded-full bg-transparent p-4 transition-colors hover:bg-secondary-200"
+              //prettier-ignore
+              className="flex items-center justify-center rounded-full
+              bg-transparent p-4 transition-colors hover:bg-secondary-200 active:bg-secondary-200"
             >
               <MenuIcon />
             </button>

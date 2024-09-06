@@ -1,13 +1,5 @@
-import {
-  AccessibilityIcon,
-  Activity,
-  // CalendarCog,
-  Info,
-  UserRound,
-} from "lucide-react";
-
+import { AccessibilityIcon, Info, UserRound } from "lucide-react";
 import AccountSettings from "./sub-settings/account-settings/AccountSettings";
-import ActivitySettings from "./sub-settings/activity-settings/ActivitySettings";
 import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 
@@ -36,9 +28,6 @@ function SettingsPage() {
       break;
     case "/settings/accessibility":
       pageToRender = <AccessibilitySettings />;
-      break;
-    case "/settings/activity-log":
-      pageToRender = <ActivitySettings />;
       break;
     case "/settings/frequently-asked-questions":
       pageToRender = <FaqSettings />;
@@ -80,11 +69,6 @@ function SettingsPage() {
               to="/settings/accessibility"
               icon={<AccessibilityIcon size={fontSizeMap["2xl"]} />}
               title="Accessibility"
-            />
-            <SettingsTab
-              to="/settings/activity-log"
-              icon={<Activity size={fontSizeMap["2xl"]} />}
-              title="Activity log"
             />
             <SettingsTab
               to="/settings/frequently-asked-questions"
@@ -150,9 +134,3 @@ function SettingsTab({
     </Link>
   );
 }
-
-// <SettingsTab
-//   to="/settings/tasks"
-//   icon={<CalendarCog size={fontSizeMap["2xl"]} />}
-//   title="Task settings"
-// />

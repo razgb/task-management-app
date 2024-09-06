@@ -1,59 +1,19 @@
-import { useReducer } from "react";
 import Button from "@/shared-components/Button";
 import Link from "@/shared-components/Link";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
+import { useLoading } from "@/stores/loading/useLoading";
+import useModal from "@/stores/modal/useModal";
+import useRouter from "@/stores/router/useRouter";
+import { useReducer } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { addNewTaskToFirebase } from "../tasks/functions/async/addNewTaskToFirebase";
+import { getWordCount } from "./functions/client/getWordCount";
+import { reducer } from "./functions/client/reducer";
 
 const inputContainerStyle = "flex flex-col gap-2 mb-4 w-full";
 const labelStyles = "font-medium";
 const inputStyles =
   "w-full hover:bg-secondaryBg rounded-xl bg-secondaryBgWeak p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
-
-type TaskFormState = {
-  taskName: string;
-  dueDate: string;
-  priority: string;
-  description: string;
-};
-
-type TaskFormAction = {
-  type: "setName" | "setDueDate" | "setPriority" | "setDescription";
-  payload: string;
-};
-
-function checkWordsAgainstLimit(word: string, limit: number) {
-  return word.split(/\s+/).filter(Boolean).length <= limit;
-}
-
-function getWordCount(word: string) {
-  return word.split(/\s+/).filter(Boolean).length;
-}
-
-function reducer(state: TaskFormState, action: TaskFormAction) {
-  const { type, payload } = action;
-
-  switch (type) {
-    case "setName":
-      if (!checkWordsAgainstLimit(payload, 10)) {
-        return state;
-      }
-
-      return { ...state, taskName: action.payload };
-    case "setDueDate":
-      return { ...state, dueDate: action.payload };
-    case "setPriority":
-      return { ...state, priority: action.payload };
-    case "setDescription":
-      if (!checkWordsAgainstLimit(payload, 30)) {
-        return state;
-      }
-
-      return { ...state, description: action.payload };
-    default:
-      throw new Error(
-        "Invalid action type. Must be one of these: \nsetName, setDueDate, setPriority, setDescription",
-      );
-  }
-}
 
 export default function TaskCreator() {
   const { accessibility } = useAccessibility();
@@ -65,17 +25,60 @@ export default function TaskCreator() {
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
+  const queryClient = useQueryClient();
+  const { updatePath } = useRouter();
+  const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
+  const { openModal } = useModal();
 
   const [state, dispatch] = useReducer(reducer, {
-    taskName: "",
+    title: "",
     dueDate: "",
-    priority: "",
     description: "",
   });
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  console.log(state);
+
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async () => {
+      if (!state.title) {
+        openModal("error", "Error, task must have a title before creation.");
+        return;
+      }
+
+      addToLoadingQueue("task-creator");
+
+      try {
+        await addNewTaskToFirebase(state);
+        updatePath("/tasks");
+      } catch (err) {
+        console.log(err); // temp
+        throw new Error(
+          "Error uploading task to server, check internet connection and try again.",
+        );
+      } finally {
+        removeFromLoadingQueue("task-creator");
+      }
+    },
+    retry: 2,
+    onError: (err) => {
+      if (err instanceof Error) {
+        openModal("error", err.message);
+        return;
+      }
+
+      openModal(
+        "error",
+        `Error uploading task to server, check internet connection and try again.`,
+      );
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries(["tasks"]);
+    },
+  });
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form submitted");
+    await mutateAsync();
   }
 
   return (
@@ -102,7 +105,7 @@ export default function TaskCreator() {
             <div className="flex items-center gap-2">
               <label
                 className={`${labelStyles} inline`}
-                htmlFor="taskName"
+                htmlFor="title"
                 style={{
                   fontSize: `${fontSizeMap.xl}px`,
                   color: highContrastMode ? accessibilityTextColor : "",
@@ -119,13 +122,13 @@ export default function TaskCreator() {
                   letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
                 }}
               >
-                {`${getWordCount(state.taskName)}/10 words`}
+                {`${getWordCount(state.title)}/10 words`}
               </span>
             </div>
             <input
               placeholder="e.g., Finish the presentation"
               type="text"
-              id="taskName"
+              id="title"
               className={inputStyles}
               style={{
                 fontSize: `${fontSizeMap.lg}px`,
@@ -133,9 +136,9 @@ export default function TaskCreator() {
                 borderRadius: removeRoundEdges ? "0" : "",
                 transition: reduceAnimations ? "none" : "",
               }}
-              value={state.taskName}
+              value={state.title}
               onChange={(e) =>
-                dispatch({ type: "setName", payload: e.target.value })
+                dispatch({ type: "setTitle", payload: e.target.value })
               }
               required
             />
@@ -178,52 +181,6 @@ export default function TaskCreator() {
                 dispatch({ type: "setDueDate", payload: e.target.value })
               }
             />
-          </div>
-
-          <div className={inputContainerStyle}>
-            <label
-              className={labelStyles}
-              htmlFor="priority"
-              style={{
-                fontSize: `${fontSizeMap.xl}px`,
-                color: highContrastMode ? accessibilityTextColor : "",
-                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-              }}
-            >
-              Priority Level{" "}
-              <span
-                className="text-textWeak"
-                style={{
-                  fontSize: `${fontSizeMap.sm}px`,
-                  color: highContrastMode ? accessibilityTextColor : "",
-                  letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-                }}
-              >
-                (optional)
-              </span>
-            </label>
-
-            <select
-              id="priority"
-              className={`${inputStyles} cursor-pointer`}
-              style={{
-                fontSize: `${fontSizeMap.lg}px`,
-                color: highContrastMode ? accessibilityTextColor : "",
-                borderRadius: removeRoundEdges ? "0" : "",
-                transition: reduceAnimations ? "none" : "",
-              }}
-              value={state.priority}
-              onChange={(e) =>
-                dispatch({ type: "setPriority", payload: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Select priority
-              </option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
           </div>
 
           <div className={inputContainerStyle}>
@@ -272,12 +229,11 @@ export default function TaskCreator() {
             <Link className="text-textWeak hover:text-text" to="/dashboard">
               Cancel
             </Link>
-            <Button>Create</Button>
+
+            <Button loading={isLoading}>Create</Button>
           </div>
         </div>
       </form>
     </div>
   );
 }
-
-// ignore for now:   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;

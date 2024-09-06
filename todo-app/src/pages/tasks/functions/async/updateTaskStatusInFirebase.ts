@@ -12,17 +12,8 @@ export async function updateTaskStatusInFirebase(
 
   const taskDocRef = doc(db, "users", user.uid, "tasks", taskID);
 
-  try {
-    await updateDoc(taskDocRef, {
-      status: newStatus,
-      updatedAt: serverTimestamp(),
-    });
-    console.log("updated");
-  } catch (error) {
-    // temp needs to be an error by value.
-    console.error(
-      "Error uploading your task, check internet connection and try again.",
-    );
-    throw error;
-  }
+  await updateDoc(taskDocRef, {
+    status: newStatus,
+    updatedAt: serverTimestamp(),
+  });
 }
