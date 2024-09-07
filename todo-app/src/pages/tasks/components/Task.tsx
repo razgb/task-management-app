@@ -65,6 +65,7 @@ export default function Task(taskData: TaskComponentType) {
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+        transition: reduceAnimations ? "none" : "",
       }}
       tabIndex={0}
       onClick={handleTaskExpand}

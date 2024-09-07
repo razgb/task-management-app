@@ -1,5 +1,4 @@
 import { AccessibilityIcon, Info, UserRound } from "lucide-react";
-import AccountSettings from "./sub-settings/account-settings/AccountSettings";
 import FaqSettings from "./sub-settings/faq-settings/FaqSettings";
 import AccessibilitySettings from "./sub-settings/accessibility-settings/AccessibilitySettings";
 
@@ -7,6 +6,7 @@ import Link from "@/shared-components/Link";
 import { ValidUrlPaths } from "@/stores/router/RouterContext";
 import useRouter from "@/stores/router/useRouter";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
+import AccountSettings from "./sub-settings/account-settings/AccountSettings";
 
 function SettingsPage() {
   const { path } = useRouter();
@@ -29,11 +29,13 @@ function SettingsPage() {
     case "/settings/accessibility":
       pageToRender = <AccessibilitySettings />;
       break;
+
     case "/settings/frequently-asked-questions":
       pageToRender = <FaqSettings />;
       break;
+
     default:
-      pageToRender = <AccountSettings />;
+      pageToRender = <AccessibilitySettings />;
       break;
   }
 

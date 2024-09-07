@@ -18,7 +18,7 @@ export default function SubTaskContainer({
     removeRoundEdges,
     reduceAnimations,
     fontSizeMap,
-    accessibilityTextColor,
+    reverseAccessibilityTextColor,
   } = accessibility;
 
   if (subTasks.length === 0) return null;
@@ -41,7 +41,7 @@ export default function SubTaskContainer({
             className="font-semibold text-textContrast"
             style={{
               fontSize: `${fontSizeMap.base}px`,
-              color: highContrastMode ? accessibilityTextColor : "",
+              color: highContrastMode ? reverseAccessibilityTextColor : "",
             }}
           >
             Sub Tasks
@@ -59,7 +59,7 @@ export default function SubTaskContainer({
           <span
             style={{
               fontSize: `${fontSizeMap.sm}px`,
-              color: highContrastMode ? accessibilityTextColor : "",
+              color: highContrastMode ? reverseAccessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
             }}
             className="font-semibold text-textContrast"

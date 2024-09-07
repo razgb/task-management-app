@@ -1,133 +1,99 @@
-import React, { useState } from "react";
 import Button from "@/shared-components/Button";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
-
-type InputEventType = React.ChangeEvent<HTMLInputElement>;
+import { useState } from "react";
 
 export default function AccountSettings() {
   const { accessibility } = useAccessibility();
   const {
     highContrastMode,
-    increaseLetterSpacing,
-    removeRoundEdges,
     reduceAnimations,
+    increaseLetterSpacing,
     fontSizeMap,
     accessibilityTextColor,
+    reverseAccessibilityTextColor,
   } = accessibility;
 
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [modalState, setModalState] = useState<boolean>(false);
 
-  const labelStyles = "font-medium text-text";
-  const inputStyles =
-    "w-full rounded-xl bg-secondary-200 p-3 outline-none placeholder:text-textPlaceholder focus:outline-focusOutline focus:outline-2 transition-colors";
-  const inputContainerStyle = "flex flex-col gap-2 mb-4";
+  const toggleModalState = () => setModalState((prev) => !prev);
+  const cancelModal = () => setModalState(false);
+  const handleModalConfirmation = () => {
+    setModalState(false);
+  };
 
-  function handleEmailChange(e: InputEventType) {
-    setEmail(e.target.value);
-  }
-
-  function handleUsernameChange(e: InputEventType) {
-    setUsername(e.target.value);
-  }
-
-  function handlePasswordChange(e: InputEventType) {
-    setPassword(e.target.value);
-  }
-
-  function handleProfilePictureChange(e: InputEventType) {
-    if (e.target.files && e.target.files[0]) {
-      setProfilePicture(e.target.files[0]);
-    }
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Account settings updated");
-  }
+  const invisibilityClasses =
+    "invisible select-none pointer-events-none opacity-0";
 
   return (
-    <div className="h-full overflow-hidden rounded-2xl bg-primaryBg p-6">
+    <div
+      className="flex h-full flex-col overflow-y-auto rounded-2xl bg-primaryBg p-6"
+      role="region"
+      aria-labelledby="accessibility-heading"
+      style={{
+        transition: reduceAnimations ? "none" : "",
+      }}
+    >
       <h2
+        id="accessibility-heading"
+        className="mb-8 font-bold text-heading"
+        aria-label="Accessibility Settings"
         style={{
-          fontSize: fontSizeMap["3xl"],
+          fontSize: `${fontSizeMap["3xl"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-          borderRadius: removeRoundEdges ? "0" : "",
-          transition: reduceAnimations ? "none" : "",
         }}
-        className={`mb-4 font-bold text-heading`}
       >
-        Account Settings
+        Account
       </h2>
 
       <form
-        className="flex max-w-[600px] flex-col gap-4"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="relative"
       >
-        <div className={inputContainerStyle}>
-          <label
-            className={labelStyles}
-            htmlFor="profilePicture"
-            style={{ fontSize: fontSizeMap["lg"] }}
-          >
-            Profile Picture
-          </label>
-          <input
-            type="file"
-            id="profilePicture"
-            className={`${inputStyles} file:mr-4 file:rounded-full file:border-0 file:bg-mainButtonBg file:px-4 file:py-2 file:text-sm file:font-semibold file:text-textContrast hover:file:bg-mainButtonBgHover`}
-            accept="image/*"
-            onChange={handleProfilePictureChange}
-            style={{ fontSize: fontSizeMap["base"] }}
-          />
-        </div>
+        <h3
+          style={{
+            fontSize: `${fontSizeMap["3xl"]}px`,
+            color: highContrastMode ? accessibilityTextColor : "",
+            letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+          }}
+          className="mb-2 text-xl capitalize"
+        >
+          permanently delete account
+        </h3>
 
-        <div className={inputContainerStyle}>
-          <label
-            className={labelStyles}
-            htmlFor="email"
-            style={{ fontSize: fontSizeMap["lg"] }}
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className={inputStyles}
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="Enter your email"
-            style={{ fontSize: fontSizeMap["base"] }}
-          />
-        </div>
+        <Button onClick={toggleModalState}>Delete</Button>
 
-        <div className={inputContainerStyle}>
-          <label
-            className={labelStyles}
-            htmlFor="username"
-            style={{ fontSize: fontSizeMap["lg"] }}
-          >
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            className={inputStyles}
-            value={username}
-            onChange={handleUsernameChange}
-            placeholder="Enter your username"
-            style={{ fontSize: fontSizeMap["base"] }}
-          />
-        </div>
+        <div
+          className={`absolute left-0 top-[110%] rounded-xl bg-secondary-700 p-3 transition-opacity ${modalState ? "opacity-100" : invisibilityClasses}`}
+        >
+          <h4 className="mb-2 text-center text-lg text-textContrast">
+            Are you sure?
+          </h4>
 
-        <div className="mt-4">
-          <Button type="submit" style={{ fontSize: `${fontSizeMap.base}px` }}>
-            Save Changes
-          </Button>
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              style={{
+                fontSize: `${fontSizeMap["sm"]}px`,
+                color: highContrastMode ? reverseAccessibilityTextColor : "",
+                letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+              }}
+              className="px-3 py-1 text-sm text-black hover:text-textContrast"
+              onClick={cancelModal}
+            >
+              Cancel
+            </button>
+
+            <Button
+              variant="custom"
+              className="rounded-full bg-secondary-400 px-4 py-1 text-sm hover:bg-secondary-500"
+              onClick={handleModalConfirmation}
+            >
+              Yes
+            </Button>
+          </div>
         </div>
       </form>
     </div>

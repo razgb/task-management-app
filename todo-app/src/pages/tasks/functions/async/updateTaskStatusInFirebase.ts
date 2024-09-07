@@ -8,7 +8,7 @@ export async function updateTaskStatusInFirebase(
 ) {
   const user = auth.currentUser;
   if (!user) throw new Error("Firebase user doesn't exist.");
-  console.log(taskID, newStatus);
+  // console.log(taskID, newStatus);
 
   const taskDocRef = doc(db, "users", user.uid, "tasks", taskID);
 

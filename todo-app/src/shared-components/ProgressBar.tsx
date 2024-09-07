@@ -23,12 +23,7 @@ export default function ProgressBar({
   outerClassName?: string;
 }) {
   const { accessibility } = useAccessibility();
-  const {
-    reduceAnimations,
-    highContrastMode,
-    accessibilityTextColor,
-    reverseAccessibilityTextColor,
-  } = accessibility;
+  const { reduceAnimations } = accessibility;
 
   let innerStyles = "";
   let outerStyles = "";
@@ -45,7 +40,6 @@ export default function ProgressBar({
     <div
       className={outerStyles}
       style={{
-        backgroundColor: highContrastMode ? reverseAccessibilityTextColor : "",
         borderRadius: reduceAnimations ? "0" : "",
       }}
     >
@@ -53,7 +47,6 @@ export default function ProgressBar({
         className={innerStyles}
         style={{
           width: completion + "%",
-          backgroundColor: highContrastMode ? accessibilityTextColor : "",
           borderRadius: reduceAnimations ? "0" : "",
         }}
       ></div>

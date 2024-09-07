@@ -76,11 +76,17 @@ export default function reducer(
           timerValue: state.timerSettings.breakDuration,
           timerMode: "break",
         };
+      } else if (state.timerMode === "break") {
+        return {
+          ...defaultTimerState,
+          timerValue: state.timerSettings.workDuration,
+          timerMode: "work",
+        };
       } else {
         return {
           ...defaultTimerState,
           timerValue: state.timerSettings.workDuration,
-          timerMode: "break",
+          timerMode: "work",
         };
       }
     }

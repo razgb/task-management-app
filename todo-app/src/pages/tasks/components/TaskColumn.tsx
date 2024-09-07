@@ -26,6 +26,8 @@ export default function TaskColumn({
     reduceAnimations,
     increaseLetterSpacing,
     fontSizeMap,
+    accessibilityTextColor,
+    reverseAccessibilityTextColor,
   } = accessibility;
   const { openModal } = useModal();
   const queryClient = useQueryClient();
@@ -97,7 +99,7 @@ export default function TaskColumn({
         style={{
           fontSize: `${fontSizeMap["2xl"]}px`,
           letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-          color: highContrastMode ? "#fff" : "",
+          color: highContrastMode ? accessibilityTextColor : "",
         }}
         className="font-bold capitalize text-text"
       >

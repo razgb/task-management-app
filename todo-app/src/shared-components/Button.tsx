@@ -39,6 +39,8 @@ export default function Button({
     accessibilityTextColor,
   } = accessibility;
 
+  const styleAttribute = variant === "custom" ? {} : style;
+
   const reverseTextColorStyle = theme === "light" ? "#fff" : "#000";
   const textColor = variant?.toLowerCase().includes("contrast")
     ? reverseTextColorStyle
@@ -99,7 +101,7 @@ export default function Button({
   return (
     <button
       style={{
-        ...style,
+        ...styleAttribute,
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",

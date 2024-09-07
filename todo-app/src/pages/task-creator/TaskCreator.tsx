@@ -36,8 +36,6 @@ export default function TaskCreator() {
     description: "",
   });
 
-  console.log(state);
-
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async () => {
       if (!state.title) {
@@ -51,7 +49,6 @@ export default function TaskCreator() {
         await addNewTaskToFirebase(state);
         updatePath("/tasks");
       } catch (err) {
-        console.log(err); // temp
         throw new Error(
           "Error uploading task to server, check internet connection and try again.",
         );

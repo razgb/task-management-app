@@ -1,14 +1,26 @@
 import { Trash } from "lucide-react";
 import Button from "@/shared-components/Button";
 import { useState } from "react";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
 
 export default function DeleteTaskButtonContainer({
   deletionMutation,
 }: {
   deletionMutation: () => void;
 }) {
+  const { accessibility } = useAccessibility();
+  const {
+    removeRoundEdges,
+    highContrastMode,
+    fontSizeMap,
+    increaseLetterSpacing,
+    reverseAccessibilityTextColor,
+    reduceAnimations,
+  } = accessibility;
+
   const [modalState, setModalState] = useState<boolean>(false);
 
+  const toggleModalState = () => setModalState((prev) => !prev);
   const handleModalConfirmation = () => {
     deletionMutation();
     setModalState(false);
@@ -21,17 +33,36 @@ export default function DeleteTaskButtonContainer({
   return (
     <div className="relative flex-shrink-0">
       <Button
+        style={{
+          borderRadius: removeRoundEdges ? "0" : "",
+          transition: reduceAnimations ? "none" : "",
+          color: highContrastMode ? reverseAccessibilityTextColor : "",
+        }}
         variant="custom"
         className="rounded-xl bg-secondary-700 px-3 py-1 text-sm text-textContrast hover:bg-secondary-900"
-        onClick={() => setModalState((prev) => !prev)}
+        onClick={toggleModalState}
         onKeyDown={(e) => e.key === "Escape" && setModalState(false)}
         tabIndex={0}
       >
-        <Trash size={20} />
-        <span>Delete task</span>
+        <Trash
+          size={fontSizeMap["xl"]}
+          color={highContrastMode ? reverseAccessibilityTextColor : "#000"}
+        />
+        <span
+          style={{
+            color: highContrastMode ? reverseAccessibilityTextColor : "",
+            fontSize: fontSizeMap["base"],
+          }}
+        >
+          Delete task
+        </span>
       </Button>
 
-      <div
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleModalConfirmation();
+        }}
         className={`absolute left-1/2 top-[110%] -translate-x-1/2 rounded-xl bg-secondary-700 p-3 transition-opacity ${modalState ? "opacity-100" : invisibilityClasses}`}
       >
         <h4 className="mb-2 text-center text-lg text-textContrast">
@@ -39,23 +70,27 @@ export default function DeleteTaskButtonContainer({
         </h4>
 
         <div className="flex items-center gap-0.5">
-          <Button
-            variant="custom"
-            className="px-3 py-1 text-sm text-textWeakContrast hover:text-textContrast"
+          <button
+            type="button"
+            style={{
+              fontSize: `${fontSizeMap["sm"]}px`,
+              color: highContrastMode ? reverseAccessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
+            }}
+            className="px-3 py-1 text-sm text-black hover:text-textContrast"
             onClick={cancelModal}
           >
             Cancel
-          </Button>
+          </button>
 
           <Button
             variant="custom"
             className="rounded-full bg-secondary-400 px-4 py-1 text-sm hover:bg-secondary-500"
-            onClick={handleModalConfirmation}
           >
             Yes
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

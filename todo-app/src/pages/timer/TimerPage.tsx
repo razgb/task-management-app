@@ -1,12 +1,5 @@
 import Button from "@/shared-components/Button";
-import {
-  Minus,
-  //  Minus , Plus,
-  PauseIcon,
-  PlayIcon,
-  Plus,
-  TimerResetIcon,
-} from "lucide-react";
+import { Minus, PauseIcon, PlayIcon, Plus, TimerResetIcon } from "lucide-react";
 
 import useTimer from "@/stores/timer/useTimer";
 import formatSecondsToDigitalFormat from "@/util/formatSecondsToDigitalFormat";

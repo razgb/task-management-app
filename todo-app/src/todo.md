@@ -2,10 +2,12 @@
 - Theme button not as thick as other menu buttons.
 
 **mid importantance**
-- Timer widget needs to be larger to fill out dashboard.
-
 - create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
   -> If the user happens to not use due dates, remove the widget entirely.
+
+- TaskProgress, RecentTasks, and UpcomingTasks need access to
+  tasks data. Therefore create a custom hook with the useMutation
+  that TasksPage already uses. ReactQuery will handle the rest.
 
 - Logging out feature.
   -> Own modal component.
@@ -14,9 +16,11 @@
 
 - Error handling for task column useMutation for task status.
 
+**most importantant**
+- Delete main nav and create success & error components.
+
 - Creating an option to change the description of the to do task when expanded.
 
-**most importantant**
 - Fully rewrite the error and success components.
 - testing for errors during signing up user.
 

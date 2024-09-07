@@ -23,9 +23,17 @@ export default function TotalTaskProgress() {
         color: highContrastMode ? accessibilityTextColor : "",
       }}
     >
+      <p
+        style={{
+          fontSize: fontSizeMap["sm"],
+        }}
+        className="font-bold uppercase"
+      >
+        across tasks &amp; sub-tasks
+      </p>
       <h2
         className="font-semibold capitalize"
-        style={{ fontSize: `${fontSizeMap["2xl"]}px` }}
+        style={{ fontSize: `${fontSizeMap["3xl"]}px` }}
       >
         total progress
       </h2>
@@ -38,7 +46,7 @@ export default function TotalTaskProgress() {
               : "",
             borderRadius: reduceAnimations ? "0" : "",
           }}
-          className="h-6 w-full overflow-hidden rounded-2xl bg-secondary-200"
+          className="h-8 w-full overflow-hidden rounded-2xl bg-secondary-200"
         >
           <div
             className="h-full rounded-2xl bg-secondary-700"

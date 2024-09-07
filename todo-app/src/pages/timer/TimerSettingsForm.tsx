@@ -58,7 +58,7 @@ export default function TimerSettingsForm() {
         variant="ghost-icon"
         onClick={() => setSettingsOpen(!settingsOpen)}
       >
-        <SettingsIcon />
+        <SettingsIcon size={fontSizeMap["3xl"]} />
       </Button>
 
       <form

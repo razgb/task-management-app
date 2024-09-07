@@ -8,9 +8,8 @@ export type ValidUrlPaths =
   | "/tasks"
   | "/settings"
   | "/settings/tasks"
-  | "/settings/account-management"
   | "/settings/accessibility"
-  | "/settings/activity-log"
+  | "/settings/account-management"
   | "/settings/frequently-asked-questions"
   | "/timer"
   | "/task-creator"
@@ -82,9 +81,8 @@ const isValidUrlPath = (url: string): url is ValidUrlPaths => {
     "/tasks",
     "/settings",
     "/settings/tasks",
-    "/settings/account-management",
     "/settings/accessibility",
-    "/settings/activity-log",
+    "/settings/account-management",
     "/settings/frequently-asked-questions",
     "/timer",
     "/task-creator",

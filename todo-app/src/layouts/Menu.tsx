@@ -10,12 +10,8 @@ export default function Menu() {
   const [menuState, setMenuState] = useState<boolean>(false);
   const toggleMenuState = () => setMenuState((prev) => !prev);
   const { accessibility } = useAccessibility();
-  const {
-    removeRoundEdges,
-    reduceAnimations,
-    highContrastMode,
-    increaseLetterSpacing,
-  } = accessibility;
+  const { removeRoundEdges, reduceAnimations, increaseLetterSpacing } =
+    accessibility;
 
   return (
     <div
@@ -23,7 +19,6 @@ export default function Menu() {
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-        color: highContrastMode ? "#fff" : "",
       }}
       className={`text-primary mr-0 rounded-3xl bg-secondaryBg p-2 ${
         menuState ? "min-w-[300px]" : "w-fit"

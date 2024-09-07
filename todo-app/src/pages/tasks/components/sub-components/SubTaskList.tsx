@@ -34,7 +34,12 @@ export default function SubTaskList({
               >
                 No sub tasks
               </h3>
-              <p className="text-center text-textWeak">
+              <p
+                style={{
+                  fontSize: fontSizeMap["base"],
+                }}
+                className="text-center text-textWeak"
+              >
                 You'll see your sub tasks here upon adding one in the form
                 above!
               </p>
