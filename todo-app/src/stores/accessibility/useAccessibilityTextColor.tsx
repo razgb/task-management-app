@@ -1,4 +1,4 @@
-import useTheme from "../timer/useTheme";
+import useTheme from "../theme/useTheme";
 
 interface AccessibilityTextColors {
   accessibilityTextColor: string;

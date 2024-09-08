@@ -5,7 +5,7 @@ import "./index.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 import { RouterProvider } from "./stores/router/RouterContext.tsx";
-import ThemeContextProvider from "./stores/timer/ThemeContext.tsx";
+import ThemeContextProvider from "./stores/theme/ThemeContext.tsx";
 import AccessibilityContextProvider from "./stores/accessibility/AccessibilityProvider.tsx";
 import TimerContextProvider from "./stores/timer/TimerContextProvider.tsx";
 import { LoadingContextProvider } from "./stores/loading/LoadingContext.tsx";

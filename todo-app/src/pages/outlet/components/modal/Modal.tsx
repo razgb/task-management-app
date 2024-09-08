@@ -2,72 +2,72 @@ import { Mail, TriangleAlert, XIcon } from "lucide-react";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import useModal from "@/stores/modal/useModal";
 import styles from "@/tailwindStyles";
-import Button from "@/shared-components/Button";
-import useTheme from "@/stores/timer/useTheme";
+import useTheme from "@/stores/theme/useTheme";
 
 export default function Modal() {
   const { closeModal, modalType, modalMessage } = useModal();
   const { accessibility } = useAccessibility();
   const {
-    highContrastMode,
     increaseLetterSpacing,
     removeRoundEdges,
     fontSizeMap,
-    accessibilityTextColor,
     reduceAnimations,
   } = accessibility;
   const { theme } = useTheme();
 
   let modalStyles = "";
+  let textIconStyles: string = "";
   let icon: React.ReactNode | null = null;
-  if (modalType === "success") {
-    modalStyles = "bg-secondary-400 bg-opacity-90";
-    icon = null;
-    icon = <Mail size={48} />;
-  } else if (modalType === "error") {
-    modalStyles = theme === "light" ? "bg-red-200" : "bg-red-950";
-    icon = <TriangleAlert size={48} />;
+
+  switch (modalType) {
+    case "success":
+      modalStyles = "bg-secondary-400 bg-opacity-90";
+      icon = <Mail size={22} />;
+      textIconStyles = "text-text";
+      break;
+
+    case "error":
+      modalStyles = theme === "light" ? "bg-red-300" : "bg-red-900";
+      icon = <TriangleAlert size={22} />;
+      textIconStyles = theme === "light" ? "text-red-950" : "text-red-300";
+      break;
+
+    default:
+      modalStyles = "";
+      textIconStyles = "";
+      icon = null;
   }
+
+  const modal = modalType ? "" : styles.invisible;
 
   return (
     <div
       style={{
+        letterSpacing: increaseLetterSpacing ? "0.1rem" : "0",
+        transition: reduceAnimations ? "none" : "",
         borderRadius: removeRoundEdges ? "0" : "",
       }}
-      className={`mb-4 flex rounded-3xl p-2 ${modalStyles}`}
+      // prettier-ignore
+      className={`font-medium w-full leading-6
+      transition-opacity ${modal} ${modalStyles} ${textIconStyles}`}
     >
-      <div
-        style={{
-          letterSpacing: increaseLetterSpacing ? "0.1rem" : "0",
-          transition: reduceAnimations ? "none" : "",
-          borderRadius: removeRoundEdges ? "0" : "",
-        }}
-        // prettier-ignore
-        className={`font-medium bg-primaryBg w-full p-3 leading-6 rounded-2xl transition-opacity ${modalType ? "" : styles.invisible}`}
-      >
-        <div className="mx-auto flex max-w-[800px] items-center justify-center gap-6">
-          <h2
-            style={{
-              color: highContrastMode ? accessibilityTextColor : "",
-              fontSize: fontSizeMap["xl"],
-              borderRadius: removeRoundEdges ? "0" : "",
-            }}
-            className={`${modalType === "success" ? "text-text" : "text-text"}`}
-          >
-            {modalMessage ||
-              "Welcome to the modal! This is a test message to see how it looks."}
-          </h2>
+      <div className="mx-auto flex max-w-[800px] items-center justify-center gap-2">
+        {icon}
+        <h2
+          style={{
+            fontSize: fontSizeMap["lg"],
+            borderRadius: removeRoundEdges ? "0" : "",
+          }}
+          className="text-inherit"
+        >
+          {modalMessage ||
+            "Welcome to the modal! This is a test message to see how it looks."}
+        </h2>
 
-          {/* The button will soon be a unstyled button. */}
-          <Button onClick={closeModal} type="button" variant="ghost-icon">
-            <XIcon size={32} color={theme === "light" ? "#000" : "#fff"} />
-          </Button>
-        </div>
+        <button className={"text-inherit"} onClick={closeModal}>
+          <XIcon size={22} />
+        </button>
       </div>
     </div>
   );
 }
-
-// {icon}
-// className={`absolute left-1/2 top-[1%] font-medium flex max-w-[700px] -translate-x-1/2 items-center justify-between
-//   gap-4 px-8 leading-6 rounded-full py-4 transition-opacity ${modalType ? "" : styles.invisible} ${modalStyles}`}

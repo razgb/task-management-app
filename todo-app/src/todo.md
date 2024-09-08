@@ -1,5 +1,4 @@
 **least importantant**
-- Theme button not as thick as other menu buttons.
 
 **mid importantance**
 - create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
@@ -16,12 +15,24 @@
 
 - Error handling for task column useMutation for task status.
 
+- ToDoItem not being added on task expanded page refresh.
+
 **most importantant**
-- Delete main nav and create success & error components.
+
+  **update 1**
+  - Put error and success modals above the loading bar.
+    -> Make thinner, cleaner design, and maybe same bg-color.
+
+  **update 2**
+  - Delete main navigation.
+  - Add app logo to main menu when expanded.
+    -> Add it to firebase to fetch it.
+
+  **update 3**
+  -
 
 - Creating an option to change the description of the to do task when expanded.
 
-- Fully rewrite the error and success components.
 - testing for errors during signing up user.
 
 - Add google for logins for UX.

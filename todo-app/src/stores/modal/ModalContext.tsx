@@ -1,7 +1,6 @@
 import { createContext } from "react";
 
 export type ModalType = "success" | "error" | null;
-
 export type ModalContextType = {
   openModal: (type: ModalType, message: string) => void;
   closeModal: () => void;

@@ -1,5 +1,5 @@
 import { useLoading } from "@/stores/loading/useLoading";
-import useTheme from "@/stores/timer/useTheme";
+import useTheme from "@/stores/theme/useTheme";
 
 export default function LoadingWave() {
   const { isLoading } = useLoading();

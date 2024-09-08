@@ -8,7 +8,7 @@ import {
   CheckCircle2Icon,
 } from "lucide-react";
 import { useState } from "react";
-import useTheme from "@/stores/timer/useTheme";
+import useTheme from "@/stores/theme/useTheme";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 
 export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
@@ -40,7 +40,7 @@ export default function ThemeAccordion({ menuState }: { menuState: boolean }) {
         aria-label="Show theme options."
         tabIndex={0}
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-2 ${fontSizeMap["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
+        className={`flex select-none items-center justify-between gap-4 bg-btnBg px-4 py-3 ${fontSizeMap["lg"]} font-medium hover:bg-btnHover active:bg-btnActive ${borderStyles}`}
         style={{
           borderRadius: removeRoundEdges ? "0" : "",
           transition: reduceAnimations ? "none" : "",

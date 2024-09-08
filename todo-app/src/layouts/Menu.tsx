@@ -20,7 +20,7 @@ export default function Menu() {
         transition: reduceAnimations ? "none" : "",
         letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
       }}
-      className={`text-primary mr-0 rounded-3xl bg-secondaryBg p-2 ${
+      className={`text-primary rounded-3xl bg-secondaryBg p-3 ${
         menuState ? "min-w-[300px]" : "w-fit"
       }`}
     >

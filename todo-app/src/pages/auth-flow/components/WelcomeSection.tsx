@@ -2,7 +2,7 @@ import useAccessibility from "@/stores/accessibility/useAccessibility";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { fetchWelcomeMessage } from "@/pages/auth-flow/fetchWelcomeMessage";
-import useTheme from "@/stores/timer/useTheme";
+import useTheme from "@/stores/theme/useTheme";
 
 export default function WelcomeSection() {
   const { accessibility } = useAccessibility();

@@ -60,7 +60,7 @@ export default function Outlet() {
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
       }}
-      className={`h-full overflow-hidden rounded-3xl bg-secondary-400 p-2`}
+      className={`flex-1 overflow-hidden rounded-3xl bg-secondary-400 p-3`}
     >
       {content}
     </div>

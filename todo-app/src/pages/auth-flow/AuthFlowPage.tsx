@@ -3,7 +3,7 @@ import AccessibilitySection from "@/pages/auth-flow/components/AccessibilitySect
 import WelcomeSection from "@/pages/auth-flow/components/WelcomeSection";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import useRouter from "@/stores/router/useRouter";
-import useTheme from "@/stores/timer/useTheme";
+import useTheme from "@/stores/theme/useTheme";
 import LoginPage from "./login/LoginPage";
 import SignupPage from "./signup/SignupPage";
 import ErrorModal from "@/pages/auth-flow/components/ErrorModal";
