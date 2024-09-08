@@ -33,6 +33,21 @@ function getLocalStorageSettings() {
 }
 
 function getSystemTheme(): ThemeStateType {
+  if (typeof window !== "undefined" && window.matchMedia) {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return { theme: "dark", themeController: "system" };
+    }
+
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+      return { theme: "light", themeController: "system" };
+    }
+  }
+
+  // Default case
+  return { theme: "light", themeController: "user" };
+}
+
+function initThemeSettings(): ThemeStateType {
   const localStorageResult = getLocalStorageSettings();
   if (localStorageResult) {
     return localStorageResult;
@@ -57,7 +72,7 @@ export default function ThemeContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [settings, setSettings] = useState<ThemeStateType>(getSystemTheme());
+  const [settings, setSettings] = useState<ThemeStateType>(initThemeSettings());
 
   function changeAppTheme(
     theme: ThemeContextType["theme"] | null,

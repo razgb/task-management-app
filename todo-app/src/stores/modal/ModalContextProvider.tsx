@@ -4,7 +4,7 @@ import { ModalContext, ModalContextType, ModalType } from "./ModalContext";
 export const ModalContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [modalType, setModalType] = useState<ModalType>(null);
+  const [modalType, setModalType] = useState<ModalType>("success");
   const [modalMessage, setModalMessage] = useState<string>("");
 
   const openModal = (type: ModalType, message: string) => {
