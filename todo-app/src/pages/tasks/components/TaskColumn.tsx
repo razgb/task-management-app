@@ -5,6 +5,7 @@ import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx"
 import { useMutation, useQueryClient } from "react-query";
 import { updateTaskStatusInFirebase } from "@/pages/tasks/functions/async/updateTaskStatusInFirebase.ts";
 import useModal from "@/stores/modal/useModal.tsx";
+import { useLoading } from "@/stores/loading/useLoading.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
@@ -27,19 +28,41 @@ export default function TaskColumn({
     increaseLetterSpacing,
     fontSizeMap,
     accessibilityTextColor,
-    reverseAccessibilityTextColor,
   } = accessibility;
   const { openModal } = useModal();
   const queryClient = useQueryClient();
+  const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
 
-  const { error, isError, isLoading, failureCount, mutate } = useMutation({
+  const { failureCount, mutate } = useMutation({
     mutationFn: async ({ id, newStatus }: MutationParameterType) => {
-      await updateTaskStatusInFirebase(id, newStatus);
+      addToLoadingQueue("task-status");
+
+      try {
+        await updateTaskStatusInFirebase(id, newStatus);
+      } catch {
+        throw new Error(
+          "Error syncing task status with server, check internet connection and try again.",
+        );
+      } finally {
+        removeFromLoadingQueue("task-status");
+      }
     },
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["tasks"] });
     },
-    retry: 3,
+    onError: (err) => {
+      if (err instanceof Error) {
+        openModal("error", err.message);
+        return;
+      }
+
+      openModal(
+        "error",
+        `Error syncing task status with server, check internet connection and try again.`,
+      );
+    },
+    retryDelay: 500,
+    retry: 2,
   });
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
@@ -148,7 +171,7 @@ function proccessTaskData(
           />
         );
       });
-  }
+  } else return null;
 
   return output;
 }

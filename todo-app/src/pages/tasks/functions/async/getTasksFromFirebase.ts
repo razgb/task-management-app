@@ -29,7 +29,7 @@ export type RawTaskType = {
 export async function getTasksFromFirebase() {
   const user = auth.currentUser;
 
-  // error occurs if user loads in on taskspage on page load. (user object may not be received from firebase yet)
+  // user may not exist on page load. Throwing causes useQuery to retry in 500ms.
   if (!user) throw new Error("no user state");
 
   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");

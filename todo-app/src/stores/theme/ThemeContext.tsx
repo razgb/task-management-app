@@ -50,6 +50,10 @@ function getSystemTheme(): ThemeStateType {
 function initThemeSettings(): ThemeStateType {
   const localStorageResult = getLocalStorageSettings();
   if (localStorageResult) {
+    if (localStorageResult.themeController === "system") {
+      return getSystemTheme(); // edge case for system theme changes between local saves.
+    }
+
     return localStorageResult;
   }
 

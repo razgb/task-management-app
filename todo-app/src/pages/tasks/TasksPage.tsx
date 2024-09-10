@@ -1,34 +1,30 @@
-import { useEffect } from "react";
 import TaskColumn from "@/pages/tasks/components/TaskColumn.tsx";
-
-import useAccessibility from "@/stores/accessibility/useAccessibility.tsx";
 import { getTasksFromFirebase } from "@/pages/tasks/functions/async/getTasksFromFirebase.ts";
-import { useQuery } from "react-query";
+import useAccessibility from "@/stores/accessibility/useAccessibility.tsx";
 import useModal from "@/stores/modal/useModal.tsx";
+import { useQuery } from "react-query";
 
 export default function TasksPage() {
   const { accessibility } = useAccessibility();
   const { removeRoundEdges } = accessibility;
   const { openModal } = useModal();
 
-  const {
-    failureCount, // got some ideas for this...
-    error,
-    data: tasks,
-    isFetching,
-  } = useQuery(["tasks"], getTasksFromFirebase, {
-    refetchOnWindowFocus: false, // Do not refetch on window focus
-    retry: 5,
+  const { data: tasks, isFetching } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: getTasksFromFirebase,
+    refetchOnWindowFocus: false,
     staleTime: Infinity,
-  });
+    retryDelay: 500,
+    retry: (failureCount) => {
+      if (failureCount < 4) return true; // retries query
 
-  useEffect(() => {
-    if (failureCount === 3) {
       openModal(
         "error",
         "Error loading your data. Check your internet connection and try again.",
       );
-    }
+
+      return false; // stops query
+    },
   });
 
   return (

@@ -11,8 +11,8 @@ export default function MainContent() {
     <div
       className={`${theme} relative flex h-screen flex-col overflow-hidden bg-primaryBg`}
     >
-      <Modal />
       <LoadingWave />
+      <Modal />
 
       <div
         className={`3xl:max-w-[85dvw] mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg px-8 pb-8 pt-4 text-text`}

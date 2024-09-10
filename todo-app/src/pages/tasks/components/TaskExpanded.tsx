@@ -94,6 +94,7 @@ export default function TaskExpanded() {
     },
     queryKey: ["task-expanded"],
     staleTime: Infinity,
+    retryDelay: 500,
     retry: (failureCount) => {
       if (failureCount < 2) return true; // retries query
 
@@ -167,6 +168,7 @@ export default function TaskExpanded() {
           break;
       }
     },
+    retryDelay: 500,
     retry: 2,
     onError: (err) => {
       if (err instanceof Error) {
