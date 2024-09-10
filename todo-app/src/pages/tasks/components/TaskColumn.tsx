@@ -1,6 +1,6 @@
 import Task, { TaskType } from "@/pages/tasks/components/Task.tsx";
 import useAccessibility from "@/stores/accessibility/useAccessibility.tsx";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTaskStatusInFirebase } from "@/pages/tasks/functions/async/updateTaskStatusInFirebase.ts";
@@ -33,7 +33,7 @@ export default function TaskColumn({
   const queryClient = useQueryClient();
   const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
 
-  const { failureCount, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async ({ id, newStatus }: MutationParameterType) => {
       addToLoadingQueue("task-status");
 
@@ -97,15 +97,6 @@ export default function TaskColumn({
       newStatus: variant,
     });
   }
-
-  useEffect(() => {
-    if (failureCount && failureCount < 3) {
-      openModal(
-        "error",
-        "Error syncing task status change, check internet connection and try again.",
-      );
-    }
-  });
 
   return (
     <div

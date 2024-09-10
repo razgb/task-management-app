@@ -50,7 +50,7 @@ export default function Menu() {
         </div>
 
         <div>
-          <MenuButton to="/dashboard" icon={<LogOut />} menuState={menuState}>
+          <MenuButton to="/logout" icon={<LogOut />} menuState={menuState}>
             Logout
           </MenuButton>
         </div>

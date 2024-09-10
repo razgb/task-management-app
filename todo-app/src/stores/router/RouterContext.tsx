@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 export type ValidUrlPaths =
   | "/error"
   | "/login"
+  | "/logout"
   | "/signup"
   | "/dashboard"
   | "/tasks"
@@ -76,6 +77,7 @@ const isValidUrlPath = (url: string): url is ValidUrlPaths => {
   const validPaths: ValidUrlPaths[] = [
     "/error",
     "/login",
+    "/logout",
     "/signup",
     "/dashboard",
     "/tasks",
