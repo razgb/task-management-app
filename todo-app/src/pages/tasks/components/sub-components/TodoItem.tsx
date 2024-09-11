@@ -1,7 +1,4 @@
-import {
-  handleDragStart,
-  handleDrop,
-} from "@/pages/tasks/functions/client/dragAndDropFunctions";
+import { handleDragStart } from "@/pages/tasks/functions/client/dragAndDropFunctions";
 import { handleCheckEvents } from "@/pages/tasks/functions/handlers/handleCheckEvent";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import { useLoading } from "@/stores/loading/useLoading";
@@ -10,22 +7,15 @@ import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { Move, Square, SquareCheck } from "lucide-react";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { handleSubTaskSwap } from "../../functions/handlers/handleSubTaskSwap";
 import { SubTaskType } from "../TaskExpanded";
 
 export type ToDoItemProps = {
   title: string;
-  swapSubTaskPositions: (
-    incomingTaskId: string,
-    outgoingTaskId: string,
-  ) => void;
   onDelete: (subTask: SubTaskType) => void;
 };
 
-export default function ToDoItem({
-  title,
-  swapSubTaskPositions,
-  onDelete,
-}: ToDoItemProps) {
+export default function ToDoItem({ title, onDelete }: ToDoItemProps) {
   const { accessibility } = useAccessibility();
   const {
     reduceAnimations,
@@ -40,26 +30,45 @@ export default function ToDoItem({
     useLoading();
   const { openModal } = useModal();
   const { currentTask, updateCurrentTask } = useTaskExpanded();
-  console.log(currentTask);
 
   const [isDragging, setIsDragging] = useState(false);
 
   const subTask = currentTask?.subTasks.find((st) => st.title === title);
 
   const { isLoading, mutateAsync } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({
+      type,
+      event,
+    }: {
+      type: "check" | "swap";
+      event?: React.DragEvent<HTMLLIElement>;
+    }) => {
       if (!currentTask || !subTask) return;
 
-      await handleCheckEvents({
-        currentTask,
-        subTask,
-        addToLoadingQueue,
-        removeFromLoadingQueue,
-        updateCurrentTask,
-      });
+      if (type === "check") {
+        await handleCheckEvents({
+          currentTask,
+          subTask,
+          addToLoadingQueue,
+          removeFromLoadingQueue,
+          updateCurrentTask,
+        });
+      } else if (type === "swap") {
+        if (!event) return;
+
+        await handleSubTaskSwap({
+          event,
+          subTask,
+          currentTask,
+          addToLoadingQueue,
+          removeFromLoadingQueue,
+          openModal,
+          updateCurrentTask,
+        });
+      }
     },
     retry: 2,
-    onError: (err) => {
+    onError: (err: unknown) => {
       if (err instanceof Error) {
         openModal("error", err.message);
         return;
@@ -91,7 +100,12 @@ export default function ToDoItem({
       draggable={isDragging}
       onDragStart={(event) => handleDragStart(event, subTask)}
       onDragOver={(event) => event.preventDefault()}
-      onDrop={(event) => handleDrop(event, subTask.title, swapSubTaskPositions)}
+      onDrop={async (event) => {
+        await mutateAsync({
+          type: "swap",
+          event,
+        });
+      }}
     >
       <div className="flex gap-4">
         <button
@@ -125,7 +139,7 @@ export default function ToDoItem({
         </button>
 
         <button
-          onClick={async () => await mutateAsync()}
+          onClick={async () => await mutateAsync({ type: "check" })}
           disabled={isLoading}
           role="checkbox"
           aria-checked={subTask.completed ? "true" : "false"}

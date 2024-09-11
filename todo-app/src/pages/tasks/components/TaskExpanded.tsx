@@ -240,50 +240,6 @@ export default function TaskExpanded() {
     });
   }
 
-  function swapSubTaskPositions(
-    incomingTaskTitle: string,
-    outgoingTaskTitle: string,
-  ) {
-    if (!localCurrentTask) return;
-
-    let incomingTaskPosition: number | undefined = undefined;
-    let outgoingTaskPosition: number | undefined = undefined;
-
-    localCurrentTask.subTasks.forEach((subTask) => {
-      const title = subTask.title;
-      if (incomingTaskPosition && outgoingTaskPosition) return;
-
-      if (title === incomingTaskTitle) {
-        incomingTaskPosition = subTask.position;
-      } else if (title === outgoingTaskTitle) {
-        outgoingTaskPosition = subTask.position;
-      }
-    });
-
-    const newSubTasksArray = localCurrentTask.subTasks.map((task) => {
-      const title = task.title;
-      if (title !== incomingTaskTitle && title !== outgoingTaskTitle)
-        return task;
-
-      return {
-        ...task,
-        position:
-          title === incomingTaskTitle
-            ? outgoingTaskPosition
-            : incomingTaskPosition,
-      } as SubTaskType;
-    });
-
-    updateCurrentTask({
-      ...localCurrentTask,
-      subTasks: newSubTasksArray,
-      updatedAt: {
-        seconds: new Date().getTime() / 1000,
-        nanoseconds: 0,
-      },
-    });
-  }
-
   async function removalMutation(subTask: SubTaskType) {
     if (!currentTask) return;
 
@@ -304,7 +260,6 @@ export default function TaskExpanded() {
   const reorderedTaskList = reorderSubtasks({
     currentTask: localCurrentTask,
     removalMutation,
-    swapSubTaskPositions,
   });
 
   return (

@@ -13,24 +13,20 @@ export function handleDragStart(
 }
 
 /**
- * Receives subtask data from another dropped subtask.
- * Checks for unique subtask titles that are used as unique identifiers.
+ * Receives subtask data from a dropped subtask.
+ * Checks for subtask titles that are used as unique identifiers.
  */
 export function handleDrop(
   event: React.DragEvent<HTMLLIElement>,
-  ownTaskTitle: SubTaskType["title"],
-  swapSubTaskPositions: (
-    incomingTaskTitle: string,
-    outgoingTaskTitle: string,
-  ) => void,
-): void {
+  subTaskTitle: SubTaskType["title"],
+) {
   event.preventDefault();
 
   const temp = event.dataTransfer?.getData("application/json");
   if (!temp) return;
 
-  const replacingTaskData = JSON.parse(temp) as SubTaskType; // Incoming task data.
-  if (ownTaskTitle === replacingTaskData.title) return; // Guard against drop on same position.
+  const receivedSubTask = JSON.parse(temp) as SubTaskType; // Incoming task data.
+  if (subTaskTitle === receivedSubTask.title) return; // Guard against drop on same position.
 
-  swapSubTaskPositions(replacingTaskData.title, ownTaskTitle);
+  return receivedSubTask.title;
 }

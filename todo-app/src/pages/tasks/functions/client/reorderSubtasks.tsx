@@ -14,7 +14,6 @@ type ReorderSubTasksType = {
 export function reorderSubtasks({
   currentTask,
   removalMutation,
-  swapSubTaskPositions,
 }: ReorderSubTasksType) {
   const reorderedTaskList: JSX.Element[] = [];
   for (let i = 0; i < currentTask.subTasks.length; i++) {
@@ -30,7 +29,6 @@ export function reorderSubtasks({
         <ToDoItem
           key={subTask.title}
           title={subTask.title}
-          swapSubTaskPositions={swapSubTaskPositions}
           onDelete={removalMutation}
         />,
       );
