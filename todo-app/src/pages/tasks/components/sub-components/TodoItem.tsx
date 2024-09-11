@@ -1,17 +1,16 @@
+import {
+  handleDragStart,
+  handleDrop,
+} from "@/pages/tasks/functions/client/dragAndDropFunctions";
+import { handleCheckEvents } from "@/pages/tasks/functions/handlers/handleCheckEvent";
+import useAccessibility from "@/stores/accessibility/useAccessibility";
+import { useLoading } from "@/stores/loading/useLoading";
+import useModal from "@/stores/modal/useModal";
+import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { Move, Square, SquareCheck } from "lucide-react";
 import { useState } from "react";
-import useAccessibility from "@/stores/accessibility/useAccessibility";
-
-import {
-  handleDrop,
-  handleDragStart,
-} from "@/pages/tasks/functions/client/dragAndDropFunctions";
-import { SubTaskType } from "../TaskExpanded";
-import { handleCheckEvents } from "@/pages/tasks/functions/handlers/handleCheckEvent";
-import { useLoading } from "@/stores/loading/useLoading";
-import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { useMutation, useQueryClient } from "react-query";
-import useModal from "@/stores/modal/useModal";
+import { SubTaskType } from "../TaskExpanded";
 
 export type ToDoItemProps = {
   title: string;
@@ -41,22 +40,23 @@ export default function ToDoItem({
     useLoading();
   const { openModal } = useModal();
   const { currentTask, updateCurrentTask } = useTaskExpanded();
+  console.log(currentTask);
 
   const [isDragging, setIsDragging] = useState(false);
 
   const subTask = currentTask?.subTasks.find((st) => st.title === title);
 
-  const { mutateAsync, isLoading } = useMutation({
+  const { isLoading, mutateAsync } = useMutation({
     mutationFn: async () => {
       if (!currentTask || !subTask) return;
 
-      await handleCheckEvents(
+      await handleCheckEvents({
         currentTask,
         subTask,
         addToLoadingQueue,
         removeFromLoadingQueue,
         updateCurrentTask,
-      );
+      });
     },
     retry: 2,
     onError: (err) => {

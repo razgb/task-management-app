@@ -1,10 +1,9 @@
 **least importantant**
 
 **mid importantance**
-- Logging out feature.
-  -> Own modal component.
-
 - ToDoItem not being added on task expanded page refresh.
+
+- Recent tasks to filter updatedAt fields and display 6 most recent tasks.
 
 - create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
   -> If the user happens to not use due dates, remove the widget entirely.

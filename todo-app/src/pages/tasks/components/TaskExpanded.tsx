@@ -1,25 +1,25 @@
-import { useRef } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { addSubTaskToFirebase } from "@/pages/tasks/functions/async/addSubTaskToFirebase";
+import { removeSubTaskFromFirebase } from "@/pages/tasks/functions/async/removeSubTaskFromFirebase";
+import { parseTaskFromURL } from "@/pages/tasks/functions/client/parseTaskFromURL";
+import { reorderSubtasks } from "@/pages/tasks/functions/client/reorderSubtasks";
+import { handleSingleTaskFetch } from "@/pages/tasks/functions/handlers/handleSingleTaskFetch";
+import { handleSubTaskAdd } from "@/pages/tasks/functions/handlers/handleSubTaskAdd";
+import { handleSubTaskRemove } from "@/pages/tasks/functions/handlers/handleSubTaskDeletion";
+import { handleTaskDeletion } from "@/pages/tasks/functions/handlers/handleTaskDeletion";
+import { handleTaskStatusUpdate } from "@/pages/tasks/functions/handlers/handleTaskStatusUpdate";
+import Button from "@/shared-components/Button";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import { useLoading } from "@/stores/loading/useLoading";
 import useModal from "@/stores/modal/useModal";
 import useRouter from "@/stores/router/useRouter";
 import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { checkInputTextValidity } from "@/util/checkInputTextValidity";
-import { TaskType } from "./Task";
-import Button from "@/shared-components/Button";
-import { addSubTaskToFirebase } from "@/pages/tasks/functions/async/addSubTaskToFirebase";
-import { removeSubTaskFromFirebase } from "@/pages/tasks/functions/async/removeSubTaskFromFirebase";
-import { reorderSubtasks } from "@/pages/tasks/functions/client/reorderSubtasks";
-import { handleSubTaskAdd } from "@/pages/tasks/functions/handlers/handleSubTaskAdd";
-import { handleSubTaskRemove } from "@/pages/tasks/functions/handlers/handleSubTaskDeletion";
-import { handleTaskDeletion } from "@/pages/tasks/functions/handlers/handleTaskDeletion";
-import { handleTaskStatusUpdate } from "@/pages/tasks/functions/handlers/handleTaskStatusUpdate";
+import { useRef } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import DeleteTaskButtonContainer from "./sub-components/DeleteTaskButtonContainer";
 import SubTaskList from "./sub-components/SubTaskList";
 import TaskDetails from "./sub-components/TaskDetails";
-import DeleteTaskButtonContainer from "./sub-components/DeleteTaskButtonContainer";
-import { handleSingleTaskFetch } from "@/pages/tasks/functions/handlers/handleSingleTaskFetch";
-import { parseTaskFromURL } from "@/pages/tasks/functions/client/parseTaskFromURL";
+import { TaskType } from "./Task";
 import TaskExpandedSkeleton from "./TaskExpandedSkeleton";
 
 export type SubTaskType = {
@@ -87,8 +87,6 @@ export default function TaskExpanded() {
 
       await handleSingleTaskFetch({
         taskID: parsedTaskID,
-        addToLoadingQueue,
-        removeFromLoadingQueue,
         updateCurrentTask,
       });
     },
@@ -96,7 +94,7 @@ export default function TaskExpanded() {
     staleTime: Infinity,
     retryDelay: 500,
     retry: (failureCount) => {
-      if (failureCount < 2) return true; // retries query
+      if (failureCount < 3) return true; // retries query
 
       updatePath("error");
       return false; // stops query

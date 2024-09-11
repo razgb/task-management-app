@@ -2,41 +2,49 @@ import { TaskType } from "@/pages/tasks/components/Task";
 import { SubTaskType } from "@/pages/tasks/components/TaskExpanded";
 import { updateSubTaskCompletion } from "../async/updateSubTaskCompletion";
 
+type HandleCheckEventsParams = {
+  currentTask: TaskType;
+  subTask: SubTaskType;
+  addToLoadingQueue: (key: string) => void;
+  removeFromLoadingQueue: (key: string) => void;
+  updateCurrentTask: (newCurrentTaskState: TaskType) => void;
+};
+
 /**
- * Middle ware between client side & async firebase functions.
+ * Handles both client side & async firebase functions.
  * App load state -> invoke async firebase function
  * -> update client -> update currentTask state -> remove app load state.
  */
-export async function handleCheckEvents(
-  currentTask: TaskType,
-  subTask: SubTaskType,
-  addToLoadingQueue: (key: string) => void,
-  removeFromLoadingQueue: (key: string) => void,
-  updateCurrentTask: (newCurrentTaskState: TaskType) => void,
-) {
+export async function handleCheckEvents({
+  currentTask,
+  subTask,
+  addToLoadingQueue,
+  removeFromLoadingQueue,
+  updateCurrentTask,
+}: HandleCheckEventsParams) {
   addToLoadingQueue("task-details");
 
-  const filteredSubTasksArray = currentTask.subTasks.filter(
-    (st) => st.title !== subTask.title,
-  );
-  const completeSubTasksArray = [
-    ...filteredSubTasksArray,
-    {
-      ...subTask,
-      completed: !subTask.completed,
-    },
-  ];
+  const newSubTasksArray = currentTask.subTasks.map((st) => {
+    if (st.title === subTask.title) {
+      return {
+        ...subTask,
+        completed: !subTask.completed,
+      };
+    }
+
+    return st;
+  });
 
   const newCurrentTask = {
     ...currentTask,
-    subTasks: completeSubTasksArray,
+    subTasks: newSubTasksArray,
   };
 
   try {
     await updateSubTaskCompletion(newCurrentTask, subTask);
     updateCurrentTask(newCurrentTask);
-  } catch (error) {
-    console.error("Error syncing your sub tasks with server.");
+  } catch (err) {
+    console.error(err);
   } finally {
     removeFromLoadingQueue("task-details");
   }

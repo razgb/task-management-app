@@ -17,7 +17,10 @@ export async function fetchSingleTaskFromFirebase(taskID: string) {
     if (!taskSnapshot.exists()) throw new Error("Task does not exist."); // 404
 
     const rawTask = taskSnapshot.data() as RawTaskType;
-    const task = convertRawTaskToClientTask(rawTask) as TaskType;
+    const task = convertRawTaskToClientTask({
+      ...rawTask,
+      id: taskSnapshot.id,
+    }) as TaskType;
 
     return task;
   } catch (_) {
