@@ -1,11 +1,11 @@
-import Task, { TaskType } from "@/pages/tasks/components/Task.tsx";
+import { TaskType } from "@/pages/tasks/components/Task.tsx";
 import useAccessibility from "@/stores/accessibility/useAccessibility.tsx";
-import { useMemo, useState } from "react";
-import { TaskSkeletonLoadMultiple } from "./sub-components/TaskSkeletonLoad.tsx";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTaskStatusInFirebase } from "@/pages/tasks/functions/async/updateTaskStatusInFirebase.ts";
 import useModal from "@/stores/modal/useModal.tsx";
 import { useLoading } from "@/stores/loading/useLoading.tsx";
+import { useProccessTaskData } from "../functions/client/useProcessTaskData.tsx";
 
 export type TaskGroupColumnType = {
   variant: "draft" | "in-progress" | "complete";
@@ -32,6 +32,13 @@ export default function TaskColumn({
   const { openModal } = useModal();
   const queryClient = useQueryClient();
   const { addToLoadingQueue, removeFromLoadingQueue } = useLoading();
+
+  const output = useProccessTaskData({
+    tasks,
+    loading,
+    column: variant,
+    hideGrabIcon: false,
+  });
 
   const { mutate } = useMutation({
     mutationFn: async ({ id, newStatus }: MutationParameterType) => {
@@ -66,11 +73,6 @@ export default function TaskColumn({
   });
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
-
-  const output = useMemo(
-    () => proccessTaskData(tasks, loading, variant),
-    [tasks, loading, variant],
-  );
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -127,42 +129,4 @@ export default function TaskColumn({
       </div>
     </div>
   );
-}
-
-/**
- * Turns raw task data from firebase into an array of JSX
- * <Task/> elements that are relevant to their respective
- * parent column's variant property.
- */
-function proccessTaskData(
-  tasks: TaskType[] | undefined,
-  loading: boolean,
-  column: TaskGroupColumnType["variant"],
-) {
-  let output: null | React.ReactNode | Iterable<React.ReactNode> = null;
-
-  if (loading) {
-    output = <TaskSkeletonLoadMultiple />;
-  } else if (!loading && tasks) {
-    output = tasks
-      .filter((task) => task.status === column)
-      .map((task) => {
-        return (
-          <Task
-            authorID={task.authorID}
-            key={task.id}
-            id={task.id}
-            subTasks={task.subTasks}
-            title={task.title}
-            description={task.description}
-            status={task.status}
-            createdAt={task.createdAt}
-            updatedAt={task.updatedAt}
-            hideGrabIcon={false}
-          />
-        );
-      });
-  } else return null;
-
-  return output;
 }

@@ -1,6 +1,4 @@
 **mid importantance**
-- Recent tasks to filter updatedAt fields and display 6 most recent tasks.
-
 - Create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
   -> If the user happens to not use due dates, remove the widget entirely.
 

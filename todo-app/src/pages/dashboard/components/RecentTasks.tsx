@@ -1,15 +1,9 @@
 import { MoveDiagonal } from "lucide-react";
-import Task from "@/pages/tasks/components/Task";
 import Link from "@/shared-components/Link";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
-
-/*
-Choice one: add a check to see if total number of tasks
-a user has is larger than 3/4 to then render this recent task container.
-----------
-Choice two: we can just show a cute svg icon of a person saying your
-tasks will show up here.
-*/
+import useGetTasks from "@/pages/tasks/useGetTasks";
+import { useProccessTaskData } from "@/pages/tasks/functions/client/useProcessTaskData";
+import { useMemo } from "react";
 
 export default function RecentTasks() {
   const { accessibility } = useAccessibility();
@@ -20,6 +14,19 @@ export default function RecentTasks() {
     fontSizeMap,
     accessibilityTextColor,
   } = accessibility;
+
+  const { tasks, loading } = useGetTasks();
+
+  const lastSixTasks = useMemo(() => {
+    return tasks ? structuredClone(tasks) : undefined;
+  }, [tasks]);
+
+  const output = useProccessTaskData({
+    tasks: lastSixTasks?.splice(0, 6),
+    loading,
+    column: undefined,
+    hideGrabIcon: true,
+  });
 
   return (
     <div
@@ -48,74 +55,7 @@ export default function RecentTasks() {
       </div>
 
       <div className="grid h-fit grid-cols-1 gap-4 overflow-y-scroll p-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-scrollbar">
-        <Task
-          createdAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          updatedAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          authorID=""
-          id={Math.random().toString()}
-          subTasks={[]}
-          title="Research the impact of climate change on coral reefs"
-          description=""
-          hideGrabIcon={true}
-          status="draft"
-        />
-        <Task
-          createdAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          updatedAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          authorID=""
-          id={Math.random().toString()}
-          subTasks={[]}
-          title="Analyze causes of the Revolution"
-          description="Study primary and secondary sources to understand the social, economic, and political factors that led to the French Revolution."
-          hideGrabIcon={true}
-          status="in-progress"
-        />
-        <Task
-          createdAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          updatedAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          authorID=""
-          id={Math.random().toString()}
-          subTasks={[]}
-          title="Learn about the history of artificial intelligence"
-          description="Explore the development of AI from its early beginnings to modern advancements."
-          hideGrabIcon={true}
-          status="in-progress"
-        />
-        <Task
-          createdAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          updatedAt={{
-            seconds: 0,
-            nanoseconds: 0,
-          }}
-          authorID=""
-          id={Math.random().toString()}
-          subTasks={[]}
-          title="Create a digital painting using Adobe Photoshop"
-          description="Experiment with different tools and techniques to create a unique digital artwork."
-          hideGrabIcon={true}
-          status="complete"
-        />
+        {output}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { TaskType } from "@/pages/tasks/components/Task";
 import { auth, db } from "@/main";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { convertRawTaskToClientTask } from "../client/convertRawTaskToClientTask";
 
 export type RawSubTaskType = {
@@ -36,7 +36,9 @@ export async function getTasksFromFirebase() {
 
   let tasksSnapshot;
   try {
-    tasksSnapshot = await getDocs(query(tasksCollectionRef));
+    tasksSnapshot = await getDocs(
+      query(tasksCollectionRef, orderBy("updatedAt", "desc")),
+    );
   } catch (error) {
     throw new Error(`Failed to load tasks, check internet and try again.`);
   }
