@@ -1,9 +1,9 @@
+import { TaskType } from "@/pages/tasks/components/Task";
+import { calculateCompletion } from "@/pages/tasks/functions/client/calculateCompletion";
+import ProgressBar from "@/shared-components/ProgressBar";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { formatFirebaseDate } from "@/util/formatFirebaseDate";
-import { TaskType } from "@/pages/tasks/components/Task";
-import ProgressBar from "@/shared-components/ProgressBar";
-import { calculateCompletion } from "@/pages/tasks/functions/client/calculateCompletion";
 
 /**
  * Renders progress bar, last edited, title, and the description.
@@ -47,16 +47,10 @@ export default function TaskDetails({
               outerClassName="h-2 w-full rounded-3xl bg-secondary-100"
               innerClassName="h-full rounded-3xl bg-secondary-600"
               completion={completion}
+              showCompletionPercentage={true}
+              textStyles="text-textContrast"
+              fontSize="sm"
             />
-            <p
-              style={{
-                fontSize: `${fontSizeMap.sm}px`,
-                color: highContrastMode ? reverseAccessibilityTextColor : "",
-              }}
-              className="flex-shrink-0 text-textContrast"
-            >
-              {`${completion}%`}
-            </p>
           </div>
         ) : null}
 

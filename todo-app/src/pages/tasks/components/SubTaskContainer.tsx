@@ -36,7 +36,7 @@ export default function SubTaskContainer({
           transition: reduceAnimations ? "none" : "",
         }}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <h3
             className="font-semibold text-textContrast"
             style={{
@@ -55,17 +55,13 @@ export default function SubTaskContainer({
         </div>
 
         <div className="flex items-center gap-2">
-          <ProgressBar completion={completion} height={2} />
-          <span
-            style={{
-              fontSize: `${fontSizeMap.sm}px`,
-              color: highContrastMode ? reverseAccessibilityTextColor : "",
-              letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
-            }}
-            className="font-semibold text-textContrast"
-          >
-            {completion}%
-          </span>
+          <ProgressBar
+            fontSize="base"
+            completion={completion}
+            height={3}
+            showCompletionPercentage={true}
+            textStyles="text-textContrast font-medium"
+          />
         </div>
       </div>
     </div>

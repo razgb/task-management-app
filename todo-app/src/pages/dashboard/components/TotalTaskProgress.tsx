@@ -2,6 +2,7 @@ import useGetTasks from "@/pages/tasks/useGetTasks";
 import ProgressBar from "@/shared-components/ProgressBar";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import { calculateAllTasksCompletion } from "../functions/client/calculateTasksCompletion";
+import { useMemo } from "react";
 
 export default function TotalTaskProgress() {
   const { accessibility } = useAccessibility();
@@ -15,26 +16,27 @@ export default function TotalTaskProgress() {
   } = accessibility;
   const { tasks, loading } = useGetTasks();
 
-  let content: JSX.Element | null;
+  const content = useMemo(() => {
+    if (loading) {
+      return <ProgressBarSkeleton />;
+    } else if (tasks && tasks.length) {
+      const completion = calculateAllTasksCompletion(tasks);
 
-  if (loading) {
-    content = <ProgressBarSkeleton />;
-  } else if (tasks && tasks.length) {
-    const completion = calculateAllTasksCompletion(tasks);
-
-    content = (
-      <ProgressBar
-        height={8}
-        completion={completion}
-        showCompletionPercentage={true}
-      />
-    );
-  } else
-    content = (
-      <div>
-        <ProgressBar height={8} completion={0} />
-      </div>
-    );
+      return (
+        <ProgressBar
+          height={8}
+          completion={completion}
+          showCompletionPercentage={true}
+          fontSize="3xl"
+        />
+      );
+    } else
+      return (
+        <div>
+          <ProgressBar height={8} completion={0} />
+        </div>
+      );
+  }, [tasks, loading]);
 
   return (
     <div

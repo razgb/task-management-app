@@ -1,4 +1,6 @@
-import useAccessibility from "@/stores/accessibility/useAccessibility";
+import useAccessibility, {
+  FontSizeMapType,
+} from "@/stores/accessibility/useAccessibility";
 
 const heightClasses = {
   1: "h-1",
@@ -16,13 +18,17 @@ export default function ProgressBar({
   height = 4,
   innerClassName,
   outerClassName,
+  fontSize,
   showCompletionPercentage,
+  textStyles,
 }: {
   completion: number;
   height?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   innerClassName?: string;
   outerClassName?: string;
+  fontSize?: keyof FontSizeMapType;
   showCompletionPercentage?: boolean;
+  textStyles?: string;
 }) {
   const { accessibility } = useAccessibility();
   const { reduceAnimations, fontSizeMap } = accessibility;
@@ -37,6 +43,8 @@ export default function ProgressBar({
     outerStyles = `overflow-hidden ${heightClasses[height]} w-full rounded-3xl bg-secondary-100`;
     innerStyles = `h-full rounded-3xl bg-secondary-600`;
   }
+
+  const textFontSize = fontSize ? fontSizeMap[fontSize] : fontSizeMap["2xl"];
 
   return (
     <div className="flex w-full items-center gap-1">
@@ -57,9 +65,9 @@ export default function ProgressBar({
 
       {showCompletionPercentage && (
         <span
-          className="font-semibold"
+          className={textStyles}
           style={{
-            fontSize: fontSizeMap["2xl"],
+            fontSize: textFontSize,
           }}
         >
           {`${completion}%`}

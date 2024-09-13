@@ -2,6 +2,7 @@ import { Trash } from "lucide-react";
 import Button from "@/shared-components/Button";
 import { useState } from "react";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
+import useTheme from "@/stores/theme/useTheme";
 
 export default function DeleteTaskButtonContainer({
   deletionMutation,
@@ -17,6 +18,7 @@ export default function DeleteTaskButtonContainer({
     reverseAccessibilityTextColor,
     reduceAnimations,
   } = accessibility;
+  const { theme } = useTheme();
 
   const [modalState, setModalState] = useState<boolean>(false);
 
@@ -46,7 +48,7 @@ export default function DeleteTaskButtonContainer({
       >
         <Trash
           size={fontSizeMap["xl"]}
-          color={highContrastMode ? reverseAccessibilityTextColor : "#000"}
+          color={theme === "light" ? "#fff" : "#000"}
         />
         <span
           style={{

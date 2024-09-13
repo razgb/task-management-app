@@ -5,10 +5,6 @@ import { SubTaskType } from "@/pages/tasks/components/TaskExpanded";
 type ReorderSubTasksType = {
   currentTask: TaskType;
   removalMutation: (subtask: SubTaskType) => void;
-  swapSubTaskPositions: (
-    incomingTaskTitle: string,
-    outgoingTaskTitle: string,
-  ) => void;
 };
 
 export function reorderSubtasks({
