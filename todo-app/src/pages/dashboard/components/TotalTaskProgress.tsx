@@ -1,7 +1,9 @@
+import useGetTasks from "@/pages/tasks/useGetTasks";
+import ProgressBar from "@/shared-components/ProgressBar";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
+import { calculateAllTasksCompletion } from "../functions/client/calculateTasksCompletion";
 
 export default function TotalTaskProgress() {
-  const completion = Math.floor(Math.random() * 100);
   const { accessibility } = useAccessibility();
   const {
     increaseLetterSpacing,
@@ -10,8 +12,29 @@ export default function TotalTaskProgress() {
     reduceAnimations,
     fontSizeMap,
     accessibilityTextColor,
-    reverseAccessibilityTextColor,
   } = accessibility;
+  const { tasks, loading } = useGetTasks();
+
+  let content: JSX.Element | null;
+
+  if (loading) {
+    content = <ProgressBarSkeleton />;
+  } else if (tasks && tasks.length) {
+    const completion = calculateAllTasksCompletion(tasks);
+
+    content = (
+      <ProgressBar
+        height={8}
+        completion={completion}
+        showCompletionPercentage={true}
+      />
+    );
+  } else
+    content = (
+      <div>
+        <ProgressBar height={8} completion={0} />
+      </div>
+    );
 
   return (
     <div
@@ -38,33 +61,15 @@ export default function TotalTaskProgress() {
         total progress
       </h2>
 
-      <div className="flex items-center gap-2">
-        <div
-          style={{
-            backgroundColor: highContrastMode
-              ? reverseAccessibilityTextColor
-              : "",
-            borderRadius: reduceAnimations ? "0" : "",
-          }}
-          className="h-8 w-full overflow-hidden rounded-2xl bg-secondary-200"
-        >
-          <div
-            className="h-full rounded-2xl bg-secondary-700"
-            style={{
-              width: completion + "%",
-              backgroundColor: highContrastMode ? accessibilityTextColor : "",
-              borderRadius: reduceAnimations ? "0" : "",
-            }}
-          ></div>
-        </div>
+      {content}
+    </div>
+  );
+}
 
-        <p
-          className="font-semibold"
-          style={{ fontSize: `${fontSizeMap["2xl"]}px` }}
-        >
-          {completion}%
-        </p>
-      </div>
+function ProgressBarSkeleton() {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="h-8 w-full animate-pulse overflow-hidden rounded-2xl bg-secondary-400"></div>
     </div>
   );
 }

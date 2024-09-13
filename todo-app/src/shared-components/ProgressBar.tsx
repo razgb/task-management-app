@@ -16,40 +16,55 @@ export default function ProgressBar({
   height = 4,
   innerClassName,
   outerClassName,
+  showCompletionPercentage,
 }: {
   completion: number;
   height?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   innerClassName?: string;
   outerClassName?: string;
+  showCompletionPercentage?: boolean;
 }) {
   const { accessibility } = useAccessibility();
-  const { reduceAnimations } = accessibility;
+  const { reduceAnimations, fontSizeMap } = accessibility;
 
-  let innerStyles = "";
   let outerStyles = "";
+  let innerStyles = "";
 
   if (innerClassName && outerClassName) {
     outerStyles = outerClassName;
     innerStyles = innerClassName;
   } else {
-    outerStyles = `${heightClasses[height]} w-full rounded-3xl bg-secondary-100`;
+    outerStyles = `overflow-hidden ${heightClasses[height]} w-full rounded-3xl bg-secondary-100`;
     innerStyles = `h-full rounded-3xl bg-secondary-600`;
   }
 
   return (
-    <div
-      className={outerStyles}
-      style={{
-        borderRadius: reduceAnimations ? "0" : "",
-      }}
-    >
+    <div className="flex w-full items-center gap-1">
       <div
-        className={innerStyles}
+        className={outerStyles}
         style={{
-          width: completion + "%",
           borderRadius: reduceAnimations ? "0" : "",
         }}
-      ></div>
+      >
+        <div
+          className={innerStyles}
+          style={{
+            width: completion + "%",
+            borderRadius: reduceAnimations ? "0" : "",
+          }}
+        ></div>
+      </div>
+
+      {showCompletionPercentage && (
+        <span
+          className="font-semibold"
+          style={{
+            fontSize: fontSizeMap["2xl"],
+          }}
+        >
+          {`${completion}%`}
+        </span>
+      )}
     </div>
   );
 }
