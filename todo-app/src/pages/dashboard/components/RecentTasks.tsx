@@ -36,8 +36,8 @@ export default function RecentTasks() {
       className="flex h-full flex-col overflow-hidden rounded-2xl bg-primaryBg p-8"
     >
       <div className="mb-4 flex items-center justify-between">
-        <h2
-          className="font-bold"
+        <h3
+          className="font-semibold"
           style={{
             fontSize: `${fontSizeMap["3xl"]}px`,
             color: highContrastMode ? accessibilityTextColor : "",
@@ -45,7 +45,8 @@ export default function RecentTasks() {
           }}
         >
           Recent Tasks
-        </h2>
+        </h3>
+
         <Link
           to="/tasks"
           className="rounded-full bg-primaryBg p-2 transition-colors hover:bg-secondaryBgWeak"

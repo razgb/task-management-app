@@ -50,7 +50,7 @@ export default function CurrentDateWidget() {
       }}
     >
       <div>
-        <p
+        <h3
           className="font-semibold"
           style={{
             fontSize: `${fontSizeMap["4xl"]}px`,
@@ -58,7 +58,7 @@ export default function CurrentDateWidget() {
           }}
         >
           {time}
-        </p>
+        </h3>
       </div>
       <p
         className="text-center"

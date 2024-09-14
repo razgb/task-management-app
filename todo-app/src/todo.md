@@ -1,6 +1,3 @@
-*Extras*
-- Create a reminder dashboard component for tasks upcoming.
-
 **most important**
 - Add google for logins for UX.
 - Build step for CI/CD. Manual is fine too for time being.

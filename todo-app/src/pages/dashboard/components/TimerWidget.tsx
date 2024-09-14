@@ -90,7 +90,7 @@ export default function TimerWidget() {
         <MoveDiagonalIcon size={fontSizeMap["xl"]} />
       </Link>
 
-      <h2
+      <h3
         style={{
           fontSize: `${fontSizeMap["5xl"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",
@@ -98,7 +98,7 @@ export default function TimerWidget() {
         className="font-semibold text-text"
       >
         {formatSecondsToDigitalFormat(timerValue, "minute-second")}
-      </h2>
+      </h3>
 
       <div className="flex items-center justify-center gap-2">{content}</div>
     </div>

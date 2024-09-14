@@ -15,7 +15,7 @@ export default function MainContent() {
       <Modal />
 
       <div
-        className={`3xl:max-w-[85dvw] mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg px-8 pb-8 pt-4 text-text`}
+        className={`3xl:max-w-[85dvw] mx-auto flex w-full flex-1 gap-6 overflow-hidden bg-primaryBg px-6 pb-12 pt-4 text-text`}
       >
         <Menu />
 

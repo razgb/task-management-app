@@ -2,6 +2,7 @@ import CurrentDateWidget from "@/pages/dashboard/components/CurrentDateWidget";
 import TimerWidget from "@/pages/dashboard/components/TimerWidget";
 import RecentTasks from "@/pages/dashboard/components/RecentTasks";
 import TotalTaskProgress from "@/pages/dashboard/components/TotalTaskProgress";
+import DueTasks from "./components/DueTasks";
 
 export default function DashboardPage() {
   return (
@@ -26,8 +27,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="col-span-2 row-span-2">
-        <div className="rounded-2xl bg-primaryBg h-full">
-        </div>
+        <DueTasks/>
       </div>
     </div>
   );

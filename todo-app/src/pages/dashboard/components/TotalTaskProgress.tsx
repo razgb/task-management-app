@@ -28,6 +28,7 @@ export default function TotalTaskProgress() {
           completion={completion}
           showCompletionPercentage={true}
           fontSize="3xl"
+          textStyles="font-medium"
         />
       );
     } else
@@ -52,16 +53,17 @@ export default function TotalTaskProgress() {
         style={{
           fontSize: fontSizeMap["sm"],
         }}
-        className="font-bold uppercase"
+        className="font-semibold uppercase"
       >
         across tasks &amp; sub-tasks
       </p>
-      <h2
+
+      <h3
         className="font-semibold capitalize"
         style={{ fontSize: `${fontSizeMap["3xl"]}px` }}
       >
         total progress
-      </h2>
+      </h3>
 
       {content}
     </div>

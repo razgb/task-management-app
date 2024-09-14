@@ -78,15 +78,15 @@ export default function Task(taskData: TaskComponentType) {
             description ? "mb-0.5" : undefined
           } flex items-center justify-between`}
         >
-          <h2
-            className="font-semibold"
+          <h3
+            className="font-medium"
             style={{
               fontSize: `${fontSizeMap.lg}px`,
               color: highContrastMode ? accessibilityTextColor : "",
             }}
           >
             {title}
-          </h2>
+          </h3>
 
           {/* Grab Button */}
           <button

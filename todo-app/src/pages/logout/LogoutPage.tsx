@@ -56,7 +56,7 @@ export default function LogoutPage() {
 
   return (
     <div
-      className={`${theme} flex min-h-dvh items-center justify-center`}
+      className={`${theme} flex min-h-dvh items-center justify-center bg-primaryBg`}
       style={{
         borderRadius: removeRoundEdges ? "0" : "",
         transition: reduceAnimations ? "none" : undefined,
@@ -78,7 +78,7 @@ export default function LogoutPage() {
           }}
         >
           <h1
-            className="mb-4 text-3xl font-bold"
+            className="mb-4 text-3xl font-bold text-text"
             style={{
               fontSize: fontSizeMap["3xl"],
               letterSpacing: increaseLetterSpacing ? "0.1em" : undefined,

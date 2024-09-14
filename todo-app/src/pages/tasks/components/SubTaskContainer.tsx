@@ -37,15 +37,16 @@ export default function SubTaskContainer({
         }}
       >
         <div className="flex items-center gap-1">
-          <h3
-            className="font-semibold text-textContrast"
+          <h4
+            className="font-medium text-textContrast"
             style={{
               fontSize: `${fontSizeMap.base}px`,
               color: highContrastMode ? reverseAccessibilityTextColor : "",
+              letterSpacing: increaseLetterSpacing ? "0.1em" : "",
             }}
           >
             Sub Tasks
-          </h3>
+          </h4>
 
           <SquareArrowOutUpRight
             className="text-textContrast"
