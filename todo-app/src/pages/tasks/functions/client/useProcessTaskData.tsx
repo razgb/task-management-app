@@ -39,6 +39,7 @@ export function useProccessTaskData({
             key={task.id}
             id={task.id}
             subTasks={task.subTasks}
+            dueDate={task.dueDate}
             title={task.title}
             description={task.description}
             status={task.status}

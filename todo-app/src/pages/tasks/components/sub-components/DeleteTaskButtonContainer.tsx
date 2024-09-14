@@ -79,7 +79,7 @@ export default function DeleteTaskButtonContainer({
               color: highContrastMode ? reverseAccessibilityTextColor : "",
               letterSpacing: increaseLetterSpacing ? "0.1rem" : "",
             }}
-            className="px-3 py-1 text-sm text-black hover:text-textContrast"
+            className="px-3 py-1 text-sm text-textContrast hover:text-textContrast"
             onClick={cancelModal}
           >
             Cancel

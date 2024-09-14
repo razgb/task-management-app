@@ -12,6 +12,7 @@ export type RawTaskType = {
   authorID: string;
   id: string;
   status: "draft" | "in-progress" | "complete";
+  dueDate: number | null;
   title: string;
   description?: string;
   // subTask titles are being used as unique IDs in firebase (the string in Record).

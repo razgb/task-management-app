@@ -9,8 +9,13 @@ export async function addNewTaskToFirebase(taskFormData: TaskFormState) {
   const tasksCollectionRef = collection(db, "users", user.uid, "tasks");
 
   const { dueDate } = taskFormData;
-  const dateObject = new Date(dueDate);
-  const unixTimestamp = dateObject.getTime().toString();
+
+  let unixTimestamp: number | null = null;
+
+  if (dueDate) {
+    const dateObject = new Date(dueDate);
+    unixTimestamp = dateObject.getTime();
+  }
 
   try {
     await addDoc(tasksCollectionRef, {

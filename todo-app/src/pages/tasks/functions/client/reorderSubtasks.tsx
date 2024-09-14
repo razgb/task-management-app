@@ -3,7 +3,7 @@ import ToDoItem from "@/pages/tasks/components/sub-components/TodoItem";
 import { SubTaskType } from "@/pages/tasks/components/TaskExpanded";
 
 type ReorderSubTasksType = {
-  currentTask: TaskType;
+  currentTask: TaskType | undefined;
   removalMutation: (subtask: SubTaskType) => void;
 };
 
@@ -11,6 +11,8 @@ export function reorderSubtasks({
   currentTask,
   removalMutation,
 }: ReorderSubTasksType) {
+  if (!currentTask) return;
+
   const reorderedTaskList: JSX.Element[] = [];
   for (let i = 0; i < currentTask.subTasks.length; i++) {
     if (reorderedTaskList.length === currentTask.subTasks.length) {

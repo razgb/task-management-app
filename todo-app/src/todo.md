@@ -1,6 +1,5 @@
-**mid importantance**
-- Create reminder widget for upcoming tasks. For the 4 most upcoming widgets.
-  -> If the user happens to not use due dates, remove the widget entirely.
+*Extras*
+- Create a reminder dashboard component for tasks upcoming.
 
 **most important**
 - Add google for logins for UX.

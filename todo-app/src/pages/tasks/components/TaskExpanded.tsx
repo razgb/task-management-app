@@ -55,26 +55,6 @@ export default function TaskExpanded() {
   const { openModal } = useModal();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const localCurrentTask =
-    currentTask ||
-    ({
-      authorID: "",
-      id: "",
-      title: "",
-      description: "",
-      dueDate: "",
-      status: "draft",
-      createdAt: {
-        seconds: 0,
-        nanoseconds: 0,
-      },
-      updatedAt: {
-        seconds: 0,
-        nanoseconds: 0,
-      },
-      subTasks: [],
-    } as TaskType);
-
   const { isFetching } = useQuery({
     queryFn: async () => {
       if (currentTask) return;
@@ -114,11 +94,18 @@ export default function TaskExpanded() {
           if (!currentTask) return;
           if (!subTask || !currentTask.id) return;
 
+          if (!checkInputTextValidity(subTask.title)) {
+            openModal(
+              "error",
+              "Error, title text must contain at least one character.",
+            );
+            return;
+          }
+
           await handleSubTaskAdd({
-            subTasks: localCurrentTask.subTasks,
+            subTasks: currentTask.subTasks,
             subTask,
             openModal,
-            inputRef,
             addToLoadingQueue,
             removeFromLoadingQueue,
             addSubTaskToFirebase,
@@ -132,7 +119,7 @@ export default function TaskExpanded() {
           if (!subTask || !currentTask.id) return;
 
           await handleSubTaskRemove({
-            subTasks: localCurrentTask.subTasks,
+            subTasks: currentTask.subTasks,
             subTask,
             addToLoadingQueue,
             removeFromLoadingQueue,
@@ -190,22 +177,19 @@ export default function TaskExpanded() {
   }
 
   function addSubTaskOnClient(title: string) {
-    if (!localCurrentTask) return;
-    if (!checkInputTextValidity(title)) {
-      openModal("error", "Invalid text, please try again.");
-    }
+    if (!currentTask) return;
 
     const newSubTasksState = [
-      ...localCurrentTask.subTasks,
+      ...currentTask.subTasks,
       {
-        position: localCurrentTask.subTasks.length || 0,
+        position: currentTask.subTasks.length || 0,
         title: title,
         completed: false,
       },
     ];
 
     updateCurrentTask({
-      ...localCurrentTask,
+      ...currentTask,
       subTasks: newSubTasksState,
       updatedAt: {
         seconds: new Date().getTime() / 1000,
@@ -217,9 +201,9 @@ export default function TaskExpanded() {
   }
 
   function removeSubTaskOnClient(subTask: SubTaskType) {
-    if (!localCurrentTask) return;
+    if (!currentTask) return;
 
-    const newSubTasksState = localCurrentTask.subTasks
+    const newSubTasksState = currentTask.subTasks
       .filter((st) => st.title !== subTask.title)
       .map((st) => {
         if (st.position < subTask.position) return st;
@@ -231,7 +215,7 @@ export default function TaskExpanded() {
       });
 
     updateCurrentTask({
-      ...localCurrentTask,
+      ...currentTask,
       subTasks: newSubTasksState,
       updatedAt: {
         seconds: new Date().getTime() / 1000,
@@ -257,8 +241,8 @@ export default function TaskExpanded() {
     await mutateAsync({ type: "delete-task" });
   }
 
-  const reorderedTaskList = reorderSubtasks({
-    currentTask: localCurrentTask,
+  const reorderedSubTaskList = reorderSubtasks({
+    currentTask,
     removalMutation,
   });
 
@@ -319,7 +303,7 @@ export default function TaskExpanded() {
           </Button>
         </form>
 
-        <SubTaskList taskList={reorderedTaskList} />
+        <SubTaskList taskList={reorderedSubTaskList} />
       </div>
     </div>
   );

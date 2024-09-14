@@ -9,7 +9,6 @@ type HandleSubTaskAddProps = {
   removeFromLoadingQueue: (key: string) => void;
   addSubTaskToFirebase: typeof addSubTaskToFirebase;
   addSubTaskOnClient: (title: string) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
   openModal: (type: "success" | "error", message: string) => void;
 };
 
@@ -17,7 +16,6 @@ export async function handleSubTaskAdd({
   subTasks,
   subTask,
   openModal,
-  inputRef,
   addToLoadingQueue,
   removeFromLoadingQueue,
   addSubTaskToFirebase,
@@ -28,7 +26,6 @@ export async function handleSubTaskAdd({
 
   if (titleAlreadyExists) {
     openModal("error", "This sub task already exists.");
-    if (inputRef.current) inputRef.current.value = "";
     return;
   }
 

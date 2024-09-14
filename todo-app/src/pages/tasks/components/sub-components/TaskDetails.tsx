@@ -4,6 +4,7 @@ import ProgressBar from "@/shared-components/ProgressBar";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
 import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 import { formatFirebaseDate } from "@/util/formatFirebaseDate";
+import { formatFromUnixTime } from "../../functions/client/formatFromUnixTime";
 
 /**
  * Renders progress bar, last edited, title, and the description.
@@ -31,29 +32,11 @@ export default function TaskDetails({
     ? `Edited: ${formatFirebaseDate(updatedAt)}`
     : null;
 
-  const completion = calculateCompletion(currentTask?.subTasks || []);
+  const completion = calculateCompletion(currentTask.subTasks);
 
   return (
     <div className="">
-      <div className="mb-4 flex h-full max-h-8 gap-2">
-        {currentTask.subTasks.length ? (
-          <div
-            style={{
-              borderRadius: removeRoundEdges ? "0" : "",
-            }}
-            className="flex w-full max-w-[150px] flex-shrink-0 items-center gap-1 rounded-xl bg-secondary-900 px-2"
-          >
-            <ProgressBar
-              outerClassName="h-2 w-full rounded-3xl bg-secondary-100"
-              innerClassName="h-full rounded-3xl bg-secondary-600"
-              completion={completion}
-              showCompletionPercentage={true}
-              textStyles="text-textContrast"
-              fontSize="sm"
-            />
-          </div>
-        ) : null}
-
+      <div className="mb-2 flex h-full max-h-8 gap-2">
         <div
           style={{
             borderRadius: removeRoundEdges ? "0" : "",
@@ -67,12 +50,12 @@ export default function TaskDetails({
             }}
             className="text-sm text-textContrast"
           >
-            {lastEdited || "Edited: 30-07-2024"}
+            {lastEdited}
           </p>
         </div>
 
         <select
-          defaultValue={currentTask?.status || "draft"}
+          defaultValue={currentTask.status}
           onChange={async (e) => {
             const value = e.target.value;
             if (!["draft", "in-progress", "complete"].includes(value)) return;
@@ -90,6 +73,45 @@ export default function TaskDetails({
         </select>
       </div>
 
+      <div className="mb-4 flex h-full max-h-8 gap-2">
+        {currentTask.subTasks.length ? (
+          <div
+            style={{
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
+            className="flex w-full max-w-[150px] flex-shrink-0 items-center gap-1 rounded-xl bg-secondary-900 px-2"
+          >
+            <ProgressBar
+              outerClassName="h-2 w-full rounded-3xl bg-secondary-100"
+              innerClassName="h-full rounded-3xl bg-secondary-600"
+              completion={completion}
+              showCompletionPercentage={true}
+              textStyles="text-textContrast font-medium"
+              fontSize="sm"
+            />
+          </div>
+        ) : null}
+
+        {currentTask.dueDate && (
+          <div
+            style={{
+              borderRadius: removeRoundEdges ? "0" : "",
+            }}
+            className="flex flex-shrink-0 items-center rounded-xl bg-secondary-900 p-2"
+          >
+            <p
+              style={{
+                fontSize: `${fontSizeMap.sm}px`,
+                color: highContrastMode ? reverseAccessibilityTextColor : "",
+              }}
+              className="text-sm text-textContrast"
+            >
+              {`Task Due: ${formatFromUnixTime(currentTask.dueDate)}`}
+            </p>
+          </div>
+        )}
+      </div>
+
       <h1
         style={{
           fontSize: `${fontSizeMap["4xl"]}px`,
@@ -98,7 +120,7 @@ export default function TaskDetails({
         }}
         className="mb-1 text-4xl font-bold capitalize"
       >
-        {currentTask?.title || "Task title"}
+        {currentTask.title}
       </h1>
 
       <p
@@ -108,7 +130,7 @@ export default function TaskDetails({
         }}
         className="mb-4 max-w-[75ch] text-xl text-textWeak"
       >
-        {currentTask?.description || "Task description"}
+        {currentTask.description}
       </p>
     </div>
   );

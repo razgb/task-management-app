@@ -10,6 +10,7 @@ export type TaskType = {
   authorID: string;
   id: string;
   status: "draft" | "in-progress" | "complete";
+  dueDate: number | null;
   title: string;
   description?: string;
   subTasks: SubTaskType[];
@@ -101,7 +102,7 @@ export default function Task(taskData: TaskComponentType) {
             }}
           >
             <span
-              className="absolute -right-1.5 -top-4 min-w-20 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute -left-[80px] top-1/2 min-w-20 -translate-y-1/2 rounded bg-secondary-700 px-1 py-0.5 font-medium text-textContrast opacity-0 transition-opacity group-hover:opacity-100"
               style={{
                 fontSize: `${fontSizeMap.xs}px`,
                 color: highContrastMode ? reverseAccessibilityTextColor : "",

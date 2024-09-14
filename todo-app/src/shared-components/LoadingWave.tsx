@@ -22,12 +22,11 @@ export default function LoadingWave() {
       break;
   }
 
-  const waveStyles = isLoading ? "opacity-100" : "opacity-0";
+  const waveStyles = isLoading ? "opacity-100 animate-wave" : "opacity-0";
+
   return (
     <div className={`overflow-hidden ${containerStyles} transition-all`}>
-      <div
-        className={`h-full w-[150%] ${waveStyles} animate-wave bg-loadingBar`}
-      ></div>
+      <div className={`h-full w-[150%] ${waveStyles} bg-loadingBar`}></div>
     </div>
   );
 }

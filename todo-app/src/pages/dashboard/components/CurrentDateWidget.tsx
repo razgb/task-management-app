@@ -61,7 +61,7 @@ export default function CurrentDateWidget() {
         </p>
       </div>
       <p
-        className=""
+        className="text-center"
         style={{
           fontSize: `${fontSizeMap["lg"]}px`,
           color: highContrastMode ? accessibilityTextColor : "",

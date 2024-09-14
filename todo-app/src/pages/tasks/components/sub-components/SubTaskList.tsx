@@ -1,16 +1,15 @@
 import { AlertTriangleIcon } from "lucide-react";
 import useAccessibility from "@/stores/accessibility/useAccessibility";
-import useTaskExpanded from "@/stores/taskExpanded/useTaskExpanded";
 
 export default function SubTaskList({
   taskList,
 }: {
-  taskList: React.ReactNode[];
+  taskList: React.ReactNode[] | undefined;
 }) {
   const { accessibility } = useAccessibility();
   const { removeRoundEdges, fontSizeMap } = accessibility;
-  const { currentTask } = useTaskExpanded();
-  // if (!currentTask) return null;
+
+  if (!taskList) return null;
 
   return (
     <div
